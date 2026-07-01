@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 export default function HeroGlobe() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -35,7 +35,7 @@ export default function HeroGlobe() {
     const RADIUS = 2.0;
     const SAMPLES = 24000;
 
-    function carveMask(theta: number, phi: number) {
+    function carveMask(theta, phi) {
       const w1 = Math.sin(theta * 3.1 + phi * 1.6);
       const w2 = Math.cos(theta * 2.0 - phi * 2.4);
       const w3 = Math.sin(phi * 3.0 + theta * 1.2);
@@ -94,7 +94,7 @@ export default function HeroGlobe() {
     sphereGroup.add(points);
 
     /* --- Edge ribbon lines along the carve boundaries --- */
-    function addRibbon(offsetPhi: number, offsetTheta: number, color: number, opacity: number) {
+    function addRibbon(offsetPhi, offsetTheta, color, opacity) {
       const segs = 200;
       const pts = [];
       for (let i = 0; i <= segs; i++) {
@@ -121,10 +121,8 @@ export default function HeroGlobe() {
 
     scene.add(sphereGroup);
 
-    /* --- Outer glow sprite behind sphere removed to prevent square box artifact --- */
-
     /* --- Orbit rings --- */
-    function makeOrbitRing(radiusX: number, radiusZ: number, rotX: number, rotY: number, rotZ: number, opacity: number) {
+    function makeOrbitRing(radiusX, radiusZ, rotX, rotY, rotZ, opacity) {
       const segs = 128;
       const pts = [];
       for (let i = 0; i <= segs; i++) {
@@ -145,7 +143,7 @@ export default function HeroGlobe() {
     scene.add(ring1);
     scene.add(ring2);
 
-    const travelDots: any[] = [];
+    const travelDots = [];
     const dotGeo = new THREE.SphereGeometry(0.035, 8, 8);
     const dotMat = new THREE.MeshBasicMaterial({ color: 0x7CF4F2 });
     for (let i = 0; i < 2; i++) {
@@ -160,7 +158,7 @@ export default function HeroGlobe() {
     window.addEventListener('resize', resize);
 
     let t0 = performance.now();
-    let frameId: number;
+    let frameId;
 
     function animate() {
       frameId = requestAnimationFrame(animate);

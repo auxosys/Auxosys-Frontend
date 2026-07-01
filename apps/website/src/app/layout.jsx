@@ -1,14 +1,19 @@
 import './globals.css'
 
+import Navbar from '@/components/Navbar'
+
 export const metadata = {
   title: 'Auxosys',
   description: 'Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products.',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+      </body>
     </html>
   )
 }

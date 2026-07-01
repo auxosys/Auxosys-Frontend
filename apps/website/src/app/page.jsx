@@ -11,31 +11,13 @@ import {
 export default function HomePage() {
   return (
     <>
-      <header>
-        <nav>
-          <a href="#" className="logo">
-            <img src="/logo-icon.svg" alt="Auxosys" className="logo-icon" />
-            AUXOSYS
-          </a>
-          <ul className="nav-links">
-            <li><a href="#about">Who We Are</a></li>
-            <li><a href="#products">Products</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#industries">Industries</a></li>
-            <li><a href="#careers">Careers</a></li>
-            <li><a href="#contact">Contact Us</a></li>
-          </ul>
-          <div className="nav-cta">
-            <a href="#contact" className="btn btn-primary btn-sm">Let's Build Together</a>
-          </div>
-        </nav>
-      </header>
+
 
       {/* HERO */}
       <section className="hero">
         <div className="container hero-grid">
           <div>
-            <span className="hero-badge"><span className="dot"></span>Now building AI-native products</span>
+
             <h1>Building Intelligent Digital Products That Scale Businesses</h1>
             <span className="hero-highlight">AI • SaaS • Cloud • Blockchain • Enterprise Solutions</span>
             <p className="desc">Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products. From AI-powered applications and SaaS platforms to enterprise software and blockchain solutions, we build technology designed for long-term growth.</p>

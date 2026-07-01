@@ -1,17 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Reveal({
   children,
   className = '',
   style,
-}: {
-  children: ReactNode;
-  className?: string;
-  style?: CSSProperties;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
