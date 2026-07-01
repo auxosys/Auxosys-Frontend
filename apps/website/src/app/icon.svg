@@ -1,0 +1,33 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7DDCE6"/>
+      <stop offset="100%" stop-color="#3C9CA8"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8A56"/>
+      <stop offset="100%" stop-color="#E85A28"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5CC9D6" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#5CC9D6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <g transform="translate(100,100)">
+    <!-- ambient glow -->
+    <circle r="80" fill="url(#glow)"/>
+    <!-- orbit arc -->
+    <path d="M -62 -8 A 64 64 0 1 1 50 52" fill="none" stroke="#22384B" stroke-width="1.2"/>
+    <!-- connector lines -->
+    <line x1="-6" y1="-47" x2="42" y2="17" stroke="url(#g1)" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="42" y1="17" x2="-38" y2="33" stroke="url(#g2)" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="-38" y1="33" x2="-6" y2="-47" stroke="#5CC9D6" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+    <!-- nodes -->
+    <circle cx="-6" cy="-47" r="11" fill="url(#g1)"/>
+    <circle cx="42" cy="17" r="16" fill="url(#g2)"/>
+    <circle cx="-38" cy="33" r="8" fill="#5CC9D6"/>
+    <!-- satellite -->
+    <circle cx="50" cy="52" r="4" fill="#FF824D"/>
+  </g>
+</svg>
