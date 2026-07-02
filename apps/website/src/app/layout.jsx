@@ -1,6 +1,7 @@
 import './globals.css'
 
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/layout/Footer'
 
 export const metadata = {
   title: 'Auxosys',
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   )

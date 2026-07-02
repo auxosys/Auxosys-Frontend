@@ -14,8 +14,27 @@ const css = `
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 60% 70% at 30% 40%, rgba(92,201,214,0.1) 0%, transparent 70%);
-    pointer-events: none;
+    background: rgba(8, 14, 23, 0.75); /* Dark overlay */
+    z-index: 1;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0;
+    animation: bgFade 18s infinite;
+  }
+  .hero-bg-1 { animation-delay: 0s; }
+  .hero-bg-2 { animation-delay: 6s; }
+  .hero-bg-3 { animation-delay: 12s; }
+  
+  @keyframes bgFade {
+    0%, 25% { opacity: 1; }
+    33%, 92% { opacity: 0; }
+    100% { opacity: 1; }
   }
 
   .hero-left {
@@ -28,7 +47,7 @@ const css = `
     max-width: 900px;
     margin: 0 auto;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   .badge {
@@ -428,10 +447,14 @@ export default function WhoWeAre() {
 
       {/* Hero */}
       <section className="wwa-hero">
+        <img src="/images/about-bg-1.jpg" alt="Hydrogen Energy" className="hero-bg hero-bg-1" />
+        <img src="/images/about-bg-2.jpg" alt="Engineer" className="hero-bg hero-bg-2" />
+        <img src="/images/about-bg-3.jpg" alt="VR Person" className="hero-bg hero-bg-3" />
+        
         <div className="hero-left" style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(24px)", transition: "opacity 0.8s, transform 0.8s" }}>
 
           <h1 className="hero-heading">
-            We Engineer<br /><em>Digital Innovation</em><br />for the Next<br />Generation
+            We Engineer<br /><em>Digital Innovation</em><br />for the Next Generation
           </h1>
           <p className="hero-desc">
             Auxosys is a modern technology startup dedicated to transforming ambitious ideas into intelligent digital solutions — AI platforms, SaaS products, blockchain solutions, and enterprise systems built to lead.
