@@ -34,13 +34,32 @@ const css = `
     overflow: hidden;
     border-bottom: 1px solid var(--divider);
   }
-  .ind-hero::before {
+  .hero-bg-slider {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  }
+  .hero-bg-slider::after {
     content: '';
     position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(92,201,214,0.07), transparent),
-      radial-gradient(ellipse 50% 60% at 80% 20%, rgba(255,107,53,0.07), transparent);
-    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(9, 15, 28, 0.5), rgba(9, 15, 28, 0.95));
+    z-index: 1;
+  }
+  .hero-bg-slide {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    animation: heroFadeCycle 15s infinite;
+  }
+  .hero-bg-slide.slide-1 { background-image: url('/images/industries-hero-1.jpg'); animation-delay: 0s; }
+  .hero-bg-slide.slide-2 { background-image: url('/images/industries-hero-2.jpg'); animation-delay: 5s; }
+  .hero-bg-slide.slide-3 { background-image: url('/images/industries-hero-3.jpg'); animation-delay: 10s; }
+  
+  @keyframes heroFadeCycle {
+    0%, 25% { opacity: 1; transform: scale(1); }
+    33.3%, 91.6% { opacity: 0; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
   }
   /* floating label pills behind hero */
   .hero-floaters {
@@ -404,6 +423,11 @@ export default function Industries() {
 
       {/* Hero */}
       <section className="ind-hero">
+        <div className="hero-bg-slider">
+          <div className="hero-bg-slide slide-1"></div>
+          <div className="hero-bg-slide slide-2"></div>
+          <div className="hero-bg-slide slide-3"></div>
+        </div>
         <div className="hero-floaters">
           {floaters.map((f, i) => (
             <span key={i} className="hero-float" style={{ top: f.top, left: f.left }}>{f.label}</span>

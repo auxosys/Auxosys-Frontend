@@ -17,22 +17,47 @@ import {
 const css = `
   /* ─── HERO ─── */
   .svc-hero {
-    padding: 140px 80px 100px;
+    height: 100vh;
+    min-height: 750px;
+    padding: 100px 80px 40px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    gap: 60px;
     align-items: center;
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid var(--divider);
   }
-  .svc-hero::before {
+  .svc-hero-bg-slider {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  }
+  .svc-hero-bg-slider::after {
     content: '';
-    position: absolute;
-    right: -200px; top: -200px;
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(255,107,53,0.08), transparent 60%);
-    pointer-events: none;
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(9, 15, 28, 0.95) 0%, rgba(9, 15, 28, 0.5) 100%);
+    z-index: 1;
+  }
+  .svc-hero-bg-slide {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    animation: svcHeroFadeCycle 15s infinite;
+  }
+  .svc-hero-bg-slide.slide-1 { background-image: url('/images/services-hero-1.jpg'); animation-delay: 0s; }
+  .svc-hero-bg-slide.slide-2 { background-image: url('/images/services-hero-2.jpg'); animation-delay: 5s; }
+  .svc-hero-bg-slide.slide-3 { background-image: url('/images/services-hero-3.jpg'); animation-delay: 10s; }
+  
+  @keyframes svcHeroFadeCycle {
+    0%, 25% { opacity: 1; transform: scale(1); }
+    33.3%, 91.6% { opacity: 0; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .svc-hero > div:not(.svc-hero-bg-slider) {
+    position: relative;
+    z-index: 2;
   }
   .hero-eyebrow {
     font-size: 12px; font-weight: 700;
@@ -81,7 +106,7 @@ const css = `
     background: var(--bg-1);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 28px;
+    padding: 20px;
     transition: all 0.25s;
     display: flex;
     flex-direction: column;
@@ -473,6 +498,11 @@ export default function Services() {
 
       {/* Hero */}
       <section className="svc-hero">
+        <div className="svc-hero-bg-slider">
+          <div className="svc-hero-bg-slide slide-1"></div>
+          <div className="svc-hero-bg-slide slide-2"></div>
+          <div className="svc-hero-bg-slide slide-3"></div>
+        </div>
         <div>
           <p className="hero-eyebrow">Technology Services</p>
           <h1 className="hero-h1">Transforming Ideas Into <em>Powerful Digital Solutions</em></h1>
