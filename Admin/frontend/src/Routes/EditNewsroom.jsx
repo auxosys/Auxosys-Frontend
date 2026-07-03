@@ -34,7 +34,7 @@ const EditNewsroom = () => {
     publishedAt: "",
     featuredImage: "",
     relatedPage: "",
-    author: "OPM Editorial",
+    author: "AUXOSYS Editorial",
   });
 
   const [seo, setSeo] = useState({
@@ -70,7 +70,7 @@ const EditNewsroom = () => {
           publishedAt: post.publishedAt ? post.publishedAt.slice(0, 10) : "",
           featuredImage: post.featuredImage || "",
           relatedPage: post.relatedPage || "",
-          author: post.author || "OPM Editorial",
+          author: post.author || "AUXOSYS Editorial",
         });
 
         if (post.seo) {
@@ -207,7 +207,7 @@ const EditNewsroom = () => {
                     className="input"
                     value={seo.canonicalUrl}
                     onChange={e => setSeo(p => ({ ...p, canonicalUrl: e.target.value }))}
-                    placeholder="https://www.opmcorp.com/newsroom/custom-slug"
+                    placeholder="https://www.auxosys.com/newsroom/custom-slug"
                   />
                   <p className="text-[11px] text-gray-400 mt-1">Leave blank to use the auto-generated canonical URL.</p>
                 </div>
@@ -275,7 +275,7 @@ const EditNewsroom = () => {
             </select>
 
             <label className="text-sm text-gray-600">Author</label>
-            <input name="author" value={form.author} onChange={handleChange} placeholder="OPM Editorial" className="input mt-1 mb-4" />
+            <input name="author" value={form.author} onChange={handleChange} placeholder="AUXOSYS Editorial" className="input mt-1 mb-4" />
 
             <label className="text-sm text-gray-600">Date Published</label>
             <input type="date" name="publishedAt" value={form.publishedAt} onChange={handleChange} className="input mt-1 mb-4" />

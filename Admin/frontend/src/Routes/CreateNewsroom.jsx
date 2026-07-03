@@ -11,7 +11,7 @@ export const RELATED_PAGES = [
 
   // Services - OT
   { value: "cyber-security", label: "Service: Cyber Security" },
-  { value: "opm-technology", label: "Service: OPM Technology" },
+  { value: "auxosys-technology", label: "Service: AUXOSYS Technology" },
   { value: "cloud-services", label: "Service: Cloud Services" },
   { value: "ai-automation", label: "Service: AI & Automation" },
   { value: "data-business-analytics", label: "Service: Data & Analytics" },
@@ -21,7 +21,7 @@ export const RELATED_PAGES = [
 
   // Services - OCS
   { value: "operation-supplychain", label: "Service: Operations & Supply Chain" },
-  { value: "opm-services", label: "Service: OPM Services" },
+  { value: "auxosys-services", label: "Service: AUXOSYS Services" },
   { value: "salespricing", label: "Service: Sales & Pricing" },
   { value: "marketingbrand", label: "Service: Marketing & Brand" },
   { value: "producteng", label: "Service: Product Engineering" },
@@ -71,7 +71,7 @@ const CreateNewsroom = () => {
     status: "Draft",
     publishedAt: "",
     relatedPage: "",
-    author: "OPM Editorial",
+    author: "AUXOSYS Editorial",
   });
 
   const [seo, setSeo] = useState({
@@ -205,7 +205,7 @@ const CreateNewsroom = () => {
                     className="input"
                     value={seo.canonicalUrl}
                     onChange={e => setSeo(p => ({ ...p, canonicalUrl: e.target.value }))}
-                    placeholder="https://www.opmcorp.com/newsroom/custom-slug"
+                    placeholder="https://www.auxosys.com/newsroom/custom-slug"
                   />
                   <p className="text-[11px] text-gray-400 mt-1">Leave blank to use the auto-generated canonical URL.</p>
                 </div>
@@ -267,7 +267,7 @@ const CreateNewsroom = () => {
             </select>
 
             <label className="block text-sm text-gray-600 mb-1">Author</label>
-            <input name="author" placeholder="OPM Editorial" className="input mb-4" onChange={handleChange} value={form.author} />
+            <input name="author" placeholder="AUXOSYS Editorial" className="input mb-4" onChange={handleChange} value={form.author} />
 
             <label className="block text-sm text-gray-600 mb-1">Date Published</label>
             <input type="date" name="publishedAt" className="input mb-4" onChange={handleChange} />

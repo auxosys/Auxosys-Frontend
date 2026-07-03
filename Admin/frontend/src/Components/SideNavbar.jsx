@@ -25,29 +25,15 @@ const Sidebar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [profile, setProfile] = useState({
-    name: "Admin",
+    name: "AUXOSYS Admin",
     avatar: DEFAULT_AVATAR,
-    email: "",
+    email: "auxosys@gmail.com",
     permissions: [],
   });
 
   const fetchProfile = async () => {
-    try {
-      const res = await apiClient.get("/profile/me");
-      const admin = res.data.data.admin;
-
-      setProfile({
-        name: `${admin.firstName} ${admin.lastName}`,
-        avatar:
-          admin.avatar && admin.avatar.trim() !== ""
-            ? admin.avatar
-            : DEFAULT_AVATAR,
-        email: admin.email,
-        permissions: admin.permissions || [],
-      });
-    } catch {
-      // silent fail
-    }
+    // API is disconnected for the reusable Auxosys Admin Panel
+    // Profile is hardcoded to auxosys@gmail.com which unlocks all modules
   };
 
   useEffect(() => {
@@ -70,7 +56,7 @@ const Sidebar = () => {
   };
 
   const hasAccess = (moduleName) => {
-    if (profile.email === "admin@opmcorporation.com") return true;
+    if (profile.email === "auxosys@gmail.com") return true;
     if (!profile.permissions || !Array.isArray(profile.permissions)) return false;
     
     return profile.permissions.some(p => {
@@ -127,13 +113,13 @@ const Sidebar = () => {
           <Link to="/" className="flex items-center gap-3">
             <div className="w-10 h-10 flex items-center justify-center">
               <img
-                src="/OPM logo.svg"
-                alt="OPM Corporation Logo"
+                src="/icon.svg"
+                alt="AUXOSYS Logo"
                 className="w-full h-full object-contain"
               />
             </div>
             <span className="text-white text-[17px] font-bold tracking-wide truncate max-w-[140px]">
-              OPM Corporation
+              AUXOSYS
             </span>
           </Link>
 

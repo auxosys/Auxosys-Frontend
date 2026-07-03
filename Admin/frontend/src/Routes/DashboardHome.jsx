@@ -40,13 +40,41 @@ const DashboardHome = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    apiClient
-      .get("/admin/dashboard")
-      .then((res) => setDashboard(res.data.data))
-      .catch(() => {
-        toast.error("Failed to load dashboard");
-        setError(true);
-      });
+    // Mock Dashboard Data for Auxosys
+    const mockData = {
+      kpi: {
+        totalContacts: { value: 24, trendDirection: "up", trend: 15 },
+        activeJobs: { value: 12, label: "Currently open" },
+        jobApplications: { value: 142, trendDirection: "up", trend: 30 },
+        caseStudies: { value: 8, trendDirection: "up", trend: 5 }
+      },
+      charts: {
+        weeklyActivity: {
+          labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          series: [
+            { name: "Contacts", data: [4, 6, 2, 8, 3, 5, 2] },
+            { name: "Applications", data: [12, 18, 14, 25, 10, 8, 5] }
+          ]
+        },
+        contactStatus: {
+          labels: ["Pending", "In Progress", "Closed"],
+          data: [14, 8, 2]
+        }
+      },
+      lists: {
+        recentContacts: [
+          { id: 1, name: "Alice Tech", subject: "Enterprise App Inquiry", status: "Pending", timestamp: Date.now() },
+          { id: 2, name: "Bob SaaS", subject: "Cloud Migration", status: "In Progress", timestamp: Date.now() - 86400000 }
+        ],
+        recentApplications: [
+          { id: 1, name: "Charlie Dev", jobTitle: "Full Stack Engineer", status: "Interview", timestamp: Date.now() },
+          { id: 2, name: "Diana UI", jobTitle: "UI/UX Designer", status: "Review", timestamp: Date.now() - 4000000 }
+        ]
+      }
+    };
+    
+    // Simulate loading
+    setDashboard(mockData);
   }, []);
 
   if (!dashboard && !error) return <div className="p-8 text-slate-500">Loading dashboard…</div>;

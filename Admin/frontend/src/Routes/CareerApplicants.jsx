@@ -45,7 +45,7 @@ const CareerApplicants = () => {
 
   const fetchJobDetails = useCallback(async () => {
     try {
-      const res = await apiClient.get(`/job/admin/${jobId}`);
+      const res = await apiClient.get(`/job/${jobId}`);
       setJobTitle(res?.data?.data?.title || "");
     } catch {
       // non-critical

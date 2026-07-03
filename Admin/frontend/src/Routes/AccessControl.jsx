@@ -169,7 +169,7 @@ const AccessControl = () => {
                     </div>
                   </td>
                   <td className="py-4 px-6">
-                    {u.email === "admin@opmcorporation.com" || MODULES.every(m => normalized.some(p => p.module === m.id && p.access === "Read & Write")) ? (
+                    {u.email === "auxosys@gmail.com" || MODULES.every(m => normalized.some(p => p.module === m.id && p.access === "Read & Write")) ? (
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">
                         <ShieldCheck size={14} /> Full Access
                       </span>
@@ -196,7 +196,7 @@ const AccessControl = () => {
                       <button onClick={() => openModal(u)} className="hover:text-blue-500 transition-colors">
                         <Edit2 size={16} />
                       </button>
-                      {u.email !== "admin@opmcorporation.com" && (
+                      {u.email !== "auxosys@gmail.com" && (
                         <button onClick={() => handleDelete(u._id)} className="hover:text-red-500 transition-colors">
                           <Trash2 size={16} />
                         </button>
@@ -265,7 +265,7 @@ const AccessControl = () => {
                 </div>
               </div>
 
-              {formData.email === "admin@opmcorporation.com" ? (
+              {formData.email === "auxosys@gmail.com" ? (
                 <div className="bg-blue-50 text-blue-800 p-4 rounded-lg text-sm mb-4">
                   This user is the Super Admin and inherently has full access to all modules.
                 </div>

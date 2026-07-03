@@ -20,6 +20,7 @@ export default function Footer() {
             <ul>
               <li><a href="/about">Who We Are</a></li>
               <li><a href="/careers">Careers</a></li>
+              <li><a href="/news">Newsroom</a></li>
               <li><a href="/contact">Contact Us</a></li>
             </ul>
           </div>

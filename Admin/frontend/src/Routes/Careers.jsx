@@ -10,6 +10,10 @@ import {
   List as ListIcon,
   Search,
   ArrowLeft,
+  Users,
+  CheckCircle,
+  Briefcase as BriefcaseIcon,
+  TrendingUp,
 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { apiClient } from "../helper/apiClient";
@@ -230,6 +234,54 @@ const Careers = () => {
           )}
         </div>
       </div>
+
+      {/* DASHBOARD WIDGETS */}
+      {!loading && !jobsError && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white rounded-xl border p-5 flex items-center justify-between shadow-sm">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Jobs</p>
+              <h3 className="text-2xl font-bold text-gray-800">{meta.total}</h3>
+            </div>
+            <div className="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-[#0c55cc]">
+              <BriefcaseIcon size={24} />
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border p-5 flex items-center justify-between shadow-sm">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Active Jobs</p>
+              <h3 className="text-2xl font-bold text-gray-800">
+                {jobs.filter(j => j.status === "Active").length}
+              </h3>
+            </div>
+            <div className="w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center text-green-600">
+              <CheckCircle size={24} />
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border p-5 flex items-center justify-between shadow-sm">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Applicants</p>
+              <h3 className="text-2xl font-bold text-gray-800">
+                {jobs.reduce((acc, curr) => acc + (curr.applicantCount || 0), 0)}
+              </h3>
+            </div>
+            <div className="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500">
+              <Users size={24} />
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border p-5 flex items-center justify-between shadow-sm">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Avg. Applications</p>
+              <h3 className="text-2xl font-bold text-gray-800">
+                {jobs.length ? Math.round(jobs.reduce((acc, curr) => acc + (curr.applicantCount || 0), 0) / jobs.length) : 0}
+              </h3>
+            </div>
+            <div className="w-12 h-12 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600">
+              <TrendingUp size={24} />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ERROR BANNER */}
       {!loading && jobsError && (

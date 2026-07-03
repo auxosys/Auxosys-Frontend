@@ -22,7 +22,7 @@ export const usePermissions = (moduleName) => {
           return;
         }
 
-        if (admin.email === "admin@opmcorporation.com") {
+        if (admin.email === "auxosys@gmail.com") {
           setCanRead(true);
           setCanWrite(true);
         } else {

@@ -23,7 +23,7 @@ const Newsroom = () => {
         setCanPublish(false);
         return;
       }
-      if (admin.email === "admin@opmcorporation.com") {
+      if (admin.email === "auxosys@gmail.com") {
         setCanPublish(true);
       } else {
         const perms = admin.permissions || [];

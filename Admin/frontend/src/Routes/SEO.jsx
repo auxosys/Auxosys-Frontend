@@ -28,7 +28,7 @@ const SEO = () => {
     siteDescription: "",
     siteKeywords: "",
     canonicalBaseUrl: "",
-    defaultMetaTitleTemplate: "%s | OPM Corporation",
+    defaultMetaTitleTemplate: "%s | AUXOSYS",
     defaultMetaDescription: "",
     openGraph: { title: "", description: "", imageKey: "", type: "website", siteName: "" },
     twitter: { card: "summary_large_image", site: "", title: "", description: "" },
@@ -50,7 +50,7 @@ const SEO = () => {
           siteDescription: d.siteDescription || "",
           siteKeywords: d.siteKeywords || "",
           canonicalBaseUrl: d.canonicalBaseUrl || "",
-          defaultMetaTitleTemplate: d.defaultMetaTitleTemplate || "%s | OPM Corporation",
+          defaultMetaTitleTemplate: d.defaultMetaTitleTemplate || "%s | AUXOSYS",
           defaultMetaDescription: d.defaultMetaDescription || "",
           openGraph: {
             title: d.openGraph?.title || "",
@@ -187,7 +187,7 @@ const SEO = () => {
             <div className="space-y-5 max-w-2xl">
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Site Name</label>
-                <input className="input" value={form.siteName} onChange={e => set("siteName", e.target.value)} placeholder="OPM Corporation" />
+                <input className="input" value={form.siteName} onChange={e => set("siteName", e.target.value)} placeholder="AUXOSYS" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Site Description</label>
@@ -195,8 +195,8 @@ const SEO = () => {
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Default Meta Title Template</label>
-                <input className="input" value={form.defaultMetaTitleTemplate} onChange={e => set("defaultMetaTitleTemplate", e.target.value)} placeholder="%s | OPM Corporation" />
-                <p className="text-[11px] text-gray-400 mt-1">Use %s as a placeholder for the page title. e.g. &ldquo;About Us | OPM Corporation&rdquo;</p>
+                <input className="input" value={form.defaultMetaTitleTemplate} onChange={e => set("defaultMetaTitleTemplate", e.target.value)} placeholder="%s | AUXOSYS" />
+                <p className="text-[11px] text-gray-400 mt-1">Use %s as a placeholder for the page title. e.g. &ldquo;About Us | AUXOSYS&rdquo;</p>
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Default Meta Description</label>
@@ -205,12 +205,12 @@ const SEO = () => {
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Default Meta Keywords</label>
-                <input className="input" value={form.siteKeywords} onChange={e => set("siteKeywords", e.target.value)} placeholder="corporation, OPM, business, enterprise..." />
+                <input className="input" value={form.siteKeywords} onChange={e => set("siteKeywords", e.target.value)} placeholder="corporation, AUXOSYS, business, enterprise..." />
                 <p className="text-[11px] text-gray-400 mt-1">Comma-separated keywords.</p>
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Canonical Base URL</label>
-                <input className="input" value={form.canonicalBaseUrl} onChange={e => set("canonicalBaseUrl", e.target.value)} placeholder="https://www.opmcorp.com" />
+                <input className="input" value={form.canonicalBaseUrl} onChange={e => set("canonicalBaseUrl", e.target.value)} placeholder="https://www.auxosys.com" />
                 <p className="text-[11px] text-gray-400 mt-1">Used to build canonical tags. Include protocol, no trailing slash.</p>
               </div>
             </div>
@@ -224,7 +224,7 @@ const SEO = () => {
               </p>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">OG Title</label>
-                <input className="input" value={form.openGraph.title} onChange={e => setNested("openGraph", "title", e.target.value)} placeholder="OPM Corporation – Leading Business Solutions" />
+                <input className="input" value={form.openGraph.title} onChange={e => setNested("openGraph", "title", e.target.value)} placeholder="AUXOSYS – Leading Business Solutions" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">OG Description</label>
@@ -241,7 +241,7 @@ const SEO = () => {
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1">OG Site Name</label>
-                  <input className="input" value={form.openGraph.siteName} onChange={e => setNested("openGraph", "siteName", e.target.value)} placeholder="OPM Corporation" />
+                  <input className="input" value={form.openGraph.siteName} onChange={e => setNested("openGraph", "siteName", e.target.value)} placeholder="AUXOSYS" />
                 </div>
               </div>
               <div>
@@ -294,7 +294,7 @@ const SEO = () => {
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Twitter Title</label>
-                <input className="input" value={form.twitter.title} onChange={e => setNested("twitter", "title", e.target.value)} placeholder="OPM Corporation" />
+                <input className="input" value={form.twitter.title} onChange={e => setNested("twitter", "title", e.target.value)} placeholder="AUXOSYS" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Twitter Description</label>
@@ -332,11 +332,11 @@ const SEO = () => {
               </p>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Organization Name</label>
-                <input className="input" value={form.organization.name} onChange={e => setNested("organization", "name", e.target.value)} placeholder="OPM Corporation" />
+                <input className="input" value={form.organization.name} onChange={e => setNested("organization", "name", e.target.value)} placeholder="AUXOSYS" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Website URL</label>
-                <input className="input" value={form.organization.url} onChange={e => setNested("organization", "url", e.target.value)} placeholder="https://www.opmcorp.com" />
+                <input className="input" value={form.organization.url} onChange={e => setNested("organization", "url", e.target.value)} placeholder="https://www.auxosys.com" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Organization Description</label>

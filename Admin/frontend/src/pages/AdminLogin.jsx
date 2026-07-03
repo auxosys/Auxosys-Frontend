@@ -18,21 +18,16 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const res = await apiClient.post("/auth/login", {
-        email,
-        password,
-      });
-
-      const token = res.data?.data?.accessToken;
-      if (!token) {
-        setError("Invalid response from server");
-        return;
+      // Hardcoded login for AUXOSYS
+      if (email === "auxosys@gmail.com" && password === "Das@9078") {
+        const fakeToken = "auxosys-admin-token-" + Date.now();
+        localStorage.setItem("accessToken", fakeToken);
+        navigate("/");
+      } else {
+        throw new Error("Invalid email or password");
       }
-      localStorage.setItem("accessToken", token);
-
-      navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid email or password");
+      setError(err.message || "Invalid email or password");
     } finally {
       setLoading(false);
     }
@@ -43,12 +38,12 @@ const AdminLogin = () => {
       {/* LEFT PANEL */}
       <div className="hidden lg:block lg:w-[38%] relative bg-black">
         <div className="absolute top-10 left-1/2 -translate-x-1/2 z-10">
-          <img src="/OPM logo.svg" alt="OPM Logo" className="h-16 w-auto" />
+          <img src="/icon.svg" alt="AUXOSYS Logo" className="h-16 w-auto" />
         </div>
 
         <img
-          src="/OPM-sign-in.jpg"
-          alt="OPM Background"
+          src="/background.jpg"
+          alt="AUXOSYS Background"
           className="w-full h-full object-cover"
         />
       </div>

@@ -107,7 +107,7 @@ const RichTextEditor = ({ value = "", onChange }) => {
         if (!url || !key) return;
 
         // Use the live backend proxy route to ensure URLs saved in the DB work across all environments.
-        const proxyUrl = `https://api.opmcorporation.com/upload/media?key=${encodeURIComponent(key)}`;
+        const proxyUrl = `https://api.auxosys.com/upload/media?key=${encodeURIComponent(key)}`;
 
         if (file.type.startsWith("video")) {
           editor.chain().focus().insertContent(
@@ -176,7 +176,7 @@ const RichTextEditor = ({ value = "", onChange }) => {
         }
 
         // Use the live backend proxy route to ensure URLs saved in the DB work across all environments.
-        const proxyUrl = `https://api.opmcorporation.com/upload/media?key=${encodeURIComponent(key)}`;
+        const proxyUrl = `https://api.auxosys.com/upload/media?key=${encodeURIComponent(key)}`;
 
         if (file.type.startsWith("video")) {
           editor
