@@ -15,6 +15,7 @@ import {
   FileText,
 } from "lucide-react";
 import { apiClient } from "../helper/apiClient";
+import { useAuth } from "../context/AuthContext";
 
 const DEFAULT_AVATAR =
   "https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff&size=128";
@@ -24,21 +25,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const [profile, setProfile] = useState({
-    name: "AUXOSYS Admin",
-    avatar: DEFAULT_AVATAR,
-    email: "auxosys@gmail.com",
-    permissions: [],
-  });
-
-  const fetchProfile = async () => {
-    // API is disconnected for the reusable Auxosys Admin Panel
-    // Profile is hardcoded to auxosys@gmail.com which unlocks all modules
-  };
-
-  useEffect(() => {
-    fetchProfile();
-  }, []);
+  const { profile, hasAccess, isLoading } = useAuth();
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -55,16 +42,6 @@ const Sidebar = () => {
       : `${base} ${inactive}`;
   };
 
-  const hasAccess = (moduleName) => {
-    if (profile.email === "auxosys@gmail.com") return true;
-    if (!profile.permissions || !Array.isArray(profile.permissions)) return false;
-    
-    return profile.permissions.some(p => {
-      if (typeof p === 'string') return p === moduleName;
-      return p.module === moduleName && (p.access === 'Read' || p.access === 'Read & Write');
-    });
-  };
-
   const handleLogout = async () => {
     try {
       await apiClient.post("/auth/logout");
@@ -72,6 +49,7 @@ const Sidebar = () => {
       console.error("Logout failed", err);
     } finally {
       localStorage.removeItem("accessToken");
+      // Optional: setProfile(null) but redirecting to login will re-mount anyway
       navigate("/login");
     }
   };

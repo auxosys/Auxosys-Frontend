@@ -7,11 +7,7 @@ const MODULES = [
   { id: "contact", label: "Contact Us" },
   { id: "careers", label: "Careers" },
   { id: "newsroom", label: "Newsroom" },
-  { id: "subscriptions", label: "Subscriptions" },
-  { id: "seo", label: "SEO" },
-  { id: "settings", label: "Settings" },
-  { id: "legalPages", label: "Legal Pages" },
-  { id: "accessControl", label: "Access Control" },
+  { id: "subscriptions", label: "Subscriptions" }
 ];
 
 const AccessControl = () => {
@@ -169,7 +165,7 @@ const AccessControl = () => {
                     </div>
                   </td>
                   <td className="py-4 px-6">
-                    {u.email === "auxosys@gmail.com" || MODULES.every(m => normalized.some(p => p.module === m.id && p.access === "Read & Write")) ? (
+                    {u.email === "ausosys@gmail.com" || MODULES.every(m => normalized.some(p => p.module === m.id && p.access === "Read & Write")) ? (
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">
                         <ShieldCheck size={14} /> Full Access
                       </span>
@@ -196,7 +192,7 @@ const AccessControl = () => {
                       <button onClick={() => openModal(u)} className="hover:text-blue-500 transition-colors">
                         <Edit2 size={16} />
                       </button>
-                      {u.email !== "auxosys@gmail.com" && (
+                      {u.email !== "ausosys@gmail.com" && (
                         <button onClick={() => handleDelete(u._id)} className="hover:text-red-500 transition-colors">
                           <Trash2 size={16} />
                         </button>

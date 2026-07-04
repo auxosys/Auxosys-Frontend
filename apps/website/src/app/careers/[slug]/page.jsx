@@ -82,9 +82,15 @@ export default function JobDetailsPage() {
               </div>
             </div>
             <div className="flex-shrink-0">
-              <Link href={`/careers/${slug}/apply`} className="bg-[#FF6B35] text-white hover:bg-[#FF824D] px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(255,107,53,0.3)] flex items-center justify-center min-w-[200px]">
-                Apply for this Role →
-              </Link>
+              {job.status === "Closed" ? (
+                <span className="bg-red-500/10 text-red-400 border border-red-500/20 px-8 py-4 rounded-xl font-bold text-lg inline-block">
+                  POSITION CLOSED
+                </span>
+              ) : (
+                <Link href={`/careers/${slug}/apply`} className="bg-[#FF6B35] text-white hover:bg-[#FF824D] px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(255,107,53,0.3)] flex items-center justify-center min-w-[200px]">
+                  Apply for this Role →
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -146,9 +152,18 @@ export default function JobDetailsPage() {
             )}
             
             <div className="pt-8 border-t border-[#22384B]">
-              <Link href={`/careers/${slug}/apply`} className="bg-[#FF6B35] text-white hover:bg-[#FF824D] px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-[0_4px_20px_rgba(255,107,53,0.3)] inline-flex items-center">
-                Submit Your Application →
-              </Link>
+              {job.status === "Closed" ? (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-6 rounded-xl text-center font-medium">
+                  This position has been closed and is no longer accepting applications.
+                </div>
+              ) : (
+                <Link 
+                  href={`/careers/${slug}/apply`}
+                  className="block w-full bg-[#FA6900] hover:bg-[#E05C00] text-white text-center py-4 rounded-xl font-bold text-lg transition-transform hover:-translate-y-1 shadow-xl shadow-[#FA6900]/20"
+                >
+                  Submit Your Application →
+                </Link>
+              )}
             </div>
           </div>
 

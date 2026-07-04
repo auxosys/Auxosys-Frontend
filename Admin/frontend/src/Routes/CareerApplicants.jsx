@@ -8,6 +8,48 @@ import ResumeViewer from "../Components/ResumeViewer";
 
 const COLUMNS = ["Pending", "Reviewed", "Shortlisted", "Hired", "Rejected"];
 
+// Memoized Kanban Card for performance
+const KanbanCard = React.memo(({ applicant, canWrite, handleDragStart, handleDragEnd, setSelectedApplicant, fullName }) => {
+  return (
+    <div
+      draggable
+      onDragStart={(e) => handleDragStart(e, applicant)}
+      onDragEnd={handleDragEnd}
+      onClick={() => setSelectedApplicant(applicant)}
+      className="group bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:border-indigo-500 hover:shadow-md transition-all cursor-grab active:cursor-grabbing"
+    >
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="font-bold text-gray-900 text-sm tracking-tight">{fullName(applicant)}</h3>
+      </div>
+
+      <div className="space-y-2 mb-4">
+        <div className="flex items-center gap-2 text-gray-500 text-xs">
+          <Mail size={14} className="text-gray-400" />
+          <span className="truncate">{applicant.email}</span>
+        </div>
+        <div className="flex items-center gap-2 text-gray-500 text-xs">
+          <Calendar size={14} className="text-gray-400" />
+          {new Date(applicant.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2">
+        {applicant.resumeKey && (
+          <span className="bg-indigo-50 text-indigo-700 px-2 py-1 rounded-md text-[11px] font-semibold tracking-wide flex items-center gap-1">
+            <FileText size={12} />
+            Resume
+          </span>
+        )}
+        {applicant.totalWorkExperience && (
+          <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-md text-[11px] font-semibold tracking-wide">
+            {applicant.totalWorkExperience} exp
+          </span>
+        )}
+      </div>
+    </div>
+  );
+});
+
 const CareerApplicants = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
@@ -35,7 +77,11 @@ const CareerApplicants = () => {
       const res = await apiClient.get(`/job/applicants/${jobId}`, {
         params: { page: 1, limit: 1000000, search },
       });
-      setApplicants(res?.data?.data || []);
+      let list = res?.data?.data || [];
+      if (!Array.isArray(list)) list = [];
+      list = list.map(a => ({ ...a, _id: a._id || a.id }));
+
+      setApplicants(list);
     } catch {
       toast.error("Failed to load applicants");
     } finally {
@@ -105,7 +151,7 @@ const CareerApplicants = () => {
       e.preventDefault();
       return;
     }
-    e.dataTransfer.setData("applicantId", applicant._id);
+    e.dataTransfer.setData("applicantId", applicant._id || applicant.id);
     e.dataTransfer.effectAllowed = "move";
     
     // Slight delay to allow the browser to capture the fully opaque ghost image
@@ -521,43 +567,15 @@ const CareerApplicants = () => {
                   {processed
                     .filter((a) => a.status === col)
                     .map((a) => (
-                      <div
-                        key={a._id}
-                        draggable
-                        onDragStart={(e) => handleDragStart(e, a)}
-                        onDragEnd={handleDragEnd}
-                        onClick={() => { setSelectedApplicant(a); }}
-                        className="group bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:border-indigo-500 hover:shadow-md transition-all cursor-grab active:cursor-grabbing"
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className="font-bold text-gray-900 text-sm tracking-tight">{fullName(a)}</h3>
-                        </div>
-
-                        <div className="space-y-2 mb-4">
-                          <div className="flex items-center gap-2 text-gray-500 text-xs">
-                            <Mail size={14} className="text-gray-400" />
-                            <span className="truncate">{a.email}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-gray-500 text-xs">
-                            <Calendar size={14} className="text-gray-400" />
-                            {new Date(a.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          {a.resumeKey && (
-                            <span className="bg-indigo-50 text-indigo-700 px-2 py-1 rounded-md text-[11px] font-semibold tracking-wide flex items-center gap-1">
-                              <FileText size={12} />
-                              Resume
-                            </span>
-                          )}
-                          {a.totalWorkExperience && (
-                            <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-md text-[11px] font-semibold tracking-wide">
-                              {a.totalWorkExperience} exp
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                      <KanbanCard 
+                        key={a._id || a.id} 
+                        applicant={a}
+                        canWrite={canWrite}
+                        handleDragStart={handleDragStart}
+                        handleDragEnd={handleDragEnd}
+                        setSelectedApplicant={setSelectedApplicant}
+                        fullName={fullName}
+                      />
                     ))}
                 </div>
               </div>

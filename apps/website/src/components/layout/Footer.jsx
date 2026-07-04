@@ -1,12 +1,16 @@
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+
 export default function Footer() {
   return (
     <footer>
       <div className="container">
         <div className="footer-top">
           <div className="footer-brand">
-            <a href="/" className="logo">
-              <img src="/logo-wordmark.svg" alt="Auxosys" className="logo-img" />
-            </a>
+            <Link href="/" className="inline-block mb-6">
+              <Image src="/logo-wordmark.svg" alt="Auxosys" width={120} height={32} className="logo-img" />
+            </Link>
             <p>We build intelligent digital ecosystems that empower businesses worldwide.</p>
             <div className="social-row">
               <a href="#" className="social-icon" aria-label="LinkedIn">in</a>

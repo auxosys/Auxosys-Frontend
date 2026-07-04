@@ -18,16 +18,15 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      // Hardcoded login for AUXOSYS
-      if (email === "auxosys@gmail.com" && password === "Das@9078") {
-        const fakeToken = "auxosys-admin-token-" + Date.now();
-        localStorage.setItem("accessToken", fakeToken);
+      const res = await apiClient.post("/auth/login", { email, password });
+      if (res.data.success && res.data.token) {
+        localStorage.setItem("accessToken", res.data.token);
         navigate("/");
       } else {
         throw new Error("Invalid email or password");
       }
     } catch (err) {
-      setError(err.message || "Invalid email or password");
+      setError(err.response?.data?.message || err.message || "Invalid email or password");
     } finally {
       setLoading(false);
     }

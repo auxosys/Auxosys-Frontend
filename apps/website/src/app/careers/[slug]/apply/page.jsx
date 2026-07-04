@@ -379,6 +379,18 @@ export default function JobApplicationForm() {
     </div>
   );
 
+  if (job.status === "Closed") {
+    return (
+      <div style={{ minHeight: "100vh", background: T.bg0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 20 }}>
+        <h1 style={{ color: T.white, fontSize: 24, marginBottom: 16 }}>Position Closed</h1>
+        <p style={{ color: T.muted, textAlign: "center", maxWidth: 400 }}>
+          Thank you for your interest. Unfortunately, this position has been closed and is no longer accepting applications.
+        </p>
+        <Link href={`/careers/${slug}`} style={{ marginTop: 24, color: T.teal, textDecoration: "none" }}>← Back to Job Details</Link>
+      </div>
+    );
+  }
+
   const steps = [
     { id: "personal", label: "Personal" },
     { id: "documents", label: "Documents" },
@@ -460,6 +472,8 @@ export default function JobApplicationForm() {
         }
         if (config.sections.education) {
           if (isReq('qualification') && !form.qualification) newErrors.qualification = "Required";
+          if (form.qualification === "Others" && !form.otherQualification?.trim()) newErrors.otherQualification = "Required";
+          if (!form.streamOfQualification?.trim()) newErrors.streamOfQualification = "Required";
         }
       }
     }
@@ -788,16 +802,32 @@ export default function JobApplicationForm() {
                         <>
                           {/* Professional Fields */}
                           {config.sections.education && (
-                            <Field label="Highest Qualification" required error={errors.qualification}>
-                              <Select name="qualification" value={form.qualification} onChange={handleChange} error={errors.qualification}>
-                                <option value="" disabled>Select qualification…</option>
-                                <option value="High School">High School</option>
-                                <option value="Bachelors">Bachelor's Degree (B.Tech, BSc…)</option>
-                                <option value="Masters">Master's Degree (MS, MBA…)</option>
-                                <option value="PhD">Ph.D. / Doctorate</option>
-                                <option value="Self Taught">Self Taught / No Degree</option>
-                              </Select>
-                            </Field>
+                            <>
+                              <Field label="Highest Qualification" required error={errors.qualification}>
+                                <Select name="qualification" value={form.qualification} onChange={handleChange} error={errors.qualification}>
+                                  <option value="" disabled>Select qualification…</option>
+                                  <option value="High School">High School</option>
+                                  <option value="Diploma">Diploma</option>
+                                  <option value="Bachelors">Bachelor's Degree (B.Tech, BSc, BA…)</option>
+                                  <option value="BCA">BCA (Bachelor of Computer Applications)</option>
+                                  <option value="Masters">Master's Degree (MS, M.Tech, MA…)</option>
+                                  <option value="MBA">MBA (Master of Business Administration)</option>
+                                  <option value="MCA">MCA (Master of Computer Applications)</option>
+                                  <option value="PhD">Ph.D. / Doctorate</option>
+                                  <option value="Sales">Sales Training / Certification</option>
+                                  <option value="Self Taught">Self Taught / No Degree</option>
+                                  <option value="Others">Others</option>
+                                </Select>
+                              </Field>
+                              {form.qualification === "Others" && (
+                                <Field label="Specify Qualification" required error={errors.otherQualification}>
+                                  <Input name="otherQualification" value={form.otherQualification || ""} onChange={handleChange} placeholder="Please specify your highest qualification" error={errors.otherQualification} />
+                                </Field>
+                              )}
+                              <Field label="Stream of Highest Qualification" required error={errors.streamOfQualification}>
+                                <Input name="streamOfQualification" value={form.streamOfQualification || ""} onChange={handleChange} placeholder="e.g. Computer Science, Marketing, Arts..." error={errors.streamOfQualification} />
+                              </Field>
+                            </>
                           )}
                           {config.sections.experience && (
                             <>

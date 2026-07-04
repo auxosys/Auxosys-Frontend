@@ -1,495 +1,511 @@
 "use client";
 import DOMPurify from "dompurify";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 
-/* ─── helpers ─────────────────────────────────────────────── */
-const formatDate = (d) =>
-  new Date(d).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-
-const estimateReadTime = (html = "") => {
-  const words = html.replace(/<[^>]+>/g, "").split(/\s+/).length;
-  return Math.max(1, Math.round(words / 200));
+// ── Brand tokens ──────────────────────────────────────────────
+const T = {
+    brand: "#5CC9D6",
+    brandLt: "rgba(92, 201, 214, 0.1)",
+    brandMd: "rgba(92, 201, 214, 0.2)",
+    black: "#F8FAFC",
+    body: "#AEB8C2",
+    muted: "#7F93A3",
+    cream: "#081826",
+    creamDk: "#22384B",
+    white: "#0F2436",
 };
+const FONT = "'DM Sans', sans-serif";
 
-/* ─── Share button ────────────────────────────────────────── */
-function ShareButton({ label, onClick, icon }) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex items-center gap-2 text-xs font-medium text-gray-400 hover:text-white border border-white/10 hover:border-white/25 px-4 py-2 rounded-full transition"
-    >
-      {icon}
-      {label}
-    </button>
-  );
+// ── Category accent colours ───────────────────────────────────
+const CAT_COLORS = {
+    Blog: { color: "#5CC9D6", bg: "rgba(92, 201, 214, 0.1)", border: "rgba(92, 201, 214, 0.2)" },
+    "Case Study": { color: "#0ea5e9", bg: "rgba(14, 165, 233, 0.1)", border: "rgba(14, 165, 233, 0.2)" },
+    Press: { color: "#F59E0B", bg: "rgba(245, 158, 11, 0.1)", border: "rgba(245, 158, 11, 0.2)" },
+    default: { color: "#AEB8C2", bg: "rgba(174, 184, 194, 0.1)", border: "rgba(174, 184, 194, 0.2)" },
+};
+const catStyle = (cat) => CAT_COLORS[cat] || CAT_COLORS.default;
+
+// ── Reading progress bar ──────────────────────────────────────
+function ProgressBar() {
+    const [pct, setPct] = useState(0);
+    useEffect(() => {
+        const onScroll = () => {
+            const el = document.documentElement;
+            const top = el.scrollTop || document.body.scrollTop;
+            const h = el.scrollHeight - el.clientHeight;
+            setPct(h > 0 ? Math.min(100, (top / h) * 100) : 0);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+    return (
+        <div style={{
+            position: "fixed", top: 0, left: 0, right: 0, height: 3, zIndex: 200,
+            background: "rgba(92, 201, 214, .12)"
+        }}>
+            <div style={{
+                height: "100%", width: `${pct}%`, background: T.brand,
+                transition: "width .1s linear",
+                boxShadow: `0 0 8px ${T.brand}`
+            }} />
+        </div>
+    );
 }
 
-/* ─── Table-of-contents builder ──────────────────────────── */
-function buildTOC(html) {
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  const headings = Array.from(div.querySelectorAll("h2,h3"));
-  return headings.map((h, i) => ({
-    id: `heading-${i}`,
-    text: h.textContent,
-    level: h.tagName === "H2" ? 2 : 3,
-  }));
+// ── Skeleton loader ───────────────────────────────────────────
+function ArticleSkeleton() {
+    const bar = (w, h = 14, mb = 10, delay = 0, key = undefined) => (
+        <div key={key} style={{
+            height: h, width: w, borderRadius: 7, marginBottom: mb,
+            background: "#22384B", animation: `pulse 1.4s ease-in-out ${delay}s infinite`
+        }} />
+    );
+    return (
+        <div style={{ maxWidth: 740, margin: "0 auto", padding: "60px 24px" }}>
+            <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}`}</style>
+            {bar("30%", 10, 24)}
+            {bar("85%", 38, 12)}
+            {bar("60%", 38, 40)}
+            <div style={{
+                height: 400, borderRadius: 20, background: "#22384B",
+                marginBottom: 48, animation: "pulse 1.4s ease-in-out infinite"
+            }} />
+            {[100, 95, 88, 72, 95, 80].map((w, i) => bar(`${w}%`, 14, 12, i * 0.08, i))}
+        </div>
+    );
 }
 
-function injectIds(html) {
-  let i = 0;
-  return html.replace(/<(h[23])(.*?)>/g, (_, tag, attrs) => {
-    return `<${tag}${attrs} id="heading-${i++}">`;
-  });
-}
-
-/* ─── Related Card ───────────────────────────────────────── */
+// ── Related card ──────────────────────────────────────────────
 function RelatedCard({ item }) {
-  return (
-    <Link
-      to={`/newsroom/${item.slug}`}
-      className="group bg-[var(--bg-1)] hover:bg-[var(--bg-1)] rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(12,85,204,0.15)] border border-transparent hover:border-[var(--teal)]/20"
-    >
-      {item.featuredImageUrl && (
-        <div className="relative h-[170px] overflow-hidden">
-          <img
-            loading="lazy"
-            src={item.featuredImageUrl}
-            alt={item.title}
-            className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-          {item.category && (
-            <span className="absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-wider bg-black/60 backdrop-blur-sm text-[var(--orange)] border border-[var(--teal)]/30 px-2.5 py-1 rounded-full">
-              {item.category}
-            </span>
-          )}
-        </div>
-      )}
-      <div className="p-4 flex flex-col flex-1">
-        <h4 className="text-sm font-medium leading-snug group-hover:text-[var(--orange)] transition line-clamp-3 flex-1">
-          {item.title}
-        </h4>
-        <p className="text-gray-500 text-xs mt-3">
-          {new Date(item.publishedAt || item.createdAt).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })}
-        </p>
-      </div>
-    </Link>
-  );
-}
-
-/* ─── Progress bar ───────────────────────────────────────── */
-function ReadingProgress() {
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const el = document.documentElement;
-      const scrolled = el.scrollTop;
-      const total = el.scrollHeight - el.clientHeight;
-      setProgress(total > 0 ? (scrolled / total) * 100 : 0);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return (
-    <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-transparent">
-      <div
-        className="h-full bg-gradient-to-r from-[var(--teal)] to-[var(--orange)] transition-[width] duration-100"
-        style={{ width: `${progress}%` }}
-      />
-    </div>
-  );
-}
-
-/* ─── Main component ─────────────────────────────────────── */
-export default function NewsPage() {
-  const { slug } = useParams();
-  const [post, setPost] = useState(null);
-  const [related, setRelated] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [toc, setToc] = useState([]);
-  const [copied, setCopied] = useState(false);
-  const [activeHeading, setActiveHeading] = useState("");
-  const contentRef = useRef(null);
-
-  const fetchPost = async () => {
-    try {
-      setLoading(true);
-      // Mocked data
-      const mockPost = {
-        title: "AUXOSYS Launches New Enterprise AI Solution",
-        content: "<h2>A New Era of Intelligence</h2><p>Today, we are thrilled to announce...</p>",
-        publishedAt: Date.now(),
-        category: "Press Release",
-        author: "AUXOSYS Editorial",
-        featuredImageUrl: "https://opmcorpimages.s3.ap-south-1.amazonaws.com/newsroom.jpg"
-      };
-      setPost(mockPost);
-      setRelated([]);
-    } catch (err) {
-      setError(err.message || "Failed to load article.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (slug) { fetchPost(); window.scrollTo(0, 0); }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
-
-  /* build TOC after post loads */
-  useEffect(() => {
-    if (post?.content) setToc(buildTOC(post.content));
-  }, [post]);
-
-  /* active heading tracker */
-  useEffect(() => {
-    if (!toc.length) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) setActiveHeading(e.target.id); });
-      },
-      { rootMargin: "-20% 0px -70% 0px" }
-    );
-    toc.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) obs.observe(el);
-    });
-    return () => obs.disconnect();
-  }, [toc]);
-
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  /* ── loading skeleton ─────────────────────────────────── */
-  if (loading) {
+    const [hov, setHov] = useState(false);
+    const cs = catStyle(item.category);
+    const imageUrl = item.featuredImage || item.featuredImageUrl || item.image;
     return (
-      <div className="bg-[var(--bg-0)] text-white min-h-screen">
-        <div className="h-[520px] bg-[var(--bg-1)] animate-pulse" />
-        <div className="max-w-[900px] mx-auto px-6 py-16 space-y-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={i}
-              className={`h-4 bg-[var(--bg-1)] rounded animate-pulse ${i % 3 === 2 ? "w-3/5" : "w-full"}`}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !post) {
-    return (
-      <div className="bg-[var(--bg-0)] text-white min-h-screen flex flex-col items-center justify-center gap-5 px-6 text-center">
-        <div className="w-16 h-16 rounded-full bg-[var(--bg-1)] flex items-center justify-center mb-2">
-          <svg className="w-7 h-7 text-red-400" fill="none" viewBox="0 0 24 24">
-            <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <p className="text-red-400 text-base font-medium">{error || "This article could not be found."}</p>
-        <Link to="/newsroom" className="text-[var(--orange)] hover:text-white text-sm transition underline underline-offset-4">
-          ← Back to Newsroom
+        <Link href={`/news/${item.slug}`}
+            onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+            style={{
+                display: "flex", flexDirection: "column", background: T.white,
+                borderRadius: 14, overflow: "hidden",
+                border: `1px solid ${hov ? T.brandMd : T.creamDk}`,
+                boxShadow: hov ? "0 10px 32px rgba(92,201,214,.10)" : "0 2px 8px rgba(0,0,0,.1)",
+                textDecoration: "none", transition: "all .25s cubic-bezier(.4,0,.2,1)",
+                transform: hov ? "translateY(-3px)" : "none"
+            }}>
+            <div style={{ height: 160, overflow: "hidden", background: "#22384B", flexShrink: 0 }}>
+                {imageUrl
+                    ? <img loading="lazy" src={imageUrl} alt={item.title}
+                        style={{
+                            width: "100%", height: "100%", objectFit: "cover",
+                            transition: "transform .55s", transform: hov ? "scale(1.05)" : "scale(1)"
+                        }} />
+                    : <div style={{ width: "100%", height: "100%", background: T.brandLt }} />
+                }
+            </div>
+            <div style={{ padding: "16px 16px 14px", flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+                {item.category && (
+                    <span style={{
+                        fontSize: 9, fontWeight: 700, letterSpacing: "0.10em",
+                        textTransform: "uppercase", color: cs.color, fontFamily: FONT
+                    }}>
+                        {item.category}
+                    </span>
+                )}
+                <h4 style={{
+                    fontSize: 'clamp(1.1rem,1.6vw,1.25rem)', fontWeight: 400, textTransform: 'none', color: hov ? T.brand : T.black,
+                    letterSpacing: '-0.01em', lineHeight: 1.4,
+                    transition: "color .2s",
+                    display: "-webkit-box", WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical", overflow: "hidden", margin: 0, fontFamily: "'Cormorant Garamond', serif",}}>
+                    {item.title}
+                </h4>
+                <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: "auto" }}>
+                    <span style={{
+                        fontSize: 10, fontWeight: 700, color: hov ? T.brand : T.muted,
+                        textTransform: "uppercase", letterSpacing: "0.08em",
+                        fontFamily: FONT, transition: "color .2s"
+                    }}>Read</span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                        stroke={hov ? T.brand : T.muted} strokeWidth="2.5"
+                        strokeLinecap="round" strokeLinejoin="round"
+                        style={{
+                            transition: "transform .2s, stroke .2s",
+                            transform: hov ? "translateX(2px)" : "none"
+                        }}>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                </div>
+            </div>
         </Link>
-      </div>
     );
-  }
+}
 
-  const safeHtml = injectIds(
-    DOMPurify.sanitize(post.content || "", { USE_PROFILES: { html: true } })
-  );
-  const readTime = estimateReadTime(post.content);
+// ── Main ──────────────────────────────────────────────────────
+export default function Blogpage() {
+    const { slug } = useParams();
+    const [post, setPost] = useState(null);
+    const [related, setRelated] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  return (
-    <>
-      <ReadingProgress />
+    useEffect(() => {
+        if (!slug) return;
+        (async () => {
+            try {
+                setLoading(true); setError(null);
+                const res = await fetch(`http://localhost:5002/news/${slug}`);
+                if (!res.ok) throw new Error("Failed to load article.");
+                const data = await res.json();
+                
+                const postData = data?.data?.post || (data?.data && !data.data.post ? data.data : null);
+                const relatedData = data?.data?.related || [];
 
-      
+                if(!postData) throw new Error("Article not found.");
 
-      <div className="bg-[var(--bg-0)] text-white min-h-screen">
+                setPost(postData);
+                setRelated(relatedData);
+            } catch (err) {
+                setError(err.message || "Failed to load article.");
+            } finally { setLoading(false); }
+        })();
+        window.scrollTo(0, 0);
+    }, [slug]);
 
-        {/* ══════════════ HERO ══════════════ */}
-        <section className="relative h-[560px] lg:h-[680px] flex items-end overflow-hidden">
-          {post.featuredImageUrl ? (
-            <img
-              loading="lazy"
-              src={post.featuredImageUrl}
-              alt={post.title}
-              className="absolute inset-0 w-full h-full object-cover scale-105"
-              style={{ animation: "heroZoom 12s ease-out forwards" }}
-            />
-          ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-1)] to-[var(--bg-0)]" />
-          )}
-
-          {/* multi-layer gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-[var(--bg-0)]/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-0)]/60 to-transparent" />
-
-          <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10 pb-16 w-full">
-            {/* breadcrumb */}
-            <div className="flex items-center gap-2 text-xs text-gray-400 mb-6">
-              <Link to="/newsroom" className="hover:text-white transition">Newsroom</Link>
-              <span>/</span>
-              {post.category && (
-                <>
-                  <span className="text-[var(--orange)]">{post.category}</span>
-                  <span>/</span>
-                </>
-              )}
-              <span className="truncate max-w-[200px] text-gray-500">{post.title}</span>
-            </div>
-
-            {post.category && (
-              <span className="inline-block text-[11px] font-semibold uppercase tracking-widest bg-[var(--teal)] text-white px-3 py-1 rounded-full mb-4">
-                {post.category}
-              </span>
-            )}
-
-            <h1 className="text-3xl lg:text-5xl font-bold font-[family-name:var(--font-display)] leading-tight max-w-3xl mb-5">
-              {post.title}
-            </h1>
-
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-300">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-[var(--teal)] flex items-center justify-center text-xs font-bold font-[family-name:var(--font-display)]">
-                  {(post.author || "O").charAt(0).toUpperCase()}
-                </div>
-                <span>{post.author || "OPM Editorial"}</span>
-              </div>
-              <span className="text-gray-600">•</span>
-              <span>{formatDate(post.publishedAt || post.createdAt)}</span>
-              <span className="text-gray-600">•</span>
-              <span className="flex items-center gap-1">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-                  <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-                {readTime} min read
-              </span>
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════ BODY ══════════════ */}
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-14 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 xl:gap-20">
-
-          {/* ── Left column: content ── */}
-          <div>
-            {/* summary callout */}
-            {post.summary && (
-              <div className="border-l-4 border-[var(--teal)] bg-[var(--bg-1)] rounded-r-xl px-6 py-5 mb-10">
-                <p className="text-gray-200 text-base leading-relaxed italic">{post.summary}</p>
-              </div>
-            )}
-
-            {/* share row */}
-            <div className="flex flex-wrap items-center gap-3 mb-10">
-              <span className="text-gray-500 text-xs font-semibold uppercase tracking-wider mr-1">Share</span>
-              <ShareButton
-                label="Twitter / X"
-                onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`, "_blank")}
-                icon={
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                }
-              />
-              <ShareButton
-                label="LinkedIn"
-                onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, "_blank")}
-                icon={
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
-                }
-              />
-              <ShareButton
-                label={copied ? "Copied!" : "Copy link"}
-                onClick={handleCopyLink}
-                icon={
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                }
-              />
-            </div>
-
-            {/* article body */}
-            <div
-              ref={contentRef}
-              className="
-                prose prose-invert max-w-none
-                prose-headings:text-white prose-headings:font-bold font-[family-name:var(--font-display)]
-                prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
-                prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-                prose-p:text-gray-300 prose-p:leading-[1.9] prose-p:my-4
-                prose-strong:text-white
-                prose-a:text-[var(--orange)] prose-a:no-underline hover:prose-a:underline
-                prose-li:text-gray-300 prose-li:leading-relaxed
-                prose-blockquote:border-[var(--teal)] prose-blockquote:bg-[var(--bg-1)]/50
-                prose-blockquote:rounded-r-lg prose-blockquote:py-1
-                prose-blockquote:text-gray-200 prose-blockquote:not-italic
-                prose-code:text-[var(--orange)] prose-code:bg-[var(--bg-1)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-                prose-pre:bg-[var(--bg-0)] prose-pre:border prose-pre:border-white/10 prose-pre:rounded-xl
-                prose-img:rounded-xl prose-img:border prose-img:border-white/5
-                prose-hr:border-white/10
-              "
-              dangerouslySetInnerHTML={{ __html: safeHtml }}
-            />
-
-            {/* tags / category */}
-            {post.category && (
-              <div className="mt-12 pt-8 border-t border-white/5 flex flex-wrap gap-2">
-                <span className="text-gray-500 text-xs font-semibold uppercase tracking-wider mr-1 flex items-center">Tags</span>
-                <span className="text-xs px-3 py-1 rounded-full bg-[var(--bg-1)] border border-white/10 text-gray-300">
-                  {post.category}
-                </span>
-                <span className="text-xs px-3 py-1 rounded-full bg-[var(--bg-1)] border border-white/10 text-gray-300">OPM</span>
-              </div>
-            )}
-
-            {/* back link */}
-            <div className="mt-10">
-              <Link
-                to="/newsroom"
-                className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
-                  <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                Back to Newsroom
-              </Link>
-            </div>
-          </div>
-
-          {/* ── Right sidebar ── */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24 space-y-6">
-
-              {/* Table of contents */}
-              {toc.length > 0 && (
-                <div className="bg-[var(--bg-1)] border border-white/5 rounded-2xl p-5">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">
-                    In this article
-                  </p>
-                  <ul className="space-y-2">
-                    {toc.map(({ id, text, level }) => (
-                      <li key={id}>
-                        <a
-                          href={`#${id}`}
-                          className={`block text-xs leading-snug transition py-1 ${level === 3 ? "pl-3" : ""
-                            } ${activeHeading === id
-                              ? "text-[var(--orange)] font-medium"
-                              : "text-gray-400 hover:text-white"
-                            }`}
-                        >
-                          {text}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Article meta */}
-              <div className="bg-[var(--bg-1)] border border-white/5 rounded-2xl p-5 space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1">
-                  Article Info
-                </p>
-                <div className="space-y-3 text-xs text-gray-400">
-                  <div className="flex justify-between">
-                    <span>Published</span>
-                    <span className="text-white">{formatDate(post.publishedAt || post.createdAt)}</span>
-                  </div>
-                  {post.updatedAt && (
-                    <div className="flex justify-between">
-                      <span>Updated</span>
-                      <span className="text-white">{formatDate(post.updatedAt)}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between">
-                    <span>Read time</span>
-                    <span className="text-white">{readTime} min</span>
-                  </div>
-                  {post.category && (
-                    <div className="flex justify-between">
-                      <span>Category</span>
-                      <span className="text-[var(--orange)]">{post.category}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* newsletter mini */}
-              <div className="bg-gradient-to-br from-[var(--teal)]/20 to-[var(--bg-1)] border border-[var(--teal)]/30 rounded-2xl p-5">
-                <p className="text-sm font-semibold mb-1">Stay updated</p>
-                <p className="text-xs text-gray-400 mb-4">Get the latest OPM news in your inbox.</p>
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="w-full bg-[var(--bg-0)] border border-white/10 text-white text-xs placeholder-gray-500 rounded-lg px-3 py-2 mb-2 focus:outline-none focus:border-[var(--teal)]/60 transition"
-                />
-                <button className="w-full bg-[var(--teal)] hover:bg-[#0a47b0] text-white text-xs font-semibold py-2 rounded-lg transition">
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </aside>
+    if (loading) return (
+        <div style={{ minHeight: "100vh", background: T.cream, paddingTop: 80 }}>
+            <ArticleSkeleton />
         </div>
+    );
 
-        {/* ══════════════ RELATED ══════════════ */}
-        {related.length > 0 && (
-          <section className="border-t border-white/5 bg-[var(--bg-0)]">
-            <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-16 lg:py-20">
-              <div className="flex items-center justify-between mb-10">
-                <div>
-                  <h3 className="text-xl font-bold font-[family-name:var(--font-display)]">Related Articles</h3>
-                  <p className="text-gray-400 text-sm mt-1">More stories you might enjoy</p>
-                </div>
-                <Link
-                  to="/newsroom"
-                  className="text-sm text-[var(--orange)] hover:text-white transition flex items-center gap-1"
-                >
-                  View all
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 16 16">
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {related.map((item) => (
-                  <RelatedCard key={item._id} item={item} />
-                ))}
-              </div>
+    if (error || !post) return (
+        <div style={{
+            minHeight: "100vh", background: T.cream, paddingTop: 80,
+            display: "flex", flexDirection: "column", alignItems: "center",
+            justifyContent: "center", gap: 16, padding: "0 24px", textAlign: "center",
+            fontFamily: FONT
+        }}>
+            <div style={{
+                width: 60, height: 60, borderRadius: 16, background: "rgba(239,68,68,0.1)",
+                border: "1px solid rgba(239,68,68,0.2)", display: "flex", alignItems: "center",
+                justifyContent: "center", color: "#ef4444"
+            }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
             </div>
-          </section>
-        )}
-      </div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: T.black }}>
+                {error || "Article not found"}
+            </div>
+            <Link href="/news" style={{
+                color: T.brand, fontSize: 13, fontWeight: 700,
+                textDecoration: "none", display: "flex", alignItems: "center", gap: 5
+            }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+                Back to News
+            </Link>
+        </div>
+    );
 
-      {/* hero zoom keyframe */}
-      <style>{`
-        @keyframes heroZoom {
-          from { transform: scale(1.05); }
-          to { transform: scale(1); }
+    const decodeHtml = (html) => {
+        const txt = document.createElement("textarea");
+        txt.innerHTML = html; return txt.value;
+    };
+    const safeHtml = DOMPurify.sanitize(
+        post.content ? decodeHtml(post.content) : "",
+        { USE_PROFILES: { html: true } }
+    );
+
+    const cs = catStyle(post.category);
+    const date = post.publishedAt || post.createdAt
+        ? new Date(post.publishedAt || post.createdAt).toLocaleDateString("en-IN",
+            { day: "numeric", month: "long", year: "numeric" })
+        : null;
+
+    // rough read time
+    const words = (post.content || "").trim().split(/\s+/).length;
+    const readTime = Math.max(1, Math.round(words / 200));
+
+    const imageUrl = post.featuredImage || post.featuredImageUrl || post.image;
+
+    return (
+        <>
+            <style>{`
+        * { box-sizing: border-box; }
+        body { background: #081826; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+        .fu  { animation: fadeUp .5s cubic-bezier(.4,0,.2,1) both; }
+        .fu1 { animation-delay: .1s; }
+        .fu2 { animation-delay: .2s; }
+        .fu3 { animation-delay: .3s; }
+
+        /* ── Article prose styles ── */
+        .article-body h1,
+        .article-body h2,
+        .article-body h3 {
+          font-family: 'DM Sans', sans-serif;
+          font-weight: 900;
+          color: #F8FAFC;
+          letter-spacing: -0.03em;
+          line-height: 1.15;
+          margin: 2em 0 0.6em;
         }
+        .article-body h1 { font-size: clamp(1.6rem, 3vw, 2rem); }
+        .article-body h2 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); }
+        .article-body h3 { font-size: 1.15rem; }
+        .article-body p {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 16px; font-weight: 400;
+          color: #AEB8C2; line-height: 1.85;
+          margin: 0 0 1.4em;
+        }
+        .article-body strong, .article-body b {
+          font-weight: 800; color: #F8FAFC;
+        }
+        .article-body em, .article-body i {
+           color: #AEB8C2;
+        }
+        .article-body a {
+          color: #5CC9D6; font-weight: 600;
+          text-underline-offset: 3px;
+        }
+        .article-body a:hover { color: #5CC9D6; filter: brightness(1.1); }
+        .article-body ul, .article-body ol {
+          padding-left: 1.5em; margin: 0 0 1.4em;
+        }
+        .article-body li {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 16px; color: #AEB8C2;
+          line-height: 1.8; margin-bottom: 0.4em;
+        }
+        .article-body blockquote {
+          border-left: 3px solid #5CC9D6;
+          margin: 2em 0; padding: 0.4em 0 0.4em 1.5em;
+        }
+        .article-body blockquote p {
+           font-size: 19px;
+          color: #F8FAFC; margin: 0;
+          font-weight: 500;
+        }
+        .article-body img {
+          max-width: 100%; border-radius: 12px;
+          margin: 2em 0;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+        }
+        .article-body hr {
+          border: none; border-top: 1px solid #22384B;
+          margin: 2.5em 0;
+        }
+        .article-body pre, .article-body code {
+          font-family: monospace; font-size: 14px;
+          background: rgba(255,255,255,0.05); 
+          border-radius: 6px; padding: 4px 8px; color: #F8FAFC;
+        }
+        .article-body pre { padding: 20px; overflow-x: auto; border-radius: 12px; }
       `}</style>
-    </>
-  );
+
+            <ProgressBar />
+
+            <div style={{ minHeight: "100vh", background: T.cream, fontFamily: FONT }}>
+
+                {/* ── HERO SECTION ── */}
+                <div className="fu" style={{
+                    position: "relative",
+                    width: "100%",
+                    minHeight: "75vh",
+                    display: "flex",
+                    alignItems: "flex-end",
+                    paddingTop: 120,
+                    paddingBottom: 70,
+                    marginBottom: 56,
+                    background: "#0d0d0d",
+                    overflow: "hidden"
+                }}>
+                    {imageUrl && (
+                        <div style={{
+                            position: "absolute",
+                            inset: 0,
+                            backgroundImage: `url(${imageUrl})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            backgroundRepeat: "no-repeat",
+                            zIndex: 0
+                        }} />
+                    )}
+                    
+                    {/* Dark gradient for text readability */}
+                    <div style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "linear-gradient(to top, rgba(8,24,38,0.95) 0%, rgba(8,24,38,0.5) 50%, rgba(8,24,38,0.1) 100%)",
+                        zIndex: 1
+                    }} />
+
+                    <div style={{ 
+                        position: "relative", 
+                        zIndex: 2, 
+                        maxWidth: 960, 
+                        margin: "0 auto", 
+                        padding: "0 24px",
+                        width: "100%"
+                    }}>
+                        <Link href="/news"
+                            style={{
+                                display: "inline-flex", alignItems: "center", gap: 6,
+                                color: "rgba(255,255,255,0.7)", fontSize: 11, fontWeight: 700, textDecoration: "none",
+                                textTransform: "uppercase", letterSpacing: "0.10em", fontFamily: FONT,
+                                transition: "color .15s", marginBottom: 28
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+                            onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.7)"}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="15 18 9 12 15 6" />
+                            </svg>
+                            Back to News
+                        </Link>
+                        
+                        <h1 style={{
+                            fontSize: "clamp(2.2rem, 5vw, 4rem)", fontWeight: 400, textTransform: 'none', color: '#ffffff', letterSpacing: '-0.01em', lineHeight: 1.15, marginBottom: 24,
+                            maxWidth: 850, fontFamily: "'Cormorant Garamond', serif",}}>
+                            {post.title}
+                        </h1>
+
+                        <div style={{
+                            display: "flex", alignItems: "center", gap: 12,
+                            flexWrap: "wrap", fontFamily: FONT
+                        }}>
+                            <span style={{ fontSize: 14, color: "#fff", fontWeight: 700 }}>
+                                By {post.author || "AUXOSYS Team"}
+                            </span>
+                            <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+                            <span style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", fontWeight: 500 }}>
+                                {date || "Unknown Date"}
+                            </span>
+                            <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+                            <span style={{ fontSize: 14, color: "rgba(255,255,255,0.8)" }}>
+                                {readTime} min read
+                            </span>
+                            <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+                            <span style={{
+                                fontSize: 10, fontWeight: 800, letterSpacing: "0.1em",
+                                textTransform: "uppercase", color: "#fff", background: "rgba(255,255,255,0.15)",
+                                border: "1px solid rgba(255,255,255,0.2)", padding: "4px 12px",
+                                borderRadius: 20
+                            }}>
+                                {post.category || "News"}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ── SUMMARY / PULL QUOTE ── */}
+                {post.summary && (
+                    <div className="fu fu2" style={{ maxWidth: 740, margin: "0 auto", padding: "0 24px 44px" }}>
+                        <div style={{
+                            background: T.brandLt, borderRadius: "0 12px 12px 0", padding: "18px 22px",
+                            borderLeft: `3px solid ${T.brand}`
+                        }}>
+                            <p style={{
+                                fontSize: 16, fontWeight: 600, color: T.black,
+                                lineHeight: 1.7, margin: 0, fontFamily: FONT,
+                                }}>
+                                {post.summary}
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {/* ── ARTICLE BODY ── */}
+                <article className="fu fu3" style={{ maxWidth: 740, margin: "0 auto", padding: "0 24px 64px" }}>
+                    <div className="article-body"
+                        dangerouslySetInnerHTML={{ __html: safeHtml }} />
+                </article>
+
+                {/* ── ARTICLE FOOTER ── */}
+                <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 24px 72px" }}>
+                    <div style={{ height: 1, background: T.creamDk, marginBottom: 24 }} />
+                    <div style={{
+                        display: "flex", alignItems: "center", justifyContent: "space-between",
+                        flexWrap: "wrap", gap: 12
+                    }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                            <div style={{
+                                width: 36, height: 36, borderRadius: "50%", background: T.brandLt,
+                                border: `1px solid ${T.brandMd}`, display: "flex", alignItems: "center",
+                                justifyContent: "center", color: T.brand
+                            }}>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div style={{ fontSize: 12, fontWeight: 800, color: T.black, fontFamily: FONT }}>
+                                    AUXOSYS Team
+                                </div>
+                                <div style={{ fontSize: 11, color: T.muted, fontFamily: FONT }}>
+                                    {date || "AUXOSYS"}
+                                </div>
+                            </div>
+                        </div>
+                        <Link href="/news"
+                            style={{
+                                display: "inline-flex", alignItems: "center", gap: 7,
+                                background: T.white, color: T.black,
+                                border: `1.5px solid ${T.creamDk}`, borderRadius: 10,
+                                padding: "9px 18px", fontSize: 11, fontWeight: 700,
+                                textDecoration: "none", fontFamily: FONT,
+                                textTransform: "uppercase", letterSpacing: "0.08em",
+                                transition: "all .2s"
+                            }}
+                            onMouseEnter={e => { e.currentTarget.style.borderColor = T.brand; e.currentTarget.style.color = T.brand; }}
+                            onMouseLeave={e => { e.currentTarget.style.borderColor = T.creamDk; e.currentTarget.style.color = T.black; }}>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="15 18 9 12 15 6" />
+                            </svg>
+                            All Articles
+                        </Link>
+                    </div>
+                </div>
+
+                {/* ── RELATED ARTICLES ── */}
+                {related.length > 0 && (
+                    <div style={{ background: T.white, borderTop: `1px solid ${T.creamDk}`, padding: "56px 24px 72px" }}>
+                        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+                            {/* Section heading */}
+                            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 32 }}>
+                                <span style={{ width: 22, height: 1.5, background: T.brand, display: "inline-block" }} />
+                                <span style={{
+                                    fontSize: 10, fontWeight: 700, color: T.brand,
+                                    letterSpacing: "0.16em", textTransform: "uppercase"
+                                }}>
+                                    Related Articles
+                                </span>
+                            </div>
+                            <h2 style={{
+                                fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 400, textTransform: 'none', color: T.black, letterSpacing: '-0.01em', lineHeight: 1.1, marginBottom: 32, fontFamily: "'Cormorant Garamond', serif",}}>
+                                Keep Reading
+                            </h2>
+                            <div style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                                gap: 16
+                            }}>
+                                {related.map(item => (
+                                    <RelatedCard key={item._id} item={item} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </>
+    );
 }

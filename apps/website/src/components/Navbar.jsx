@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
@@ -31,7 +32,7 @@ export default function Navbar() {
           
           {/* Left Logo Section */}
           <Link href="/" className="new-nav-logo">
-            <img src="/logo-icon.svg" alt="Auxosys Logo" className="logo-icon-img" />
+            <Image src="/logo-icon.svg" alt="Auxosys Logo" width={32} height={32} className="logo-icon-img" />
             <span className="logo-text">AUXOSYS</span>
           </Link>
 

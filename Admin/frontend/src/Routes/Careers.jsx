@@ -73,10 +73,13 @@ const Careers = () => {
       if (status) params.status = status;
 
       const res = await apiClient.get("/job/admin", { params, signal: controller.signal });
-      const list = res?.data?.data;
+      let list = res?.data?.data;
       const m = res?.data?.meta || {};
 
       if (!Array.isArray(list)) throw new Error("Unexpected response shape");
+
+      // Normalize Supabase 'id' to '_id' for frontend components
+      list = list.map(job => ({ ...job, _id: job.id || job._id }));
 
       setJobs(list);
       setMeta({
@@ -200,9 +203,9 @@ const Careers = () => {
             value={status}
             onChange={(e) => { setPage(1); setStatus(e.target.value); }}
           >
-            <option value="">All</option>
+            <option value="">All Status</option>
             <option value="Active">Active</option>
-            <option value="Inactive">Closed</option>
+            <option value="Closed">Closed</option>
           </select>
 
           <select

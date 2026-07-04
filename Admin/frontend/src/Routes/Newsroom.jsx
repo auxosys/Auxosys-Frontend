@@ -4,39 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { apiClient } from "../helper/apiClient";
 import { toast } from "react-toastify";
 
+import { useAuth } from "../context/AuthContext";
+
 const Newsroom = () => {
   const navigate = useNavigate();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newsError, setNewsError] = useState(false);
-  const [canPublish, setCanPublish] = useState(false);
+  const { hasPermission, isLoading: authLoading } = useAuth();
+  const canPublish = hasPermission("newsroom", "Read & Write");
 
   // Prevents stale async callbacks from updating state / showing toasts
   // after the component unmounts (e.g. user navigates away mid-request).
   const abortRef = useRef(null);
-
-  const fetchPermission = async () => {
-    try {
-      const res = await apiClient.get("/profile/me");
-      const admin = res.data?.data?.admin;
-      if (!admin) {
-        setCanPublish(false);
-        return;
-      }
-      if (admin.email === "auxosys@gmail.com") {
-        setCanPublish(true);
-      } else {
-        const perms = admin.permissions || [];
-        const hasWrite = perms.some(p => {
-          if (typeof p === 'string') return p === "newsroom";
-          return p.module === "newsroom" && p.access === "Read & Write";
-        });
-        setCanPublish(hasWrite);
-      }
-    } catch {
-      setCanPublish(false);
-    }
-  };
 
   const fetchNews = async () => {
     if (abortRef.current) abortRef.current.abort();
@@ -47,7 +27,9 @@ const Newsroom = () => {
       setLoading(true);
       setNewsError(false);
       const res = await apiClient.get("/news/admin/all", { signal: controller.signal });
-      setNews(res.data.data || []);
+      let list = res.data.data || [];
+      list = list.map(item => ({ ...item, _id: item.id || item._id }));
+      setNews(list);
     } catch (err) {
       if (err?.name === "CanceledError" || err?.code === "ERR_CANCELED") return;
       setNewsError(true);
@@ -58,7 +40,6 @@ const Newsroom = () => {
   };
 
   useEffect(() => {
-    fetchPermission();
     fetchNews();
     return () => {
       if (abortRef.current) abortRef.current.abort();
