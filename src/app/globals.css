@@ -503,6 +503,7 @@ h4 {
 .hero {
   padding: 100px 0 40px;
   min-height: 100vh;
+  max-height: 950px;
   display: flex;
   align-items: center;
   position: relative;
