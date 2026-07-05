@@ -422,6 +422,21 @@ h4 {
   }
 }
 
+@media (max-width: 1200px) {
+  .new-nav-pill {
+    gap: 24px;
+    padding: 0 16px;
+  }
+  .new-nav-link {
+    font-size: 14px;
+  }
+  .new-nav-cta {
+    padding: 0 20px;
+    height: 52px;
+    font-size: 14px;
+  }
+}
+
 @media (max-width: 900px) {
 
   .new-nav-pill,
