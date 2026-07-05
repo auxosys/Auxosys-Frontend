@@ -209,6 +209,7 @@ h4 {
   gap: 14px;
   transition: all 0.3s ease;
   flex-shrink: 0;
+  margin-left: -17px;
 }
 
 .new-nav-logo:hover {
@@ -1197,6 +1198,7 @@ footer {
     background: transparent !important;
     border-color: transparent !important;
     box-shadow: none !important;
+    padding: 0 16px !important;
   }
 
   .hero::before {
