@@ -48,7 +48,7 @@ const CSS = `
    JOB LISTINGS
 ════════════════════════════════════ */
 .jobs-section {
-  padding: 100px 0;
+  padding: 160px 0 100px 0;
   background: var(--bg-1);
   border-bottom: 1px solid var(--divider);
 }
@@ -297,7 +297,7 @@ const CSS = `
   text-align: center; padding: 80px 24px;
   color: var(--muted); font-size: 16px;
 }
-.no-results-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+.no-results-icon { font-size: 48px; margin-bottom: 16px; display: flex; justify-content: center; }
 
 
 
@@ -503,7 +503,7 @@ export default function CareersPage() {
         <div className="container">
           <div className="jobs-header">
             <div>
-              <div className="eyebrow">Open Positions</div>
+              {/* Open Positions removed */}
               <h2 className="jobs-title">Find your role at Auxosys</h2>
             </div>
             <span className="jobs-count">{loading ? "..." : `${filtered.length} of ${jobs.length} positions`}</span>
