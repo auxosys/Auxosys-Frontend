@@ -1726,8 +1726,7 @@ footer {
     grid-template-columns: 1fr;
   }
   .contact-left {
-    padding: 32px;
-    min-height: 400px;
+    display: none;
   }
   .contact-logo {
     margin-bottom: 40px;

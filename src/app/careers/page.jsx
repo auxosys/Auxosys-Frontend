@@ -390,7 +390,8 @@ const CSS = `
 }
 @media (max-width: 640px) {
   .container { padding: 0 20px; }
-  .careers-hero, .culture-section, .jobs-section, .intern-section, .cta-section { padding: 64px 0; }
+  .careers-hero, .culture-section, .intern-section, .cta-section { padding: 64px 0; }
+  .jobs-section { padding: 120px 0 64px 0; }
   .benefit-mosaic { grid-template-columns: 1fr; }
   .benefit-tile.wide { grid-column: span 1; }
   .stats-inner { grid-template-columns: 1fr 1fr; }

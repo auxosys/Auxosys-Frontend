@@ -318,8 +318,20 @@ export default function JobApplicationForm() {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    if (typeof sessionStorage !== "undefined" && slug) {
+      const savedStep = sessionStorage.getItem(`auxosys_step_${slug}`);
+      if (savedStep !== null) {
+        setCurrentStep(parseInt(savedStep, 10));
+      }
+    }
+  }, [slug]);
+
+  useEffect(() => {
+    if (typeof sessionStorage !== "undefined" && slug) {
+      sessionStorage.setItem(`auxosys_step_${slug}`, currentStep.toString());
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentStep]);
+  }, [currentStep, slug]);
 
   useEffect(() => {
     const fetchJob = async () => {

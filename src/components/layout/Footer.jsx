@@ -48,8 +48,9 @@ export default function Footer() {
       <div className="container">
         <div className="footer-top">
           <div className="footer-brand">
-            <Link href="/" className="inline-block mb-6">
-              <Image src="/logo-wordmark.svg" alt="Auxosys" width={120} height={32} className="logo-img" />
+            <Link href="/" className="inline-block mb-6" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Image src="/logo-icon.svg" alt="Auxosys" width={32} height={32} className="logo-img" />
+              <span className="logo-text" style={{ fontFamily: 'var(--font-display)', fontSize: '24px', fontWeight: '700', color: 'var(--white)', letterSpacing: '0.05em' }}>AUXOSYS</span>
             </Link>
             <p>We build intelligent digital ecosystems that empower businesses worldwide.</p>
             <div className="social-row">
