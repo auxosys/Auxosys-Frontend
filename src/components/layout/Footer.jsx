@@ -104,30 +104,32 @@ export default function Footer() {
               )}
             </ul>
           </div>
-          <div className="footer-col">
-            <h5>Stay Updated</h5>
-            <div className="newsletter-box">
-              <p>Stay updated with our latest products, technology insights, and company news.</p>
-              <form className="news-input-row" onSubmit={handleSubscribe}>
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <button type="submit" disabled={status.loading}>
-                  {status.loading ? 'Subscribing...' : 'Subscribe'}
-                </button>
-              </form>
-              {status.message && (
-                <p className={`mt-2 text-sm ${status.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
-                  {status.message}
-                </p>
-              )}
-            </div>
+        </div>
+        
+        <div className="footer-subscribe-section">
+          <h5>Stay Updated</h5>
+          <div className="newsletter-box">
+            <p>Stay updated with our latest products, technology insights, and company news.</p>
+            <form className="news-input-row" onSubmit={handleSubscribe}>
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <button type="submit" disabled={status.loading}>
+                {status.loading ? 'Subscribing...' : 'Subscribe'}
+              </button>
+            </form>
+            {status.message && (
+              <p className={`mt-2 text-sm ${status.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                {status.message}
+              </p>
+            )}
           </div>
         </div>
+
         <div className="footer-bottom">
           <span>© 2026 Auxosys. All rights reserved.</span>
           <span className="footer-tagline"><span className="dot"></span>Engineering the Future, Together.</span>
