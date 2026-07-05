@@ -1420,8 +1420,10 @@ footer .container {
     flex-direction: column;
     align-items: stretch;
   }
+  .newsletter-box > p,
   .news-input-row {
     max-width: none;
+    flex-basis: auto;
   }
 }
 
@@ -1430,11 +1432,29 @@ footer .container {
     padding: 56px 20px 24px;
   }
   .footer-top {
-    grid-template-columns: 1fr;
-    gap: 32px;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 16px;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
   }
   .footer-subscribe-section {
     padding: 24px 20px;
+  }
+  .news-input-row {
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    gap: 12px;
+  }
+  .news-input-row input {
+    border: 1px solid var(--footer-line);
+    border-radius: 8px;
+    background: var(--footer-bg);
+  }
+  .news-input-row button {
+    border-radius: 8px;
+    width: 100%;
   }
   .footer-bottom {
     flex-direction: column;
