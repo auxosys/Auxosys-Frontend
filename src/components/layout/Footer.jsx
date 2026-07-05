@@ -9,8 +9,10 @@ export default function Footer() {
   const [status, setStatus] = useState({ loading: false, message: '', type: '' });
   const [legalPages, setLegalPages] = useState([]);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5002";
+
   useEffect(() => {
-    fetch('http://localhost:5002/public/legal')
+    fetch(`${API_URL}/public/legal`)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -26,7 +28,7 @@ export default function Footer() {
 
     setStatus({ loading: true, message: '', type: '' });
     try {
-      const res = await fetch('http://localhost:5002/public/subscribe', {
+      const res = await fetch(`${API_URL}/public/subscribe`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
