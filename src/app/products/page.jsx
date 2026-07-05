@@ -32,12 +32,12 @@ const css = `
     animation: bgFade 18s infinite;
   }
   .hero-bg-1 { animation-delay: 0s; }
-  .hero-bg-2 { animation-delay: 6s; }
-  .hero-bg-3 { animation-delay: 12s; }
+  .hero-bg-2 { animation-delay: -12s; }
+  .hero-bg-3 { animation-delay: -6s; }
   
   @keyframes bgFade {
-    0%, 25% { opacity: 1; }
-    33%, 92% { opacity: 0; }
+    0%, 22.22% { opacity: 1; }
+    33.33%, 88.88% { opacity: 0; }
     100% { opacity: 1; }
   }
   

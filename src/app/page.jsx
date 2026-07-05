@@ -1,5 +1,6 @@
 import HeroGlobe from '@/components/HeroGlobe';
 import Reveal from '@/components/Reveal';
+import { ArrowRight } from 'lucide-react';
 import {
   IconBrain, IconCRM, IconCloud, IconTools,
   IconAI, IconSaaS, IconWeb, IconMobile, IconBlockchain, IconBulb, IconDesign,
@@ -22,8 +23,10 @@ export default function HomePage() {
             <span className="hero-highlight">AI • SaaS • Cloud • Blockchain • Enterprise Solutions</span>
             <p className="desc">Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products. From AI-powered applications and SaaS platforms to enterprise software and blockchain solutions, we build technology designed for long-term growth.</p>
             <div className="hero-actions">
-              <a href="#contact" className="btn btn-primary">Start Your Project</a>
-              <a href="#services" className="btn btn-outline">Explore Our Solutions</a>
+              <a href="/contact" className="btn-glass-pill">
+                Accelerate Your Growth
+                <span className="btn-glass-icon"><ArrowRight size={18} /></span>
+              </a>
             </div>
           </div>
 
@@ -255,8 +258,7 @@ export default function HomePage() {
             <h2>Ready to Build Something Extraordinary?</h2>
             <p>Whether you're launching a startup, modernizing enterprise software, or building the next AI-powered platform, Auxosys is ready to help transform your vision into reality.</p>
             <div className="cta-actions">
-              <a href="#" className="btn btn-primary">Start Your Project</a>
-              <a href="#" className="btn btn-outline">Contact Our Team</a>
+              <a href="/contact" className="btn btn-primary">Contact Our Team</a>
             </div>
           </Reveal>
         </div>

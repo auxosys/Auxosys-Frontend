@@ -53,12 +53,12 @@ const css = `
     animation: heroFadeCycle 15s infinite;
   }
   .hero-bg-slide.slide-1 { background-image: url('/images/industries-hero-1.jpg'); animation-delay: 0s; }
-  .hero-bg-slide.slide-2 { background-image: url('/images/industries-hero-2.jpg'); animation-delay: 5s; }
-  .hero-bg-slide.slide-3 { background-image: url('/images/industries-hero-3.jpg'); animation-delay: 10s; }
+  .hero-bg-slide.slide-2 { background-image: url('/images/industries-hero-2.jpg'); animation-delay: -10s; }
+  .hero-bg-slide.slide-3 { background-image: url('/images/industries-hero-3.jpg'); animation-delay: -5s; }
   
   @keyframes heroFadeCycle {
-    0%, 25% { opacity: 1; transform: scale(1); }
-    33.3%, 91.6% { opacity: 0; transform: scale(1.05); }
+    0%, 20% { opacity: 1; transform: scale(1); }
+    33.33%, 86.66% { opacity: 0; transform: scale(1.05); }
     100% { opacity: 1; transform: scale(1); }
   }
   /* floating label pills behind hero */

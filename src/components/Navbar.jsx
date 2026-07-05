@@ -51,8 +51,8 @@ export default function Navbar() {
           </nav>
 
           {/* Right CTA Button */}
-          <Link href="/#contact" className="new-nav-cta">
-            Let's Build Together
+          <Link href="/contact" className="new-nav-cta">
+            Connect Us
             <ArrowRight className="cta-arrow" size={20} />
           </Link>
 
@@ -90,10 +90,10 @@ export default function Navbar() {
               ))}
             </nav>
 
-            <Link href="/#contact" 
+            <Link href="/contact" 
                onClick={() => setMobileMenuOpen(false)}
                className="drawer-cta">
-              Let's Build Together
+              Connect Us
               <ArrowRight size={20} />
             </Link>
           </div>

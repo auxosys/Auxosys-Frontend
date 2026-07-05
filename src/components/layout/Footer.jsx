@@ -1,8 +1,48 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState({ loading: false, message: '', type: '' });
+  const [legalPages, setLegalPages] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5002/public/legal')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setLegalPages(data.data);
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setStatus({ loading: true, message: '', type: '' });
+    try {
+      const res = await fetch('http://localhost:5002/public/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus({ loading: false, message: 'Successfully subscribed!', type: 'success' });
+        setEmail('');
+      } else {
+        setStatus({ loading: false, message: data.message || 'Failed to subscribe', type: 'error' });
+      }
+    } catch (err) {
+      setStatus({ loading: false, message: 'An error occurred. Please try again.', type: 'error' });
+    }
+  };
   return (
     <footer>
       <div className="container">
@@ -48,20 +88,47 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer-col">
+            <h5>Legal</h5>
+            <ul>
+              {legalPages.length > 0 ? (
+                legalPages.map((page) => (
+                  <li key={page.slug}>
+                    <Link href={`/${page.slug}`}>{page.title}</Link>
+                  </li>
+                ))
+              ) : (
+                <li><span className="text-gray-500 text-sm">No pages yet</span></li>
+              )}
+            </ul>
+          </div>
+          <div className="footer-col">
             <h5>Stay Updated</h5>
             <div className="newsletter-box">
               <p>Stay updated with our latest products, technology insights, and company news.</p>
-              <div className="news-input-row">
-                <input type="email" placeholder="Enter your email" />
-                <button type="button">Subscribe</button>
-              </div>
+              <form className="news-input-row" onSubmit={handleSubscribe}>
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <button type="submit" disabled={status.loading}>
+                  {status.loading ? 'Subscribing...' : 'Subscribe'}
+                </button>
+              </form>
+              {status.message && (
+                <p className={`mt-2 text-sm ${status.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                  {status.message}
+                </p>
+              )}
             </div>
           </div>
         </div>
         <div className="footer-bottom">
           <span>© 2026 Auxosys. All rights reserved.</span>
           <span className="footer-tagline"><span className="dot"></span>Engineering the Future, Together.</span>
-          <span>Privacy Policy &nbsp;·&nbsp; Terms &amp; Conditions</span>
+          <span></span>
         </div>
       </div>
     </footer>

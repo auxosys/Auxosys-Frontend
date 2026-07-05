@@ -47,12 +47,12 @@ const css = `
     animation: svcHeroFadeCycle 15s infinite;
   }
   .svc-hero-bg-slide.slide-1 { background-image: url('/images/services-hero-1.jpg'); animation-delay: 0s; }
-  .svc-hero-bg-slide.slide-2 { background-image: url('/images/services-hero-2.jpg'); animation-delay: 5s; }
-  .svc-hero-bg-slide.slide-3 { background-image: url('/images/services-hero-3.jpg'); animation-delay: 10s; }
+  .svc-hero-bg-slide.slide-2 { background-image: url('/images/services-hero-2.jpg'); animation-delay: -10s; }
+  .svc-hero-bg-slide.slide-3 { background-image: url('/images/services-hero-3.jpg'); animation-delay: -5s; }
   
   @keyframes svcHeroFadeCycle {
-    0%, 25% { opacity: 1; transform: scale(1); }
-    33.3%, 91.6% { opacity: 0; transform: scale(1.05); }
+    0%, 20% { opacity: 1; transform: scale(1); }
+    33.33%, 86.66% { opacity: 0; transform: scale(1.05); }
     100% { opacity: 1; transform: scale(1); }
   }
   .svc-hero > div:not(.svc-hero-bg-slider) {

@@ -28,12 +28,12 @@ const css = `
     animation: bgFade 18s infinite;
   }
   .hero-bg-1 { animation-delay: 0s; }
-  .hero-bg-2 { animation-delay: 6s; }
-  .hero-bg-3 { animation-delay: 12s; }
+  .hero-bg-2 { animation-delay: -12s; }
+  .hero-bg-3 { animation-delay: -6s; }
   
   @keyframes bgFade {
-    0%, 25% { opacity: 1; }
-    33%, 92% { opacity: 0; }
+    0%, 22.22% { opacity: 1; }
+    33.33%, 88.88% { opacity: 0; }
     100% { opacity: 1; }
   }
 
@@ -447,9 +447,9 @@ export default function WhoWeAre() {
 
       {/* Hero */}
       <section className="wwa-hero">
-        <img src="/images/about-bg-1.jpg" alt="Hydrogen Energy" className="hero-bg hero-bg-1" />
-        <img src="/images/about-bg-2.jpg" alt="Engineer" className="hero-bg hero-bg-2" />
-        <img src="/images/about-bg-3.jpg" alt="VR Person" className="hero-bg hero-bg-3" />
+        <img src="/images/about-bg-2.jpg" alt="Engineer" className="hero-bg hero-bg-1" />
+        <img src="/images/about-bg-3.jpg" alt="VR Person" className="hero-bg hero-bg-2" />
+        <img src="/images/about-bg-1.jpg" alt="Hydrogen Energy" className="hero-bg hero-bg-3" />
         
         <div className="hero-left" style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(24px)", transition: "opacity 0.8s, transform 0.8s" }}>
 
