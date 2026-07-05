@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import Link from 'next/link';
-import PolicyLayout from '../../components/layout/PolicyLayout';
+import LegalTemplate from '../../components/templates/LegalTemplate';
 
 export default function TermsAndConditions() {
   const content = (
@@ -134,12 +134,12 @@ export default function TermsAndConditions() {
   );
 
   return (
-    <PolicyLayout 
-      title="Terms & Conditions"
-      subtitle="Please read these terms carefully before submitting your application."
+    <LegalTemplate 
+      title="Career Terms & Conditions"
+      subtitle="The terms and rules you agree to when applying for a position at Auxosys."
       lastUpdated="January 2026"
       content={content}
-      backFallback="/careers/apply"
+      backFallback="/careers"
     />
   );
 }

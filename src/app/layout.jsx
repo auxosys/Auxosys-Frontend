@@ -1,4 +1,5 @@
 import './globals.css'
+import './ds.css'
 
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/layout/Footer'

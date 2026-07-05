@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import Link from 'next/link';
-import PolicyLayout from '../../components/layout/PolicyLayout';
+import LegalTemplate from '../../components/templates/LegalTemplate';
 
 export default function PrivacyPolicy() {
   const content = (
@@ -116,12 +116,12 @@ export default function PrivacyPolicy() {
   );
 
   return (
-    <PolicyLayout 
-      title="Privacy Policy"
-      subtitle="Privacy Policy for Job & Internship Applicants"
+    <LegalTemplate 
+      title="Career Privacy Policy"
+      subtitle="How we collect, use, and protect your information when you apply for a position at Auxosys."
       lastUpdated="January 2026"
       content={content}
-      backFallback="/careers/apply"
+      backFallback="/careers"
     />
   );
 }
