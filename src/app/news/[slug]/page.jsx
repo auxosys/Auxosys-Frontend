@@ -6,15 +6,15 @@ import Link from "next/link";
 
 // ── Brand tokens ──────────────────────────────────────────────
 const T = {
-    brand: "#5CC9D6",
-    brandLt: "rgba(92, 201, 214, 0.1)",
-    brandMd: "rgba(92, 201, 214, 0.2)",
-    black: "#F8FAFC",
-    body: "#AEB8C2",
-    muted: "#7F93A3",
-    cream: "#081826",
-    creamDk: "#22384B",
-    white: "#0F2436",
+    brand: "#0EA5E9",
+    brandLt: "rgba(14, 165, 233, 0.1)",
+    brandMd: "rgba(14, 165, 233, 0.2)",
+    black: "#0F172A",
+    body: "#475569",
+    muted: "#64748B",
+    cream: "#FFFFFF",
+    creamDk: "#E2E8F0",
+    white: "#F8FAFC",
 };
 const FONT = "'DM Sans', sans-serif";
 
@@ -236,7 +236,7 @@ export default function Blogpage() {
         <>
             <style>{`
         * { box-sizing: border-box; }
-        body { background: #081826; }
+        body { background: var(--bg-0); }
         @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
         .fu  { animation: fadeUp .5s cubic-bezier(.4,0,.2,1) both; }
         .fu1 { animation-delay: .1s; }

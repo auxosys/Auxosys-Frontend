@@ -294,20 +294,23 @@ const css = `
   /* ─── CTA ─── */
   .ind-cta {
     padding: 120px 80px;
-    border-top: 1px solid var(--divider);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
     align-items: center;
     position: relative; overflow: hidden;
-  }
-  .ind-cta::before {
-    content: '';
-    position: absolute; left: -100px; top: 50%;
-    transform: translateY(-50%);
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(92,201,214,0.06), transparent 70%);
-    pointer-events: none;
+    background:
+      linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0) 15%),
+      radial-gradient(60% 90% at 22% 45%, #E0F6ED 0%, transparent 70%),
+      radial-gradient(55% 85% at 78% 40%, #F6FDEB 0%, transparent 72%),
+      radial-gradient(70% 120% at 55% 20%, #E4F7E1 0%, transparent 80%),
+      linear-gradient(100deg,
+        #E5F7F3 0%,
+        #E0F6ED 22%,
+        #E4F7E1 48%,
+        #EEFADB 72%,
+        #F6FDEB 88%,
+        #FEFFFC 100%);
   }
   .cta-label { font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); margin-bottom: 20px; }
   .cta-h2 {
@@ -315,8 +318,9 @@ const css = `
     font-size: clamp(28px, 3.5vw, 48px);
     font-weight: 800; letter-spacing: -0.02em;
     line-height: 1.08; margin-bottom: 20px;
+    color: var(--ink, #17262B);
   }
-  .cta-p { font-size: 16px; color: var(--gray); line-height: 1.8; margin-bottom: 40px; }
+  .cta-p { font-size: 16px; color: var(--gray, #475569); line-height: 1.8; margin-bottom: 40px; }
   .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
   .btn-primary {
     background: var(--orange); color: var(--white);
@@ -326,12 +330,12 @@ const css = `
   }
   .btn-primary:hover { background: var(--orange-hover); transform: translateY(-1px); }
   .btn-ghost {
-    background: transparent; color: var(--white);
+    background: transparent; color: var(--ink, #111418);
     border: 1px solid var(--border); border-radius: 8px;
     padding: 14px 28px; font-size: 15px; font-weight: 500;
     cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block;
   }
-  .btn-ghost:hover { border-color: var(--teal); transform: translateY(-1px); }
+  .btn-ghost:hover { border-color: var(--teal); transform: translateY(-1px); color: var(--ink); background: rgba(255,255,255,0.5); }
 
   .cta-right {
     background: var(--bg-1);
@@ -423,11 +427,7 @@ export default function Industries() {
 
       {/* Hero */}
       <section className="ind-hero">
-        <div className="hero-bg-slider">
-          <div className="hero-bg-slide slide-1"></div>
-          <div className="hero-bg-slide slide-2"></div>
-          <div className="hero-bg-slide slide-3"></div>
-        </div>
+
         <div className="hero-floaters">
           {floaters.map((f, i) => (
             <span key={i} className="hero-float" style={{ top: f.top, left: f.left }}>{f.label}</span>

@@ -473,9 +473,7 @@ export default function Products() {
 
       {/* Hero */}
       <section className="products-hero">
-        <img src="/images/bg-tech.jpg" alt="Technology" className="hero-bg hero-bg-1" />
-        <img src="/images/bg-gradient.jpg" alt="Gradient" className="hero-bg hero-bg-2" />
-        <img src="/images/bg-robot.jpg" alt="AI Robot" className="hero-bg hero-bg-3" />
+
         <h1>Building Products That Solve <span>Real Business Problems</span></h1>
         <p style={{ marginTop: 24, maxWidth: "800px", margin: "24px auto 0" }}>Alongside delivering technology services, Auxosys develops innovative software products that simplify operations, improve productivity, and accelerate business growth.</p>
         
@@ -553,15 +551,7 @@ export default function Products() {
       </section>
 
       {/* CTA */}
-      <section className="products-cta">
-        <p className="section-eyebrow">Early Access</p>
-        <h2 className="cta-heading">Be first to experience what we're building.</h2>
-        <p className="cta-sub">Join the waitlist for early access to Auxosys products and help shape what comes next.</p>
-        <div className="cta-btns">
-          <a href="/contact" className="btn-primary">Join Waitlist</a>
-          <a href="/services" className="btn-outline">Explore Services</a>
-        </div>
-      </section>
+
     </>
   );
 }

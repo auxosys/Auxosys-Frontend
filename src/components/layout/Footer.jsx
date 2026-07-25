@@ -45,96 +45,107 @@ export default function Footer() {
       setStatus({ loading: false, message: 'An error occurred. Please try again.', type: 'error' });
     }
   };
+
   return (
-    <footer>
-      <div className="container">
+    <footer className="site-footer">
+      <div className="footer-container">
+
+        {/* Top Grid: Brand + Links */}
         <div className="footer-top">
+
           <div className="footer-brand">
-            <Link href="/" className="inline-block mb-6" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Image src="/logo-icon.svg" alt="Auxosys" width={32} height={32} className="logo-img" />
-              <span className="logo-text" style={{ fontFamily: 'var(--font-display)', fontSize: '24px', fontWeight: '700', color: 'var(--white)', letterSpacing: '0.05em' }}>AUXOSYS</span>
-            </Link>
-            <p>We build intelligent digital ecosystems that empower businesses worldwide.</p>
-            <div className="social-row">
+            <h2 className="footer-hero-text">The digital network<br />for the AI economy</h2>
+            <div className="footer-social" style={{ marginTop: 24, marginBottom: 48 }}>
               <a href="#" className="social-icon" aria-label="LinkedIn">in</a>
               <a href="#" className="social-icon" aria-label="GitHub">gh</a>
               <a href="#" className="social-icon" aria-label="X / Twitter">𝕏</a>
               <a href="#" className="social-icon" aria-label="Instagram">ig</a>
             </div>
-          </div>
-          <div className="footer-col">
-            <h5>Company</h5>
-            <ul>
-              <li><a href="/about">Who We Are</a></li>
-              <li><a href="/careers">Careers</a></li>
-              <li><a href="/news">Newsroom</a></li>
-              <li><a href="/contact">Contact Us</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Solutions</h5>
-            <ul>
-              <li><a href="/products">Products</a></li>
-              <li><a href="/services">Services</a></li>
-              <li><a href="/industries">Industries</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Technologies</h5>
-            <ul>
-              <li><a href="#">AI</a></li>
-              <li><a href="#">Cloud</a></li>
-              <li><a href="#">SaaS</a></li>
-              <li><a href="#">Blockchain</a></li>
-              <li><a href="#">Web Development</a></li>
-              <li><a href="#">Mobile Development</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h5>Legal</h5>
-            <ul>
-              {legalPages.length > 0 ? (
-                legalPages.map((page) => (
-                  <li key={page.slug}>
-                    <Link href={`/${page.slug}`}>{page.title}</Link>
-                  </li>
-                ))
-              ) : (
-                <li><span className="text-gray-500 text-sm">No pages yet</span></li>
+
+            <div className="footer-subscribe">
+              <p>Get the latest product updates, technology insights, and news.</p>
+              <form className="subscribe-form" onSubmit={handleSubscribe}>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <button type="submit" disabled={status.loading}>
+                  {status.loading ? 'Subscribing...' : 'Subscribe'}
+                </button>
+              </form>
+              {status.message && (
+                <p className={`subscribe-msg ${status.type === 'success' ? 'is-success' : 'is-error'}`}>
+                  {status.message}
+                </p>
               )}
-            </ul>
+            </div>
           </div>
-        </div>
-        
-        <div className="footer-subscribe-section">
-          <h5>Stay Updated</h5>
-          <div className="newsletter-box">
-            <p>Stay updated with our latest products, technology insights, and company news.</p>
-            <form className="news-input-row" onSubmit={handleSubscribe}>
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <button type="submit" disabled={status.loading}>
-                {status.loading ? 'Subscribing...' : 'Subscribe'}
-              </button>
-            </form>
-            {status.message && (
-              <p className={`mt-2 text-sm ${status.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
-                {status.message}
-              </p>
-            )}
+
+          <div className="footer-links">
+            <div className="footer-col">
+              <h5>Company</h5>
+              <ul>
+                <li><Link href="/about">Who We Are</Link></li>
+                <li><Link href="/careers">Careers</Link></li>
+                <li><Link href="/news">Newsroom</Link></li>
+                <li><Link href="/contact">Contact Us</Link></li>
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h5>Solutions</h5>
+              <ul>
+                <li><Link href="/products">Products</Link></li>
+                <li><Link href="/services">Services</Link></li>
+                <li><Link href="/industries">Industries</Link></li>
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h5>Technologies</h5>
+              <ul>
+                <li><Link href="#">AI</Link></li>
+                <li><Link href="#">Cloud</Link></li>
+                <li><Link href="#">SaaS</Link></li>
+                <li><Link href="#">Blockchain</Link></li>
+                <li><Link href="#">Web & Mobile</Link></li>
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h5>Legal</h5>
+              <ul>
+                {legalPages.length > 0 ? (
+                  legalPages.map((page) => (
+                    <li key={page.slug}>
+                      <Link href={`/${page.slug}`}>{page.title}</Link>
+                    </li>
+                  ))
+                ) : (
+                  <li><span className="footer-empty">No pages yet</span></li>
+                )}
+              </ul>
+            </div>
           </div>
         </div>
 
+        {/* Giant Signature Wordmark */}
+        <div className="footer-wordmark">
+          AUXOSYS
+        </div>
+
+        {/* Bottom Bar */}
         <div className="footer-bottom">
           <span>© 2026 Auxosys. All rights reserved.</span>
-          <span className="footer-tagline"><span className="dot"></span>Engineering the Future, Together.</span>
-          <span></span>
+          <span className="footer-bottom-tag">
+            <span className="dot"></span>Engineering the Future, Together.
+          </span>
+          <div className="footer-bottom-links">
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
+          </div>
         </div>
+
       </div>
     </footer>
   );

@@ -159,9 +159,9 @@ const css = `
   .hgv-icon { width: 32px; height: 32px; margin-bottom: 14px; display: block; color: var(--teal); position: relative; z-index: 2; }
   .hgv-name {
     font-family: var(--font-display);
-    font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 6px; position: relative; z-index: 2;
+    font-size: 16px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px; position: relative; z-index: 2;
   }
-  .hgv-desc { font-size: 13px; color: var(--gray); line-height: 1.65; position: relative; z-index: 2; }
+  .hgv-desc { font-size: 13px; color: #E2E8F0; line-height: 1.65; position: relative; z-index: 2; }
 
   /* ─── SERVICES GRID ─── */
   .services-section {
@@ -355,24 +355,37 @@ const css = `
   /* ─── CTA ─── */
   .svc-cta {
     padding: 120px 80px;
-    border-top: 1px solid var(--divider);
-    background: linear-gradient(180deg, var(--bg-0) 0%, #091e2e 100%);
-    text-align: center;
-    position: relative; overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0) 15%),
+      linear-gradient(0deg, #FFFFFF 0%, rgba(255,255,255,0) 15%),
+      radial-gradient(60% 90% at 22% 45%, #E0F6ED 0%, transparent 70%),
+      radial-gradient(55% 85% at 78% 40%, #F6FDEB 0%, transparent 72%),
+      radial-gradient(70% 120% at 55% 20%, #E4F7E1 0%, transparent 80%),
+      linear-gradient(100deg,
+        #E5F7F3 0%,
+        #E0F6ED 22%,
+        #E4F7E1 48%,
+        #EEFADB 72%,
+        #F6FDEB 88%,
+        #FEFFFC 100%);
   }
-  .svc-cta::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(92,201,214,0.07), transparent);
-    pointer-events: none;
-  }
+  .svc-cta::before { display: none !important; }
+  .svc-cta-content { flex: 1; }
   .cta-h2 {
     font-family: var(--font-display);
-    font-size: clamp(28px, 4vw, 50px);
+    font-size: clamp(28px, 4vw, 44px);
     font-weight: 800; letter-spacing: -0.02em;
-    max-width: 640px; margin: 16px auto 24px;
+    margin: 0 0 16px;
+    color: var(--ink, #17262B);
   }
-  .cta-p { font-size: 17px; color: var(--gray); max-width: 480px; margin: 0 auto 48px; line-height: 1.75; }
+  .cta-p { font-size: 17px; color: var(--gray, #475569); max-width: 580px; margin: 0; line-height: 1.6; }
   .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
   .btn-primary {
     background: var(--orange); color: var(--white);
@@ -498,11 +511,7 @@ export default function Services() {
 
       {/* Hero */}
       <section className="svc-hero">
-        <div className="svc-hero-bg-slider">
-          <div className="svc-hero-bg-slide slide-1"></div>
-          <div className="svc-hero-bg-slide slide-2"></div>
-          <div className="svc-hero-bg-slide slide-3"></div>
-        </div>
+        {/* Hero Background Slider Removed */}
         <div>
 
           <h1 className="hero-h1">Transforming Ideas Into <em>Powerful Digital Solutions</em></h1>
@@ -626,12 +635,12 @@ export default function Services() {
 
       {/* CTA */}
       <section className="svc-cta">
-        <p className="section-eyebrow">Start a Project</p>
-        <h2 className="cta-h2">Have an idea? Let's turn it into reality.</h2>
-        <p className="cta-p">Whether you're a startup looking to launch or an enterprise ready to modernize, we're ready to build alongside you.</p>
-        <div className="cta-row">
+        <div className="svc-cta-content">
+          <h2 className="cta-h2">Have an idea? Let's turn it into reality.</h2>
+          <p className="cta-p">Whether you're a startup looking to launch or an enterprise ready to modernize, we're ready to build alongside you.</p>
+        </div>
+        <div className="svc-cta-action">
           <a href="/contact" className="btn-primary">Start a Conversation</a>
-          <a href="/products" className="btn-ghost">See Our Products</a>
         </div>
       </section>
     </>

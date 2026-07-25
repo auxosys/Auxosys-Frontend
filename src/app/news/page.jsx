@@ -5,15 +5,15 @@ import Image from "next/image";
 
 // ── Brand tokens ──────────────────────────────────────────────
 const T = {
-    brand: "#5CC9D6",
-    brandLt: "rgba(92, 201, 214, 0.1)",
-    brandMd: "rgba(92, 201, 214, 0.2)",
-    black: "#F8FAFC",
-    body: "#AEB8C2",
-    muted: "#7F93A3",
-    cream: "#081826",
-    creamDk: "#22384B",
-    white: "#0F2436",
+    brand: "#0EA5E9",
+    brandLt: "rgba(14, 165, 233, 0.1)",
+    brandMd: "rgba(14, 165, 233, 0.2)",
+    black: "#0F172A",
+    body: "#475569",
+    muted: "#64748B",
+    cream: "#FFFFFF",
+    creamDk: "#E2E8F0",
+    white: "#F8FAFC",
 };
 const FONT = "'DM Sans', sans-serif";
 const DISPLAY = "'DM Sans', sans-serif";
@@ -262,7 +262,7 @@ export default function Blog() {
         @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
         @keyframes pulse  { 0%,100%{opacity:1} 50%{opacity:.45} }
         .card-in { animation: fadeUp .45s cubic-bezier(.4,0,.2,1) both; }
-        body { background: #081826; }
+        body { background: var(--bg-0); }
       `}</style>
 
             <div style={{ minHeight: "100vh", background: T.cream, fontFamily: FONT, paddingTop: 100 }}>

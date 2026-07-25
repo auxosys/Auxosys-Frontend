@@ -11,13 +11,45 @@ export default function HeroGlobe() {
     const container = canvas.parentElement;
     if (!container) return;
 
+    const style = getComputedStyle(document.documentElement);
+    const getVar = (name, def) => style.getPropertyValue(name).trim() || def;
+
+    const globeBg = getVar('--globe-bg', '#000000');
+    const globeCyan = getVar('--globe-cyan', '#2DFDF9');
+    const globeDeep = getVar('--globe-deep', '#052F38');
+    const globeRibbon1 = getVar('--globe-ribbon1', '#6FE9EA');
+    const globeRibbon2 = getVar('--globe-ribbon2', '#4FCFD8');
+    const globeRibbon3 = getVar('--globe-ribbon3', '#3FB8C4');
+    const globeRing = getVar('--globe-ring', '#2DD4D8');
+    const globeDot = getVar('--globe-dot', '#7CF4F2');
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     camera.position.set(0, 0, 6.2);
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, premultipliedAlpha: false });
-    renderer.setClearColor(0x000000, 1);
-    renderer.setPixelRatio(1); // Force 1:1 pixel ratio so 1px WebGL lines are visible on retina displays
+    const parseColor = (str, def) => {
+      try {
+        return new THREE.Color(str);
+      } catch (e) {
+        console.warn(`Invalid color string "${str}", falling back to ${def}`);
+        return new THREE.Color(def);
+      }
+    };
+
+    let renderer;
+    try {
+      const isBgTransparent = globeBg.toLowerCase() === 'transparent';
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: isBgTransparent, antialias: true, premultipliedAlpha: false });
+      if (isBgTransparent) {
+        renderer.setClearColor(0x000000, 0);
+      } else {
+        renderer.setClearColor(parseColor(globeBg, '#000000'), 1);
+      }
+      renderer.setPixelRatio(1);
+    } catch (e) {
+      console.error('Error setting up HeroGlobe renderer:', e);
+      return;
+    }
 
     function resize() {
       if (!container) return;
@@ -45,8 +77,8 @@ export default function HeroGlobe() {
 
     const positions = [];
     const colors = [];
-    const colorCyan = new THREE.Color('#2DFDF9'); // Brighter electric cyan
-    const colorDeep = new THREE.Color('#052F38'); // Deeper, darker teal for extreme contrast
+    const colorCyan = parseColor(globeCyan, '#2DFDF9');
+    const colorDeep = parseColor(globeDeep, '#052F38');
 
     for (let i = 0; i < SAMPLES; i++) {
       const y = 1 - (i / (SAMPLES - 1)) * 2;
@@ -112,9 +144,9 @@ export default function HeroGlobe() {
       const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity });
       return new THREE.Line(lineGeo, lineMat);
     }
-    sphereGroup.add(addRibbon(0, 0, 0x6FE9EA, 0.5));
-    sphereGroup.add(addRibbon(1.8, 1.1, 0x4FCFD8, 0.35));
-    sphereGroup.add(addRibbon(3.6, 2.4, 0x3FB8C4, 0.3));
+    sphereGroup.add(addRibbon(0, 0, parseColor(globeRibbon1, '#6FE9EA'), 0.5));
+    sphereGroup.add(addRibbon(1.8, 1.1, parseColor(globeRibbon2, '#4FCFD8'), 0.35));
+    sphereGroup.add(addRibbon(3.6, 2.4, parseColor(globeRibbon3, '#3FB8C4'), 0.3));
 
     // Scale the entire globe down so it doesn't get clipped by the canvas edges
     sphereGroup.scale.set(0.95, 0.95, 0.95);
@@ -130,7 +162,7 @@ export default function HeroGlobe() {
         pts.push(new THREE.Vector3(Math.cos(t) * radiusX, 0, Math.sin(t) * radiusZ));
       }
       const g = new THREE.BufferGeometry().setFromPoints(pts);
-      const m = new THREE.LineBasicMaterial({ color: 0x2DD4D8, transparent: true, opacity });
+      const m = new THREE.LineBasicMaterial({ color: parseColor(globeRing, '#2DD4D8'), transparent: true, opacity });
       const ring = new THREE.LineLoop(g, m);
       ring.rotation.x = rotX;
       ring.rotation.y = rotY;
@@ -145,7 +177,7 @@ export default function HeroGlobe() {
 
     const travelDots = [];
     const dotGeo = new THREE.SphereGeometry(0.035, 8, 8);
-    const dotMat = new THREE.MeshBasicMaterial({ color: 0x7CF4F2 });
+    const dotMat = new THREE.MeshBasicMaterial({ color: parseColor(globeDot, '#7CF4F2') });
     for (let i = 0; i < 2; i++) {
       const d = new THREE.Mesh(dotGeo, dotMat);
       travelDots.push({ mesh: d, offset: i * Math.PI, ring: i === 0 ? ring1 : ring2, rx: i === 0 ? 3.6 : 3.9, rz: i === 0 ? 1.1 : 1.5 });

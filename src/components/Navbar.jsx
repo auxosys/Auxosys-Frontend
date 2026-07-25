@@ -11,9 +11,10 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 40);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initially
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -27,46 +28,40 @@ export default function Navbar() {
 
   return (
     <>
-      <div className={`new-nav-wrapper ${scrolled ? 'scrolled' : ''}`}>
-        <div className="new-nav-container">
-          
-          {/* Left Logo Section */}
-          <Link href="/" className="new-nav-logo">
-            <Image src="/logo-icon.svg" alt="Auxosys Logo" width={32} height={32} className="logo-icon-img" />
-            <span className="logo-text">AUXOSYS</span>
+      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
+        <div className="nav-inner">
+          <Link href="/" className="logo">
+            <span className="logo-word">AUXOSYS</span>
+            <span className="logo-mark" style={{ background: 'transparent' }}>
+              <Image src="/Auxosys-icon-mono-dark.svg" alt="Auxosys Logo" width={40} height={40} />
+            </span>
           </Link>
 
-          {/* Center Navigation Pill */}
-          <nav className="new-nav-pill">
+          <ul className="nav-links">
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href}
-                className="new-nav-link"
-              >
-                {link.name}
-                <span className="new-nav-link-underline"></span>
-              </Link>
+              <li key={link.name}>
+                <Link href={link.href}>{link.name}</Link>
+              </li>
             ))}
-          </nav>
+          </ul>
 
-          {/* Right CTA Button */}
-          <Link href="/contact" className="new-nav-cta">
-            Connect Us
-            <ArrowRight className="cta-arrow" size={20} />
-          </Link>
+          <div className="nav-actions hidden md:flex items-center">
+            <Link href="/contact" className="nav-btn nav-btn-primary flex items-center">
+              Connect Us <ArrowRight className="inline ml-1" size={16} />
+            </Link>
+          </div>
 
           {/* Mobile Hamburger */}
-          <button 
-            className="new-nav-hamburger"
+          <button
+            className="md:hidden flex items-center justify-center p-2 text-black hover:bg-gray-100 rounded-full transition"
             onClick={() => setMobileMenuOpen(true)}
           >
             <Menu size={24} />
           </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer (Preserved from original) */}
       {mobileMenuOpen && (
         <div className="new-mobile-overlay">
           <div className="new-mobile-drawer">
@@ -76,11 +71,11 @@ export default function Navbar() {
                 <X size={24} />
               </button>
             </div>
-            
+
             <nav className="drawer-nav">
               {navLinks.map((link) => (
-                <Link 
-                  key={link.name} 
+                <Link
+                  key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className="drawer-link"
@@ -90,9 +85,9 @@ export default function Navbar() {
               ))}
             </nav>
 
-            <Link href="/contact" 
-               onClick={() => setMobileMenuOpen(false)}
-               className="drawer-cta">
+            <Link href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="drawer-cta">
               Connect Us
               <ArrowRight size={20} />
             </Link>

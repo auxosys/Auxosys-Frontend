@@ -369,35 +369,45 @@ const css = `
   /* Commitment CTA */
   .commit-section {
     padding: 120px 80px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    text-align: left;
     position: relative;
     overflow: hidden;
-    border-top: 1px solid var(--divider);
+    background:
+      linear-gradient(180deg, var(--bg-1) 0%, rgba(255,255,255,0) 15%),
+      linear-gradient(0deg, #FFFFFF 0%, rgba(255,255,255,0) 15%),
+      radial-gradient(60% 90% at 22% 45%, #E0F6ED 0%, transparent 70%),
+      radial-gradient(55% 85% at 78% 40%, #F6FDEB 0%, transparent 72%),
+      radial-gradient(70% 120% at 55% 20%, #E4F7E1 0%, transparent 80%),
+      linear-gradient(100deg,
+        #E5F7F3 0%,
+        #E0F6ED 22%,
+        #E4F7E1 48%,
+        #EEFADB 72%,
+        #F6FDEB 88%,
+        #FEFFFC 100%);
   }
-  .commit-section::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(255,107,53,0.08), transparent 70%);
-    pointer-events: none;
-  }
+  .commit-section::before { display: none !important; }
+  .commit-content { flex: 1; }
   .commit-heading {
     font-family: var(--font-display);
     font-size: clamp(30px, 4vw, 52px);
     font-weight: 800;
     line-height: 1.1;
     max-width: 680px;
-    margin: 0 auto 24px;
+    margin: 0 0 24px;
     letter-spacing: -0.02em;
+    color: var(--ink, #17262B);
   }
   .commit-desc {
     font-size: 17px;
-    color: var(--gray);
-    max-width: 540px;
-    margin: 0 auto 48px;
-    line-height: 1.75;
+    color: var(--gray, #475569);
+    max-width: 580px;
+    margin: 0;
+    line-height: 1.6;
   }
 
   @media (max-width: 900px) {
@@ -447,9 +457,7 @@ export default function WhoWeAre() {
 
       {/* Hero */}
       <section className="wwa-hero">
-        <img src="/images/about-bg-2.jpg" alt="Engineer" className="hero-bg hero-bg-1" />
-        <img src="/images/about-bg-3.jpg" alt="VR Person" className="hero-bg hero-bg-2" />
-        <img src="/images/about-bg-1.jpg" alt="Hydrogen Energy" className="hero-bg hero-bg-3" />
+
         
         <div className="hero-left" style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(24px)", transition: "opacity 0.8s, transform 0.8s" }}>
 
@@ -543,10 +551,13 @@ export default function WhoWeAre() {
 
       {/* Commitment CTA */}
       <section className="commit-section">
-        <p className="section-eyebrow" style={{ marginBottom: 16 }}>Our Commitment</p>
-        <h2 className="commit-heading">Success is measured by the value we create — not just the software we ship.</h2>
-        <p className="commit-desc">At Auxosys, we build for the long term — for our clients, our community, and the future of technology.</p>
-        <a href="/contact" className="btn-primary">Let's Build Together</a>
+        <div className="commit-content">
+          <h2 className="commit-heading">Success is measured by the value we create — not just the software we ship.</h2>
+          <p className="commit-desc">At Auxosys, we build for the long term — for our clients, our community, and the future of technology.</p>
+        </div>
+        <div className="commit-action">
+          <a href="/contact" className="btn-primary">Let's Build Together</a>
+        </div>
       </section>
     </>
   );
