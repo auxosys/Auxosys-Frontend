@@ -58,6 +58,9 @@ const ArrowRightIcon = () => (
 const EmptyIcon = () => (
   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><path d="M3 12h18" /><path d="M10 12v2h4v-2" /></svg>
 );
+const FilterIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+);
 
 const extractListItems = (html) => {
   if (!html) return [];
@@ -88,6 +91,7 @@ export default function CareersClient({ initialJobs = [] }) {
   const [type, setType] = useState("All Types");
   const [loc, setLoc] = useState("All Locations");
   const [expanded, setExpanded] = useState(null);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const filtered = useMemo(() => {
     return jobs.filter(j => {
@@ -122,6 +126,27 @@ export default function CareersClient({ initialJobs = [] }) {
           z-index: 5;
           backdrop-filter: blur(10px);
         }
+        .filter-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 12px; align-items: flex-end; }
+        @media (max-width: 1024px) { .filter-grid { grid-template-columns: 1fr 1fr; } }
+        
+        .mobile-filter-toggle { display: none; }
+        .filter-dropdowns { display: contents; }
+        .search-row { display: contents; }
+        
+        @media (max-width: 600px) { 
+          .filter-grid { grid-template-columns: 1fr 1fr; gap: 12px; } 
+          .filter-grid > div:first-child, .filter-grid > button { grid-column: 1 / -1; }
+          
+          .search-row { display: flex; gap: 10px; grid-column: 1 / -1; align-items: flex-end; }
+          .search-row > div { flex: 1; }
+          
+          .mobile-filter-toggle { display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border-subtle); border-radius: 8px; width: 40px; height: 40px; color: var(--text-muted); flex-shrink: 0; cursor: pointer; transition: all 0.2s; }
+          .mobile-filter-toggle.active { background: color-mix(in srgb, var(--teal) 15%, transparent); border-color: var(--teal); color: var(--teal); }
+          
+          .filter-dropdowns { display: none; }
+          .filter-dropdowns.show { display: contents; }
+        }
+
         .search-input, .filter-select {
           background: transparent; border: 1px solid var(--border-subtle);
           border-radius: 8px; color: var(--text); padding: 10px 14px; width: 100%; outline: none;
@@ -195,44 +220,75 @@ export default function CareersClient({ initialJobs = [] }) {
         .empty-state { text-align: center; padding: 64px 24px; background: var(--surface-bg); border-radius: 14px; border: 1px dashed var(--border-subtle); color: var(--text-muted); }
         .empty-state svg { margin: 0 auto 16px; opacity: 0.5; }
 
+        .jobs-section { padding-top: 160px; }
+
         @media (max-width: 640px) {
-          .job-card-top { flex-wrap: wrap; }
-          .job-side { flex-direction: row; width: 100%; justify-content: flex-start; }
+          .jobs-section { padding-top: 100px; }
+          .job-list { grid-template-columns: 1fr; gap: 12px; }
+          
+          .job-card { height: max-content; }
+          .job-card-top { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+          .dept-badge { display: none; }
+          .job-main { width: 100%; display: flex; flex-direction: column; gap: 6px; }
+          
+          .job-title-row { gap: 6px; }
+          .job-title { font-size: 16px; }
+          
+          .job-meta-row { gap: 4px 10px; margin-top: 0; }
+          .job-meta-item { font-size: 11.5px; }
+          .job-meta-item svg { width: 12px; height: 12px; }
+          
+          .skill-pills { margin-top: 4px; gap: 5px; }
+          .skill-pill { font-size: 10px; padding: 2px 6px; }
+          
+          .job-side { display: none; }
+          .mobile-emp-type { display: inline-flex !important; }
+          
+          .job-footer { padding: 10px 14px; }
         }
       `}</style>
 
       {/* ===================== JOBS BOARD ===================== */}
-      <section className="section alt" id="openings" style={{ paddingTop: '160px' }}>
+      <section className="section alt jobs-section" id="openings">
         <div className="container">
 
           <Reveal>
             {/* Filters */}
             <div className="filters-bar">
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'flex-end' }}>
-                <div style={{ flex: 2, minWidth: '200px' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Search</div>
-                  <div style={{ position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: 12, top: 10, color: 'var(--text-muted)' }}><IconSearch style={{ width: 16, height: 16 }} /></span>
-                    <input className="search-input" style={{ paddingLeft: 36 }} placeholder="Role, skill, or keyword…" value={search} onChange={e => setSearch(e.target.value)} />
+              <div className="filter-grid">
+                
+                <div className="search-row">
+                  <div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Search</div>
+                    <div style={{ position: 'relative' }}>
+                      <span style={{ position: 'absolute', left: 12, top: 10, color: 'var(--text-muted)' }}><IconSearch style={{ width: 16, height: 16 }} /></span>
+                      <input className="search-input" style={{ paddingLeft: 36, height: '40px' }} placeholder="Role, skill, or keyword…" value={search} onChange={e => setSearch(e.target.value)} />
+                    </div>
                   </div>
+                  <button className={`mobile-filter-toggle ${showMobileFilters ? 'active' : ''}`} onClick={() => setShowMobileFilters(!showMobileFilters)}>
+                    <FilterIcon />
+                  </button>
                 </div>
-                <div style={{ flex: 1, minWidth: '150px' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Department</div>
-                  <select className="filter-select" value={dept} onChange={e => setDept(e.target.value)}>
-                    {DEPTS.map(d => <option key={d}>{d}</option>)}
-                  </select>
-                </div>
-                <div style={{ flex: 1, minWidth: '150px' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Type</div>
-                  <select className="filter-select" value={type} onChange={e => setType(e.target.value)}>
-                    {TYPES.map(t => <option key={t}>{t}</option>)}
-                  </select>
-                </div>
-                <div style={{ flex: 1, minWidth: '150px' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Location</div>
-                  <select className="filter-select" value={loc} onChange={e => setLoc(e.target.value)}>
-                    {LOCATIONS.map(l => <option key={l}>{l}</option>)}
-                  </select>
+
+                <div className={`filter-dropdowns ${showMobileFilters ? 'show' : ''}`}>
+                  <div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Department</div>
+                    <select className="filter-select" style={{ height: '40px' }} value={dept} onChange={e => setDept(e.target.value)}>
+                      {DEPTS.map(d => <option key={d}>{d}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Type</div>
+                    <select className="filter-select" style={{ height: '40px' }} value={type} onChange={e => setType(e.target.value)}>
+                      {TYPES.map(t => <option key={t}>{t}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Location</div>
+                    <select className="filter-select" style={{ height: '40px' }} value={loc} onChange={e => setLoc(e.target.value)}>
+                      {LOCATIONS.map(l => <option key={l}>{l}</option>)}
+                    </select>
+                  </div>
                 </div>
                 {(activeFilters.length > 0 || search) && (
                   <button className="btn btn-secondary" style={{ padding: '9px 16px' }} onClick={clearAll}>Clear all</button>
@@ -298,6 +354,9 @@ export default function CareersClient({ initialJobs = [] }) {
                                 <span className="urgent-dot" /> URGENT
                               </span>
                             )}
+                            <span className={`status-tag mobile-emp-type ${typeClass[job.employment_type] || "status-planned"}`} style={{ display: 'none', padding: '2px 8px', fontSize: '10px' }}>
+                              {job.employment_type}
+                            </span>
                           </div>
 
                           <div className="job-meta-row">

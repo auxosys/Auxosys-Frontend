@@ -169,9 +169,8 @@ function BulletItem({ text }) {
 function OverviewRow({ icon, label, value, valueColor }) {
   if (!value) return null;
   return (
-    <div style={{
+    <div className="overview-row" style={{
       display: "flex", alignItems: "flex-start", gap: "14px",
-      padding: "16px 0",
       borderBottom: "1px dashed var(--border-subtle)",
     }}>
       <div style={{ color: ACCENT, flexShrink: 0, marginTop: "3px" }}>{icon}</div>
@@ -296,18 +295,42 @@ export default function JobDetailsPage() {
         .bullet-item:hover { transform: translateX(4px); color: var(--text); }
         .sidebar-glance { background: var(--surface-bg); border: 1px solid var(--border-subtle); border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px -12px rgba(0,0,0,0.06); }
 
-        @media (max-width: 1024px) {
-          .job-layout { flex-direction: column !important; }
-          .job-sidebar { position: static !important; width: 100% !important; }
-        }
-        @media (max-width: 640px) {
-          .title-row { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; }
-          .hero-title { font-size: 1.9rem !important; }
-          .facts-strip { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+        @media (max-width: 768px) {
+          .job-layout { flex-direction: column !important; gap: 16px !important; }
+          .job-sidebar { position: static !important; width: 100% !important; margin-bottom: 24px !important; }
+          .header-hero { padding: 40px 16px 20px !important; }
+          .job-detail-main { padding: 24px 16px 0 !important; }
+          
+          /* Hero Section compacting */
+          .title-row { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+          .hero-title { font-size: 2rem !important; line-height: 1.1 !important; }
+          
+          /* 1-column Facts strip */
+          .facts-strip { 
+            display: grid !important; 
+            grid-template-columns: 1fr; 
+            gap: 8px !important; 
+          }
           .facts-divider { display: none !important; }
           .hero-actions { width: 100%; }
-          .hero-actions .apply-btn { flex: 1; text-align: center; justify-content: center; }
+          .hero-actions .apply-btn { width: 100%; text-align: center; justify-content: center; }
+
+          /* Content cards */
+          .section-card { padding: 16px 20px !important; margin-bottom: 0 !important; }
+          .section-block { padding-bottom: 16px !important; margin-bottom: 16px !important; }
+          .section-block h2 { font-size: 1.1rem !important; }
+
+          .cross-nav { margin-top: 16px !important; }
+
+          /* 1-column Sidebar Glance */
+          .glance-grid {
+            display: grid !important;
+            grid-template-columns: 1fr;
+            gap: 0;
+          }
+          .overview-row { padding: 10px 0 !important; }
         }
+        .overview-row { padding: 16px 0; }
         @media print {
           .no-print { display: none !important; }
           .job-layout { display: block !important; }
@@ -423,13 +446,13 @@ export default function JobDetailsPage() {
   
               {techSkills.length > 0 && (
                 <SectionBlock icon={<CodeIcon />} title="Tech stack & skills">
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                     {techSkills.map((skill, i) => (
                       <span key={i} className="skill-tag" style={{
                         background: "rgba(92,201,214,0.08)", color: ACCENT,
                         border: "1px solid rgba(92,201,214,0.2)",
-                        padding: "7px 16px", borderRadius: "6px",
-                        fontSize: "0.85rem", fontWeight: 600, cursor: "default",
+                        padding: "6px 12px", borderRadius: "6px",
+                        fontSize: "0.8rem", fontWeight: 600, cursor: "default",
                       }}>
                         {skill}
                       </span>
@@ -440,10 +463,10 @@ export default function JobDetailsPage() {
             </section>
 
             {/* Closing cross-nav — enterprise career pages point back to the full board */}
-            <div className="no-print" style={{
+            <div className="no-print cross-nav" style={{
               border: "1px solid var(--border-subtle)", borderRadius: "10px",
-              padding: "24px 28px", display: "flex", alignItems: "center", justifyContent: "space-between",
-              gap: "16px", flexWrap: "wrap", marginTop: "8px", marginBottom: "48px",
+              padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between",
+              gap: "16px", flexWrap: "wrap"
             }}>
               <div>
                 <p style={{ fontWeight: 700, color: "var(--text)", margin: "0 0 4px", fontSize: "0.95rem" }}>Not quite the right fit?</p>
@@ -456,13 +479,13 @@ export default function JobDetailsPage() {
           </div>
 
           {/* ── RIGHT: Sidebar ── */}
-          <div className="job-sidebar" style={{ width: "320px", flexShrink: 0, position: "sticky", top: "100px", marginBottom: "48px" }}>
+          <div className="job-sidebar" style={{ width: "320px", flexShrink: 0, position: "sticky", top: "100px", marginBottom: "24px" }}>
             <div className="sidebar-glance">
               <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--border-subtle)" }}>
                 <p style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-soft)", margin: 0 }}>Job at a glance</p>
               </div>
 
-              <div style={{ padding: "4px 22px 4px" }}>
+              <div className="glance-grid" style={{ padding: "4px 22px 12px" }}>
                 <OverviewRow icon={<BuildingIcon />} label="Department" value={job.department} />
                 {job.team && <OverviewRow icon={<UsersIcon />} label="Team" value={job.team} />}
                 <OverviewRow icon={<MonitorIcon />} label="Work mode" value={job.work_mode} />
