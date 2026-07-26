@@ -838,7 +838,7 @@
   }
 
   .hero-right {
-    /* Removed order: -1 so text appears first */
+    order: -1
   }
 
   .timeline {

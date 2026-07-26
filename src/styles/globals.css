@@ -408,13 +408,18 @@ h4 {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  background: var(--orange);
+  background: var(--auxo-ink, #17262B);
   color: #fff;
   padding: 16px;
   border-radius: 999px;
   font-weight: 500;
   margin-top: 32px;
-  box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 8px 30px rgba(23, 38, 43, 0.2);
+  transition: background 0.15s ease;
+}
+
+.drawer-cta:hover {
+  background: #223A42;
 }
 
 @keyframes slideInRight {

@@ -66,7 +66,7 @@ export default function ProductsPage() {
 
           </div>
 
-          <div className="hero-right">
+          <div className="hero-right" style={{ order: 'initial' }}>
             <ProductPhone />
           </div>
         </div>

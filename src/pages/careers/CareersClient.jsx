@@ -204,12 +204,6 @@ export default function CareersClient({ initialJobs = [] }) {
       {/* ===================== JOBS BOARD ===================== */}
       <section className="section alt" id="openings">
         <div className="container">
-          <Reveal className="section-head">
-
-            <h2>
-              Find your role
-            </h2>
-          </Reveal>
 
           <Reveal>
             {/* Filters */}

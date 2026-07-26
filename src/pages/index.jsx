@@ -219,7 +219,25 @@ export default function HomePage() {
           place-items: center;
         }
         @media (max-width: 960px) {
-          .home-legacy-hero .hero-grid { grid-template-columns: 1fr; text-align: center; }
+          .home-legacy-hero .hero-grid { 
+            display: block; 
+            text-align: center; 
+          }
+          .home-legacy-hero .hero-right {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140vw;
+            height: 140vw;
+            opacity: 0.25;
+            z-index: 0;
+            pointer-events: none;
+          }
+          .home-legacy-hero h1, .home-legacy-hero .hero-highlight, .home-legacy-hero .desc, .home-legacy-hero .hero-actions {
+            position: relative;
+            z-index: 10;
+          }
           .home-legacy-hero h1 { font-size: 42px; }
           .home-legacy-hero p.desc { margin: 0 auto 36px; }
           .home-legacy-hero .hero-actions { justify-content: center; }
