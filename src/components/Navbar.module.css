@@ -169,11 +169,21 @@
   .navInner {
     grid-template-columns: 1fr auto !important;
     position: relative;
+    padding: 8px 4px !important;
+  }
+
+  .nav {
+    padding: 12px 8px !important;
+  }
+
+  .nav.scrolled {
+    padding: 6px 8px !important;
   }
 
   .nav.scrolled .navInner {
     max-width: 100%;
     grid-template-columns: 1fr auto !important;
+    padding: 4px 4px !important;
   }
 
   .nav.scrolled .logo {
@@ -191,5 +201,19 @@
 
   .nav.scrolled .logoMark {
     left: 16px;
+  }
+}
+
+.mobileLogo {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .mobileLogo {
+    display: block;
+    margin-right: -2px;
+  }
+  .logoMark {
+    display: none !important;
   }
 }

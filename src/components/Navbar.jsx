@@ -32,6 +32,7 @@ export default function Navbar() {
       <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
         <div className={styles.navInner}>
           <Link href="/" className={styles.logo}>
+            <Image src="/Auxosys-icon-mono-dark.svg" alt="Auxosys Mobile Logo" width={47} height={47} className={styles.mobileLogo} />
             <span className={styles.logoWord}>AUXOSYS</span>
             <span className={styles.logoMark} style={{ background: 'transparent' }}>
               <Image src="/Auxosys-icon-mono-dark.svg" alt="Auxosys Logo" width={40} height={40} />

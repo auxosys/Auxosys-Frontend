@@ -106,11 +106,27 @@ export default function ServicesPage() {
         .hgv-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; position: relative; z-index: 2; }
         @media (max-width: 960px) {
           .hero-grid-visual { 
-            grid-template-columns: 1fr; 
-            min-height: auto;
             margin-top: 32px;
+            min-height: 400px;
+            gap: 12px;
           }
-          .hgv-cell.span-2 { grid-row: auto; }
+          .hgv-cell {
+            padding: 14px;
+            min-width: 0; /* prevent min-content overflow */
+          }
+          .hgv-name {
+            font-size: 15px;
+            word-wrap: break-word;
+            margin-bottom: 4px;
+          }
+          .hgv-desc {
+            font-size: 12px;
+          }
+          .hgv-icon {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 8px;
+          }
         }
       `}</style>
       <section className="hero" style={{ overflowX: 'hidden' }}>

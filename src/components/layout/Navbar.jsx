@@ -18,6 +18,7 @@ export default function Navbar() {
     <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-inner">
         <Link href="/" className="logo">
+          <img src="/Auxosys-icon-mono-dark.svg" alt="Auxosys Logo" className="logo-icon-mobile" />
           <span className="logo-word">AUXOSYS</span>
           <span className="logo-mark">A</span>
         </Link>

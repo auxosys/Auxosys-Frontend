@@ -19,7 +19,7 @@
   --green: #22C55E;
   --amber: #5aa9db;
 
-  --auxo-ice: #95e8f3;
+  --auxo-ice: #85e5f1;
   --auxo-white: #FFFFFF;
   --nav-h: 96px;
 
@@ -94,8 +94,8 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-heading, var(--font-display));
-  font-weight: 700;
+  font-family: var(--font-display, var(--font-heading));
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.12;
 }

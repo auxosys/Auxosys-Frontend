@@ -124,7 +124,7 @@ export default function ContactUs() {
 
         .contact-left-content {
           position: relative;
-          z-index: 1;
+          z-index: 10;
           display: flex;
           flex-direction: column;
           height: 100%;
@@ -157,8 +157,8 @@ export default function ContactUs() {
         .contact-left-headline p {
           font-size: 16px;
           color: #ffffff !important;
+          opacity: 1 !important;
           font-weight: 500;
-          text-shadow: 0 1px 3px rgba(0,0,0,0.8);
           max-width: 320px;
           line-height: 1.6;
           margin: 0;
@@ -206,7 +206,7 @@ export default function ContactUs() {
           font-weight: 700;
           letter-spacing: 0.1em;
           color: #ffffff !important;
-          text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+          opacity: 1 !important;
         }
 
         .info-label::before {
@@ -228,8 +228,8 @@ export default function ContactUs() {
         .info-value {
           font-size: 14.5px;
           color: #ffffff !important;
+          opacity: 1 !important;
           font-weight: 600;
-          text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
 
         /* ── RIGHT PANEL ── */
@@ -456,11 +456,22 @@ export default function ContactUs() {
 
         /* ── MOBILE ── */
         @media (max-width: 900px) {
-          .contact-container { grid-template-columns: 1fr; }
-          .contact-left { padding: 40px 28px 32px; }
-          .contact-left-headline { padding-top: 60px; }
+          .contact-page {
+            display: block;
+            padding: 100px 16px 40px;
+          }
+          .contact-container { 
+            grid-template-columns: 1fr;
+            height: auto;
+            min-height: auto;
+          }
+          .contact-left { padding: 40px 24px 40px; }
+          .contact-left-headline { padding-top: 30px; }
           .contact-left-headline h2 { font-size: 26px; }
-          .contact-right { padding: 40px 24px 64px; }
+          .contact-right { 
+            padding: 40px 20px 48px;
+            overflow-y: visible;
+          }
           .phone-input-group { grid-template-columns: 1fr; }
         }
       `}</style>

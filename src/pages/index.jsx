@@ -147,7 +147,7 @@ export default function HomePage() {
           margin-bottom: 18px;
           color: var(--white);
           font-family: var(--font-display);
-          font-weight: 800;
+          font-weight: 600;
           line-height: 1.05;
           letter-spacing: -0.03em;
         }
@@ -179,24 +179,22 @@ export default function HomePage() {
           display: inline-flex;
           align-items: center;
           gap: 16px;
-          background: rgba(15, 36, 54, 0.55);
-          border: 1px solid rgba(92, 201, 214, 0.3);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          background: #11262b;
+          border: 1px solid #11262b;
           border-radius: 9999px;
           padding: 8px 10px 8px 24px;
           color: #ffffff;
           font-weight: 600;
           font-size: 15px;
           text-decoration: none;
-          box-shadow: 0 0 16px rgba(92, 201, 214, 0.15);
+          box-shadow: 0 4px 14px rgba(17, 38, 43, 0.15);
           transition: all 0.3s ease;
           cursor: pointer;
         }
         .home-legacy-hero .btn-glass-pill:hover {
-          background: rgba(15, 36, 54, 0.75);
-          border-color: rgba(92, 201, 214, 0.6);
-          box-shadow: 0 0 24px rgba(92, 201, 214, 0.3);
+          background: #0fb5a6;
+          border-color: #0fb5a6;
+          box-shadow: 0 6px 20px rgba(15, 181, 166, 0.3);
           transform: translateY(-2px);
         }
         .home-legacy-hero .btn-glass-icon {
@@ -206,13 +204,13 @@ export default function HomePage() {
           width: 36px;
           height: 36px;
           border-radius: 50%;
-          border: 1px solid rgba(92, 201, 214, 0.4);
-          background: rgba(92, 201, 214, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.1);
           transition: all 0.3s ease;
         }
         .home-legacy-hero .btn-glass-pill:hover .btn-glass-icon {
-          background: rgba(92, 201, 214, 0.25);
-          border-color: rgba(92, 201, 214, 0.8);
+          background: rgba(255, 255, 255, 0.2);
+          border-color: rgba(255, 255, 255, 0.4);
         }
         .home-legacy-hero .hero-right {
           display: grid;
