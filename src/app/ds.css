@@ -22,7 +22,7 @@
 
 /* --- CARDS --- */
 .ds-card {
-  background: var(--bg-1);
+  background: var(--surface, #fff);
   border: 1px solid var(--border);
   border-radius: 28px;
   padding: 48px;
@@ -41,12 +41,12 @@
 /* --- TYPOGRAPHY (Used inside LegalTemplate) --- */
 .ds-document h2 {
   font-size: 28px;
-  font-weight: 700;
-  color: #f8fafc;
+  font-weight: 750;
+  color: var(--text);
   letter-spacing: -0.01em;
   margin: 48px 0 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border);
 }
 
 .ds-document h2:first-child {
@@ -55,25 +55,25 @@
 
 .ds-document h3 {
   font-size: 20px;
-  font-weight: 600;
-  color: #ffffff;
+  font-weight: 680;
+  color: var(--text);
   margin: 32px 0 16px;
 }
 
 .ds-document p {
-  font-size: 18px;
-  line-height: 1.8;
-  color: #AEB8C7;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text-muted);
   margin-bottom: 24px;
 }
 
 .ds-document strong, .ds-document b {
-  color: #ffffff;
+  color: var(--text);
   font-weight: 700;
 }
 
 .ds-document a {
-  color: #5CC9D6;
+  color: var(--accent);
   text-decoration: none;
   font-weight: 600;
   transition: opacity 0.2s;
@@ -93,9 +93,9 @@
 }
 
 .ds-document li {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.6;
-  color: #AEB8C7;
+  color: var(--text-muted);
   position: relative;
   padding-left: 28px;
 }

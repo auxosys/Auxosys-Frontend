@@ -1,6 +1,6 @@
 import './globals.css'
 import './ds.css'
-
+import './home-pro.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/layout/Footer'
 import { Archivo, Inter_Tight, Inter } from 'next/font/google'

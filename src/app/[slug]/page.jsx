@@ -6,15 +6,15 @@ import DOMPurify from "dompurify";
 
 // ── Brand tokens (matching News/Career details pages) ─────────
 const T = {
-  brand: "#5CC9D6",
-  brandLt: "rgba(92, 201, 214, 0.1)",
-  brandMd: "rgba(92, 201, 214, 0.2)",
-  black: "#F8FAFC",
-  body: "#AEB8C2",
-  muted: "#7F93A3",
-  cream: "#081826",
-  creamDk: "#22384B",
-  white: "#0F2436",
+  brand: "var(--accent)",
+  brandLt: "rgba(15, 181, 166, 0.1)",
+  brandMd: "rgba(15, 181, 166, 0.2)",
+  black: "var(--text)",
+  body: "var(--text-muted)",
+  muted: "var(--text-soft)",
+  cream: "var(--bg)",
+  creamDk: "var(--bg-alt)",
+  white: "var(--surface)",
 };
 const FONT = "'DM Sans', sans-serif";
 
@@ -68,7 +68,7 @@ function ArticleSkeleton() {
   const bar = (w, h = 14, mb = 10, delay = 0, key = undefined) => (
       <div key={key} style={{
           height: h, width: w, borderRadius: 7, marginBottom: mb,
-          background: "#22384B", animation: `pulse 1.4s ease-in-out ${delay}s infinite`
+          background: T.creamDk, animation: `pulse 1.4s ease-in-out ${delay}s infinite`
       }} />
   );
   return (
@@ -78,7 +78,7 @@ function ArticleSkeleton() {
           {bar("85%", 38, 12)}
           {bar("60%", 38, 40)}
           <div style={{
-              height: 100, borderRadius: 20, background: "#22384B",
+              height: 100, borderRadius: 20, background: T.creamDk,
               marginBottom: 48, animation: "pulse 1.4s ease-in-out infinite"
           }} />
           {[100, 95, 88, 72, 95, 80].map((w, i) => bar(`${w}%`, 14, 12, i * 0.08, i))}
@@ -160,8 +160,8 @@ export default function LegalPage() {
         }
         .article-body h2 {
           font-family: 'DM Sans', sans-serif;
-          font-weight: 700;
-          color: #F8FAFC;
+          font-weight: 750;
+          color: ${T.black};
           letter-spacing: -0.02em;
           line-height: 1.25;
           font-size: clamp(1.2rem, 2vw, 1.5rem);
@@ -169,28 +169,28 @@ export default function LegalPage() {
         }
         .article-body p {
           font-family: 'DM Sans', sans-serif;
-          font-size: 16px; 
+          font-size: 16.5px; 
           font-weight: 400;
-          color: #AEB8C2; 
-          line-height: 1.85;
+          color: ${T.body}; 
+          line-height: 1.7;
           margin: 0 0 1.4em;
         }
         .article-body strong, .article-body b {
-          font-weight: 700; color: #F8FAFC;
+          font-weight: 700; color: ${T.black};
         }
         .article-body a {
-          color: #5CC9D6; font-weight: 600;
+          color: ${T.brand}; font-weight: 600;
           text-underline-offset: 3px;
         }
-        .article-body a:hover { color: #5CC9D6; filter: brightness(1.1); text-decoration: underline; }
+        .article-body a:hover { color: ${T.brand}; filter: brightness(1.1); text-decoration: underline; }
         .article-body ul, .article-body ol {
           padding-left: 0; margin: 0 0 1.4em;
           list-style: none;
         }
         .article-body li {
           font-family: 'DM Sans', sans-serif;
-          font-size: 16px; color: #AEB8C2;
-          line-height: 1.8; margin-bottom: 0.6em;
+          font-size: 16.5px; color: ${T.body};
+          line-height: 1.7; margin-bottom: 0.6em;
           position: relative;
           padding-left: 24px;
         }
@@ -204,7 +204,7 @@ export default function LegalPage() {
           font-size: 20px;
         }
         .article-body hr {
-          border: none; border-top: 1px solid rgba(255,255,255,0.06);
+          border: none; border-top: 1px solid var(--border);
           margin: 0 0 2em 0;
         }
       `}</style>
@@ -220,7 +220,7 @@ export default function LegalPage() {
             paddingTop: 120,
             paddingBottom: 40,
             marginBottom: 20,
-            background: "#081826",
+            background: T.cream,
             overflow: "hidden"
         }}>
             {/* Subtle Gradient Glow */}
@@ -230,7 +230,7 @@ export default function LegalPage() {
                 left: "20%",
                 width: "60%",
                 height: "100%",
-                background: "radial-gradient(ellipse at top, rgba(92,201,214,0.08) 0%, rgba(8,24,38,0) 70%)",
+                background: "radial-gradient(ellipse at top, rgba(15,181,166,0.08) 0%, transparent 70%)",
                 zIndex: 0,
                 pointerEvents: "none"
             }} />
@@ -245,8 +245,8 @@ export default function LegalPage() {
             }}>
                 <h1 style={{
                     fontSize: "clamp(2rem, 4vw, 2.75rem)", 
-                    fontWeight: 700, 
-                    color: '#ffffff', 
+                    fontWeight: 750, 
+                    color: T.black, 
                     letterSpacing: '-0.02em', 
                     lineHeight: 1.2, 
                     marginBottom: 16,
@@ -272,7 +272,7 @@ export default function LegalPage() {
                         flexWrap: "wrap", fontFamily: FONT
                     }}>
                         <span style={{ fontSize: 13, color: T.muted, fontWeight: 500, letterSpacing: "0.02em" }}>
-                            Last Updated: <strong style={{ color: "#fff", fontWeight: 700 }}>{lastUpdatedLabel}</strong>
+                            Last Updated: <strong style={{ color: T.black, fontWeight: 700 }}>{lastUpdatedLabel}</strong>
                         </span>
                     </div>
                 )}

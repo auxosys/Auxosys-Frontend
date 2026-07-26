@@ -14,7 +14,7 @@ export default function LegalTemplate({
   backFallback = "/careers"
 }) {
   return (
-    <div className="font-sans min-h-screen" style={{ background: 'linear-gradient(to bottom, #071321, #0D1D36)', color: '#F8FAFC' }}>
+    <div className="font-sans min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
       <Container>
         {/* HERO */}
         <PageHero title={title} subtitle={subtitle} lastUpdated={lastUpdated}>

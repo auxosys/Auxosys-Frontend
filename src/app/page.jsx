@@ -1,6 +1,6 @@
 import HeroGlobe from '@/components/HeroGlobe';
 import Reveal from '@/components/Reveal';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import {
   IconBrain, IconCRM, IconCloud, IconTools,
   IconAI, IconSaaS, IconWeb, IconMobile, IconBlockchain, IconBulb, IconDesign,
@@ -11,22 +11,221 @@ import {
 
 /*
   ────────────────────────────────────────────────────────────────
-  AUXOSYS — Home
-  Styling lives in home.css (import it in app/layout.jsx or globals).
-  Every block below uses ONE shared card system: .card / .card-icon /
-  .card-grid.cols-N  — so the whole page reads consistently.
+  AUXOSYS — Home  (pairs with home-pro.css + home-pro-additions.css)
 
-  Cards intentionally trimmed for an early product+service startup are
-  COMMENTED OUT (not deleted) with a note, so you can switch them back
-  on the moment they're truthful. Search "TRIMMED" to find them.
+  Card system:
+    • .card                 → icon card (services, industries, why)
+    • .card.card--media     → media/editorial card (products)
+    • .card.card--feature   → 2-col split feature card
+    • .card.card--dark      → dark contrast card (inline CTA)
+    • .card-link + .arw     → "Learn more ↗" affordance
+
+  Content is data-driven (arrays → map) so sections stay DRY.
+  Cards trimmed for an early startup are COMMENTED with a reason —
+  search "TRIMMED" to re-enable them.
   ────────────────────────────────────────────────────────────────
 */
 
+/* small arrow affordance reused by every card link */
+const Arrow = () => (
+  <span className="arw"><ArrowUpRight size={13} strokeWidth={2.5} /></span>
+);
+
+/* ---------------- DATA ---------------- */
+const PRODUCTS = [
+  {
+    cat: 'AI', title: 'AI Workspace', href: '/products/ai-workspace', Icon: IconBrain,
+    desc: 'An intelligent workspace for automating workflows, content generation, and AI-assisted productivity.'
+  },
+  {
+    cat: 'CRM', title: 'Auxosys CRM', href: '/products/crm', Icon: IconCRM,
+    desc: 'A lightweight customer relationship platform for startups and growing businesses.'
+  },
+  {
+    cat: 'Cloud', title: 'Cloud Workspace', href: '/products/cloud-workspace', Icon: IconCloud,
+    desc: 'Secure document management and a collaborative cloud platform for modern teams.'
+  },
+];
+
+const SERVICES = [
+  { title: 'AI Development', href: '/services/ai', Icon: IconAI, desc: 'Custom AI applications, chatbots, recommendation systems, and intelligent automation.' },
+  { title: 'SaaS Development', href: '/services/saas', Icon: IconSaaS, desc: 'Scalable multi-tenant SaaS platforms designed for rapid business growth.' },
+  { title: 'Web Development', href: '/services/web', Icon: IconWeb, desc: 'Modern, responsive, high-performance websites and web applications.' },
+  { title: 'Mobile Development', href: '/services/mobile', Icon: IconMobile, desc: 'Cross-platform Android and iOS applications.' },
+  { title: 'Cloud Solutions', href: '/services/cloud', Icon: IconCloud, desc: 'Cloud-native infrastructure, migration, DevOps, and monitoring.' },
+  { title: 'Blockchain Development', href: '/services/blockchain', Icon: IconBlockchain, desc: 'Smart contracts, decentralized applications, and Web3 solutions.' },
+  { title: 'Product Consulting', href: '/services/consulting', Icon: IconBulb, desc: 'Helping startups validate, design, and launch successful products.' },
+  { title: 'UI/UX Design', href: '/services/design', Icon: IconDesign, desc: 'Human-centered interfaces with exceptional user experiences.' },
+];
+
+const INDUSTRIES = [
+  { Icon: IconHealthcare, title: 'Healthcare', desc: 'Secure healthcare software and patient management systems.' },
+  { Icon: IconFinance, title: 'Finance', desc: 'Digital banking, fintech, payment systems, and analytics.' },
+  { Icon: IconEducation, title: 'Education', desc: 'Learning management and digital education platforms.' },
+  { Icon: IconRetail, title: 'Retail', desc: 'Omnichannel commerce and inventory management.' },
+  { Icon: IconLogistics, title: 'Logistics', desc: 'Fleet tracking and logistics optimization.' },
+  { Icon: IconStartup, title: 'Startups', desc: 'MVP development and product engineering.' },
+  // TRIMMED — bring back as case studies land:
+  // { Icon: IconManufacturing, title: 'Manufacturing', desc: 'Factory automation and operational intelligence.' },
+  // { Icon: IconRealEstate, title: 'Real Estate', desc: 'Property management and smart real estate platforms.' },
+];
+
+const VALUES = [
+  { n: '01', title: 'Innovation', desc: 'Solutions built with emerging technologies.' },
+  { n: '02', title: 'Quality', desc: 'Software built for performance and scale.' },
+  { n: '03', title: 'Trust', desc: 'Transparent communication, reliable partnerships.' },
+  { n: '04', title: 'Growth', desc: 'Helping businesses scale through technology.' },
+];
+
+const PROCESS = [
+  { n: '01', title: 'Discover', desc: 'Understand your goals, users, and constraints.' },
+  { n: '02', title: 'Strategize', desc: 'Define scope, architecture, and a realistic roadmap.' },
+  { n: '03', title: 'Design', desc: 'Craft interfaces and systems built for clarity.' },
+  { n: '04', title: 'Develop', desc: 'Build with modern, scalable engineering practices.' },
+  { n: '05', title: 'Test & Launch', desc: 'Rigorous QA before anything goes live.' },
+  { n: '06', title: 'Support', desc: 'Ongoing maintenance, monitoring, and iteration.' },
+];
+
+const WHY = [
+  { Icon: IconLightning, title: 'Future-Ready Technology', desc: 'Built using the latest technologies.' },
+  { Icon: IconShield, title: 'Enterprise Security', desc: 'Secure architecture following modern best practices.' },
+  { Icon: IconScale, title: 'Scalable Architecture', desc: 'Designed to grow alongside your business.' },
+  { Icon: IconSearch, title: 'Transparent Process', desc: 'Clear communication and agile development.' },
+  { Icon: IconHandshake, title: 'Dedicated Partnership', desc: 'We work as an extension of your team.' },
+  { Icon: IconSupport, title: 'Long-Term Support', desc: 'Continuous maintenance and optimization.' },
+];
+
+const STATS = [
+  { num: '30+', label: 'Technologies Mastered' },
+  { num: '10+', label: 'Solutions in Development' },
+  { num: 'Growing', label: 'Global Clients' },
+  { num: '24/7', label: 'Support Availability' },
+  // TRIMMED — re-enable when verifiable:
+  // { num: '50+', label: 'Projects Delivered' },
+  // { num: '15+', label: 'Industries Served' },
+];
+
+const TECH = ['React', 'Next.js', 'TypeScript', 'Node.js', 'NestJS', 'Supabase', 'PostgreSQL',
+  'Docker', 'Kubernetes', 'AWS', 'Google Cloud', 'OpenAI', 'Gemini', 'Claude', 'Python', 'Blockchain'];
+
+/* ---------------- PAGE ---------------- */
 export default function HomePage() {
   return (
     <>
       {/* ===================== HERO ===================== */}
-      <section className="hero">
+      <style>{`
+        .home-legacy-hero {
+          padding: calc(5px + var(--nav-h)) 0 40px;
+          min-height: 100vh;
+          max-height: 950px;
+          display: flex;
+          align-items: center;
+          position: relative;
+          overflow: hidden;
+          background: linear-gradient(180deg, var(--auxo-ice) 0%, #EAF9FB 45%, var(--auxo-white) 100%);
+        }
+        .home-legacy-hero::before {
+          content: "";
+          position: absolute;
+          top: -200px;
+          right: -200px;
+          width: 900px;
+          height: 900px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(92, 201, 214, 0.16), rgba(92, 201, 214, 0) 70%);
+          pointer-events: none;
+        }
+        .home-legacy-hero .hero-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 48px;
+          align-items: center;
+          width: 100%;
+        }
+        .home-legacy-hero h1 {
+          font-size: 54px;
+          margin-bottom: 18px;
+          color: var(--white);
+          font-family: var(--font-display);
+          font-weight: 800;
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+        }
+        .home-legacy-hero .hero-highlight {
+          font-family: var(--font-display);
+          font-weight: 600;
+          font-size: 15px;
+          color: var(--teal);
+          letter-spacing: 0.04em;
+          margin-bottom: 22px;
+          display: block;
+          background: transparent;
+          border: none;
+          padding: 0;
+        }
+        .home-legacy-hero p.desc {
+          color: var(--gray);
+          font-size: 17px;
+          max-width: 540px;
+          margin-bottom: 36px;
+          line-height: 1.6;
+        }
+        .home-legacy-hero .hero-actions {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+        .home-legacy-hero .btn-glass-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 16px;
+          background: rgba(15, 36, 54, 0.55);
+          border: 1px solid rgba(92, 201, 214, 0.3);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border-radius: 9999px;
+          padding: 8px 10px 8px 24px;
+          color: #ffffff;
+          font-weight: 600;
+          font-size: 15px;
+          text-decoration: none;
+          box-shadow: 0 0 16px rgba(92, 201, 214, 0.15);
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+        .home-legacy-hero .btn-glass-pill:hover {
+          background: rgba(15, 36, 54, 0.75);
+          border-color: rgba(92, 201, 214, 0.6);
+          box-shadow: 0 0 24px rgba(92, 201, 214, 0.3);
+          transform: translateY(-2px);
+        }
+        .home-legacy-hero .btn-glass-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 1px solid rgba(92, 201, 214, 0.4);
+          background: rgba(92, 201, 214, 0.1);
+          transition: all 0.3s ease;
+        }
+        .home-legacy-hero .btn-glass-pill:hover .btn-glass-icon {
+          background: rgba(92, 201, 214, 0.25);
+          border-color: rgba(92, 201, 214, 0.8);
+        }
+        .home-legacy-hero .hero-right {
+          display: grid;
+          place-items: center;
+        }
+        @media (max-width: 960px) {
+          .home-legacy-hero .hero-grid { grid-template-columns: 1fr; text-align: center; }
+          .home-legacy-hero h1 { font-size: 42px; }
+          .home-legacy-hero p.desc { margin: 0 auto 36px; }
+          .home-legacy-hero .hero-actions { justify-content: center; }
+        }
+      `}</style>
+      <section className="home-legacy-hero">
         <div className="container hero-grid">
           <div>
             <h1>Building Intelligent Digital Products That Scale Businesses</h1>
@@ -43,9 +242,7 @@ export default function HomePage() {
               </a>
             </div>
           </div>
-          <div className="hero-right">
-            <HeroGlobe />
-          </div>
+          <div className="hero-right"><HeroGlobe /></div>
         </div>
       </section>
 
@@ -62,15 +259,16 @@ export default function HomePage() {
               intelligent automation, thoughtful design, and modern engineering.</p>
           </Reveal>
           <Reveal className="values-grid">
-            <div className="value-card"><div className="num">01</div><h4>Innovation</h4><p>Solutions built with emerging technologies.</p></div>
-            <div className="value-card"><div className="num">02</div><h4>Quality</h4><p>Software built for performance and scale.</p></div>
-            <div className="value-card"><div className="num">03</div><h4>Trust</h4><p>Transparent communication, reliable partnerships.</p></div>
-            <div className="value-card"><div className="num">04</div><h4>Growth</h4><p>Helping businesses scale through technology.</p></div>
+            {VALUES.map((v) => (
+              <div className="value-card" key={v.n}>
+                <div className="num">{v.n}</div><h4>{v.title}</h4><p>{v.desc}</p>
+              </div>
+            ))}
           </Reveal>
         </div>
       </section>
 
-      {/* ===================== PRODUCTS ===================== */}
+      {/* ===================== PRODUCTS (media cards) ===================== */}
       <section className="section alt" id="products">
         <div className="container">
           <Reveal className="section-head">
@@ -79,47 +277,51 @@ export default function HomePage() {
             <p>A growing ecosystem of software products designed to solve everyday business challenges.</p>
           </Reveal>
           <Reveal>
-            {/* Kept the two strongest, most credible products. cols-2 keeps a
-                small line-up looking intentional rather than sparse. */}
-            <div className="card-grid cols-2">
-              <div className="card">
-                <div className="card-icon"><IconBrain /></div>
-                <h3>AI Workspace</h3>
-                <p>An intelligent workspace for automating business workflows, content generation, and AI-assisted productivity.</p>
-                <span className="status-tag status-soon">Coming Soon</span>
-              </div>
-              <div className="card">
-                <div className="card-icon"><IconCRM /></div>
-                <h3>Auxosys CRM</h3>
-                <p>A lightweight customer relationship management platform for startups and growing businesses.</p>
-                <span className="status-tag status-dev">In Development</span>
-              </div>
-
-              {/* TRIMMED — "Research" / "Planned" products read as placeholders when
-                  every card already says it isn't shipped. Re-enable once they're real:
-              <div className="card">
-                <div className="card-icon"><IconCloud /></div>
-                <h3>Cloud Workspace</h3>
-                <p>Secure document management and collaborative cloud platform.</p>
-                <span className="status-tag status-research">Research</span>
-              </div>
-              <div className="card">
-                <div className="card-icon"><IconTools /></div>
-                <h3>Developer Toolkit</h3>
-                <p>A collection of APIs, SDKs, and developer utilities.</p>
-                <span className="status-tag status-planned">Planned</span>
-              </div>
-              */}
+            <div className="card-grid cols-3">
+              {PRODUCTS.map(({ cat, title, desc, href, Icon }) => (
+                <a href={href} className="card card--media" key={title}>
+                  <div className="card-media icon-panel">
+                    <span className="card-cat">{cat}</span>
+                    <Icon />
+                  </div>
+                  <div className="card-body">
+                    <h3>{title}</h3>
+                    <p>{desc}</p>
+                    <span className="card-link">Learn more <Arrow /></span>
+                  </div>
+                </a>
+              ))}
             </div>
           </Reveal>
-          {/* TRIMMED — no product catalog to link to yet:
-          <div className="section-cta"><a href="#" className="btn btn-outline">View All Products</a></div>
-          */}
         </div>
       </section>
 
-      {/* ===================== SERVICES (core revenue — full grid kept) ===================== */}
-      <section className="section" id="services">
+      {/* ===================== FEATURED (split feature card) ===================== */}
+      <section className="section">
+        <div className="container">
+          <Reveal className="section-head">
+            <div className="eyebrow">Featured</div>
+            <h2>Our Flagship Platform</h2>
+          </Reveal>
+          <Reveal>
+            <div className="card-grid" style={{ gridTemplateColumns: '1fr' }}>
+              <article className="card card--feature">
+                <div className="card-media icon-panel"><IconBrain /></div>
+                <div className="card-body">
+                  <span className="eyebrow">Enterprise AI</span>
+                  <h3>Ship intelligent products faster</h3>
+                  <p>A unified platform combining AI automation, cloud infrastructure, and
+                    enterprise-grade security — everything you need to build and scale, in one place.</p>
+                  <a href="/platform" className="card-link">Explore the platform <Arrow /></a>
+                </div>
+              </article>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===================== SERVICES (icon cards + arrow links + dark CTA) ===================== */}
+      <section className="section alt" id="services">
         <div className="container">
           <Reveal className="section-head">
             <div className="eyebrow">Our Services</div>
@@ -128,22 +330,30 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <div className="card-grid cols-4">
-              <div className="card"><div className="card-icon"><IconAI /></div><h3>AI Development</h3><p>Custom AI applications, chatbots, recommendation systems, and intelligent automation.</p></div>
-              <div className="card"><div className="card-icon"><IconSaaS /></div><h3>SaaS Development</h3><p>Scalable multi-tenant SaaS platforms designed for rapid business growth.</p></div>
-              <div className="card"><div className="card-icon"><IconWeb /></div><h3>Web Development</h3><p>Modern, responsive, high-performance websites and web applications.</p></div>
-              <div className="card"><div className="card-icon"><IconMobile /></div><h3>Mobile Development</h3><p>Cross-platform Android and iOS applications.</p></div>
-              <div className="card"><div className="card-icon"><IconCloud /></div><h3>Cloud Solutions</h3><p>Cloud-native infrastructure, migration, DevOps, and monitoring.</p></div>
-              <div className="card"><div className="card-icon"><IconBlockchain /></div><h3>Blockchain Development</h3><p>Smart contracts, decentralized applications, and Web3 solutions.</p></div>
-              <div className="card"><div className="card-icon"><IconBulb /></div><h3>Product Consulting</h3><p>Helping startups validate, design, and launch successful products.</p></div>
-              <div className="card"><div className="card-icon"><IconDesign /></div><h3>UI/UX Design</h3><p>Human-centered interfaces with exceptional user experiences.</p></div>
+              {SERVICES.map(({ title, desc, href, Icon }) => (
+                <a href={href} className="card" key={title}>
+                  <div className="card-icon"><Icon /></div>
+                  <h3>{title}</h3>
+                  <p>{desc}</p>
+                  <span className="card-link">Learn more <Arrow /></span>
+                </a>
+              ))}
+
+              {/* full-width dark inline CTA — closes the section */}
+              <div className="card card--dark card--cta">
+                <div className="cta-card-text">
+                  <h3>Not sure where to start?</h3>
+                  <p>Tell us about your project and we&apos;ll help scope the right approach — no commitment.</p>
+                </div>
+                <a href="/contact" className="btn">Talk to our team <ArrowUpRight size={16} strokeWidth={2.5} /></a>
+              </div>
             </div>
           </Reveal>
-          <div className="section-cta"><a href="/contact" className="btn btn-outline">Discuss Your Project</a></div>
         </div>
       </section>
 
       {/* ===================== PROCESS ===================== */}
-      <section className="section alt">
+      <section className="section">
         <div className="container">
           <Reveal className="section-head">
             <div className="eyebrow">How We Work</div>
@@ -152,19 +362,18 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <div className="timeline">
-              <div className="tl-step"><div className="tl-dot">01</div><h4>Discover</h4><p>Understand your goals, users, and constraints.</p></div>
-              <div className="tl-step"><div className="tl-dot">02</div><h4>Strategize</h4><p>Define scope, architecture, and a realistic roadmap.</p></div>
-              <div className="tl-step"><div className="tl-dot">03</div><h4>Design</h4><p>Craft interfaces and systems built for clarity.</p></div>
-              <div className="tl-step"><div className="tl-dot">04</div><h4>Develop</h4><p>Build with modern, scalable engineering practices.</p></div>
-              <div className="tl-step"><div className="tl-dot">05</div><h4>Test &amp; Launch</h4><p>Rigorous QA before anything goes live.</p></div>
-              <div className="tl-step"><div className="tl-dot">06</div><h4>Support</h4><p>Ongoing maintenance, monitoring, and iteration.</p></div>
+              {PROCESS.map(({ n, title, desc }) => (
+                <div className="tl-step" key={n}>
+                  <div className="tl-dot">{n}</div><h4>{title}</h4><p>{desc}</p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* ===================== INDUSTRIES ===================== */}
-      <section className="section" id="industries">
+      <section className="section alt" id="industries">
         <div className="container">
           <Reveal className="section-head">
             <div className="eyebrow">Industries</div>
@@ -172,27 +381,19 @@ export default function HomePage() {
             <p>Tailored technology solutions that drive measurable outcomes across sectors.</p>
           </Reveal>
           <Reveal>
-            {/* Kept six focused sectors. cols-3 → two tidy rows.
-                (Original had 8; trimmed the two weakest to avoid overclaiming breadth.) */}
             <div className="card-grid cols-3">
-              <div className="card"><div className="card-icon"><IconHealthcare /></div><h3>Healthcare</h3><p>Secure healthcare software and patient management systems.</p></div>
-              <div className="card"><div className="card-icon"><IconFinance /></div><h3>Finance</h3><p>Digital banking, fintech, payment systems, and analytics.</p></div>
-              <div className="card"><div className="card-icon"><IconEducation /></div><h3>Education</h3><p>Learning management and digital education platforms.</p></div>
-              <div className="card"><div className="card-icon"><IconRetail /></div><h3>Retail</h3><p>Omnichannel commerce and inventory management.</p></div>
-              <div className="card"><div className="card-icon"><IconLogistics /></div><h3>Logistics</h3><p>Fleet tracking and logistics optimization.</p></div>
-              <div className="card"><div className="card-icon"><IconStartup /></div><h3>Startups</h3><p>MVP development and product engineering.</p></div>
-
-              {/* TRIMMED — bring back as case studies land:
-              <div className="card"><div className="card-icon"><IconManufacturing /></div><h3>Manufacturing</h3><p>Factory automation and operational intelligence.</p></div>
-              <div className="card"><div className="card-icon"><IconRealEstate /></div><h3>Real Estate</h3><p>Property management and smart real estate platforms.</p></div>
-              */}
+              {INDUSTRIES.map(({ Icon, title, desc }) => (
+                <div className="card" key={title}>
+                  <div className="card-icon"><Icon /></div><h3>{title}</h3><p>{desc}</p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* ===================== TECH STACK ===================== */}
-      <section className="section alt">
+      <section className="section">
         <div className="container">
           <Reveal className="section-head">
             <div className="eyebrow">Tech Stack</div>
@@ -201,16 +402,14 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <div className="tech-grid">
-              {['React', 'Next.js', 'TypeScript', 'Node.js', 'NestJS', 'Supabase', 'PostgreSQL', 'Docker',
-                'Kubernetes', 'AWS', 'Google Cloud', 'OpenAI', 'Gemini', 'Claude', 'Python', 'Blockchain']
-                .map((t) => <div className="tech-item" key={t}>{t}</div>)}
+              {TECH.map((t) => <div className="tech-item" key={t}>{t}</div>)}
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* ===================== WHY CHOOSE ===================== */}
-      <section className="section">
+      <section className="section alt">
         <div className="container">
           <Reveal className="section-head">
             <div className="eyebrow">Why Auxosys</div>
@@ -218,50 +417,39 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <div className="why-grid">
-              <div className="why-card"><div className="why-icon"><IconLightning /></div><h4>Future-Ready Technology</h4><p>Built using the latest technologies.</p></div>
-              <div className="why-card"><div className="why-icon"><IconShield /></div><h4>Enterprise Security</h4><p>Secure architecture following modern best practices.</p></div>
-              <div className="why-card"><div className="why-icon"><IconScale /></div><h4>Scalable Architecture</h4><p>Designed to grow alongside your business.</p></div>
-              <div className="why-card"><div className="why-icon"><IconSearch /></div><h4>Transparent Process</h4><p>Clear communication and agile development.</p></div>
-              <div className="why-card"><div className="why-icon"><IconHandshake /></div><h4>Dedicated Partnership</h4><p>We work as an extension of your team.</p></div>
-              <div className="why-card"><div className="why-icon"><IconSupport /></div><h4>Long-Term Support</h4><p>Continuous maintenance and optimization.</p></div>
+              {WHY.map(({ Icon, title, desc }) => (
+                <div className="why-card" key={title}>
+                  <div className="why-icon"><Icon /></div><h4>{title}</h4><p>{desc}</p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* ===================== STATS ===================== */}
-      <section className="section alt">
+      <section className="section">
         <div className="container">
           <Reveal className="section-head" style={{ marginBottom: '48px' }}>
             <div className="eyebrow">By the Numbers</div>
             <h2>Numbers That Reflect Our Vision</h2>
           </Reveal>
           <Reveal>
-            {/* Kept only claims that are credible for a young company and don't
-                invite "prove it." Dropped "50+ Projects Delivered" — the riskiest
-                to state early. cols reflow to a clean 4-up on desktop. */}
-            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
-              <div className="stat-card"><div className="stat-num">30+</div><div className="stat-label">Technologies Mastered</div></div>
-              <div className="stat-card"><div className="stat-num">10+</div><div className="stat-label">Solutions in Development</div></div>
-              <div className="stat-card"><div className="stat-num">Growing</div><div className="stat-label">Global Clients</div></div>
-              <div className="stat-card"><div className="stat-num">24/7</div><div className="stat-label">Support Availability</div></div>
-
-              {/* TRIMMED — re-enable when verifiable:
-              <div className="stat-card"><div className="stat-num">50+</div><div className="stat-label">Projects Delivered</div></div>
-              <div className="stat-card"><div className="stat-num">15+</div><div className="stat-label">Industries Served</div></div>
-              */}
+            <div className="stats-grid">
+              {STATS.map(({ num, label }) => (
+                <div className="stat-card" key={label}>
+                  <div className="stat-num">{num}</div><div className="stat-label">{label}</div>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ===================== TESTIMONIALS ===================== */}
-      {/*
-        TRIMMED (whole section) — placeholder "Coming Soon" testimonials read as
-        unfinished and hurt credibility more than they help. Drop this back in,
-        with real quotes, once you have them:
-
-      <section className="section">
+      {/* ===================== TESTIMONIALS =====================
+        TRIMMED (whole section) — placeholder testimonials read as unfinished.
+        Drop back in with real quotes:
+      <section className="section alt">
         <div className="container">
           <Reveal className="section-head">
             <div className="eyebrow">Testimonials</div>
@@ -269,9 +457,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <div className="card-grid cols-3">
-              <div className="testimonial-card"><span className="badge">Verified</span><h4>Client Name — Company</h4><p>Real quote here.</p></div>
-              <div className="testimonial-card"><span className="badge">Verified</span><h4>Client Name — Company</h4><p>Real quote here.</p></div>
-              <div className="testimonial-card"><span className="badge">Verified</span><h4>Client Name — Company</h4><p>Real quote here.</p></div>
+              <div className="testimonial-card"><span className="badge">Verified</span><h4>Client — Company</h4><p>Real quote here.</p></div>
             </div>
           </Reveal>
         </div>
@@ -282,11 +468,12 @@ export default function HomePage() {
       <section className="section home-cta" id="contact">
         <div className="container">
           <Reveal className="cta-banner">
-            <h2>Ready to Build Something Extraordinary?</h2>
-            <p>Whether you&apos;re launching a startup, modernizing enterprise software, or building the
-              next AI-powered platform, Auxosys is ready to turn your vision into reality.</p>
+            <div className="cta-content">
+              <h2>Success is measured by the value we create — not just the software we ship.</h2>
+              <p>At Auxosys, we build for the long term — for our clients, our community, and the future of technology.</p>
+            </div>
             <div className="cta-actions">
-              <a href="/contact" className="btn btn-primary">Contact Our Team</a>
+              <a href="/contact" className="btn btn-primary">Let's Build Together</a>
             </div>
           </Reveal>
         </div>

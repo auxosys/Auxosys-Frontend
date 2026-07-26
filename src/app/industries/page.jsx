@@ -1,6 +1,5 @@
-"use client";
-
-import { useState } from "react";
+import Reveal from '@/components/Reveal';
+import { ArrowUpRight } from 'lucide-react';
 import { 
   IconHealthcare, 
   IconFinance, 
@@ -18,373 +17,28 @@ import {
   IconBlockchain, 
   IconSearch, 
   IconHandshake 
-} from "@/components/Icons";
+} from '@/components/Icons';
 
-const css = `
-  /* ─── HERO ─── */
-  .ind-hero {
-    min-height: 100vh;
-    padding: 140px 80px 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 1px solid var(--divider);
-  }
-  .hero-bg-slider {
-    position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  }
-  .hero-bg-slider::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(to bottom, rgba(9, 15, 28, 0.5), rgba(9, 15, 28, 0.95));
-    z-index: 1;
-  }
-  .hero-bg-slide {
-    position: absolute; inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0;
-    z-index: 0;
-    animation: heroFadeCycle 15s infinite;
-  }
-  .hero-bg-slide.slide-1 { background-image: url('/images/industries-hero-1.jpg'); animation-delay: 0s; }
-  .hero-bg-slide.slide-2 { background-image: url('/images/industries-hero-2.jpg'); animation-delay: -10s; }
-  .hero-bg-slide.slide-3 { background-image: url('/images/industries-hero-3.jpg'); animation-delay: -5s; }
-  
-  @keyframes heroFadeCycle {
-    0%, 20% { opacity: 1; transform: scale(1); }
-    33.33%, 86.66% { opacity: 0; transform: scale(1.05); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-  /* floating label pills behind hero */
-  .hero-floaters {
-    position: absolute; inset: 0;
-    pointer-events: none; overflow: hidden;
-  }
-  .hero-float {
-    position: absolute;
-    font-size: 11px; font-weight: 600;
-    color: var(--border);
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 5px 14px;
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-  }
-  .hero-eyebrow {
-    font-size: 12px; font-weight: 700;
-    letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--teal); margin-bottom: 24px;
-    position: relative; z-index: 1;
-  }
-  .ind-h1 {
-    font-family: var(--font-display);
-    font-size: clamp(40px, 5.5vw, 72px);
-    font-weight: 800; line-height: 1.04;
-    letter-spacing: -0.03em;
-    max-width: 860px;
-    margin-bottom: 28px;
-    position: relative; z-index: 1;
-  }
-  .ind-h1 span {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--teal) 0%, var(--orange) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .ind-hero-desc {
-    font-size: 18px; line-height: 1.78;
-    color: var(--gray);
-    max-width: 640px; margin-bottom: 52px;
-    position: relative; z-index: 1;
-  }
-  .hero-count-row {
-    display: flex; gap: 48px; flex-wrap: wrap;
-    justify-content: center;
-    position: relative; z-index: 1;
-  }
-  .hero-count { text-align: center; }
-  .hero-count-num {
-    font-family: var(--font-display);
-    font-size: 44px; font-weight: 800;
-    line-height: 1; letter-spacing: -0.04em;
-    color: var(--white);
-  }
-  .hero-count-num sup { font-size: 22px; color: var(--teal); }
-  .hero-count-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+/* small arrow affordance reused by every card link */
+const Arrow = () => (
+  <span className="arw"><ArrowUpRight size={13} strokeWidth={2.5} /></span>
+);
 
-  /* ─── INDUSTRIES MOSAIC ─── */
-  .industries-section {
-    padding: 100px 80px;
-  }
-  .section-eyebrow {
-    font-size: 12px; font-weight: 600;
-    color: var(--teal); letter-spacing: 0.15em;
-    text-transform: uppercase; margin-bottom: 14px;
-    text-align: center;
-  }
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(26px, 3vw, 44px);
-    font-weight: 700; letter-spacing: -0.02em;
-    text-align: center; margin-bottom: 56px;
-  }
-
-  /* Mosaic: rows of varying column counts */
-  .mosaic {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .mosaic-row {
-    display: grid;
-    gap: 12px;
-  }
-  .mosaic-row-3 { grid-template-columns: 1.4fr 1fr 1fr; }
-  .mosaic-row-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
-  .mosaic-row-4b { grid-template-columns: 1fr 1fr 1.4fr 1fr; }
-
-  .ind-card {
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 36px 32px;
-    position: relative;
-    overflow: hidden;
-    cursor: default;
-    transition: transform 0.3s, border-color 0.3s;
-    min-height: 190px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .ind-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    opacity: 0;
-    transition: opacity 0.35s;
-    border-radius: 18px;
-  }
-  .ind-card:hover { transform: translateY(-5px); }
-  .ind-card:hover::before { opacity: 1; }
-
-  /* unique gradient per card using css vars */
-  .ind-card[data-glow="teal"]::before {
-    background: radial-gradient(circle at 0% 0%, rgba(92,201,214,0.12), transparent 65%);
-    border: 1px solid rgba(92,201,214,0.2);
-  }
-  .ind-card[data-glow="teal"]:hover { border-color: rgba(92,201,214,0.4); }
-  .ind-card[data-glow="orange"]::before {
-    background: radial-gradient(circle at 0% 0%, rgba(255,107,53,0.12), transparent 65%);
-  }
-  .ind-card[data-glow="orange"]:hover { border-color: rgba(255,107,53,0.35); }
-  .ind-card[data-glow="amber"]::before {
-    background: radial-gradient(circle at 0% 0%, rgba(245,158,11,0.1), transparent 65%);
-  }
-  .ind-card[data-glow="amber"]:hover { border-color: rgba(245,158,11,0.3); }
-
-  .ind-card-top { display: flex; align-items: flex-start; justify-content: space-between; }
-  .ind-card-icon {
-    width: 56px; height: 56px;
-    border-radius: 14px;
-    background: rgba(255,255,255,0.04);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    color: var(--teal);
-  }
-  .ind-card-icon svg { width: 32px; height: 32px; }
-  .ind-card-arrow {
-    font-size: 18px; color: var(--border);
-    transition: color 0.2s, transform 0.2s;
-  }
-  .ind-card:hover .ind-card-arrow { color: var(--teal); transform: translate(3px, -3px); }
-
-  .ind-card-name {
-    font-family: var(--font-display);
-    font-size: 20px; font-weight: 700;
-    color: var(--white); margin-bottom: 8px;
-  }
-  .ind-card-desc {
-    font-size: 13px; line-height: 1.7;
-    color: var(--muted);
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.3s;
-    opacity: 0;
-  }
-  .ind-card:hover .ind-card-desc { max-height: 100px; opacity: 1; }
-
-  .ind-card-tags {
-    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px;
-  }
-  .ind-tag {
-    font-size: 11px; font-weight: 500;
-    color: var(--muted);
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    border-radius: 5px; padding: 3px 10px;
-  }
-
-  /* ─── APPROACH ─── */
-  .approach-section {
-    padding: 100px 80px;
-    background: var(--bg-1);
-    border-top: 1px solid var(--divider);
-  }
-  .approach-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 2px;
-    background: var(--divider);
-    border-radius: 16px;
-    overflow: hidden;
-    margin-top: 56px;
-  }
-  .approach-step {
-    background: var(--bg-1);
-    padding: 40px 28px;
-    position: relative;
-    transition: background 0.2s;
-  }
-  .approach-step:hover { background: var(--hover-slate); }
-  .approach-step-num {
-    font-family: var(--font-display);
-    font-size: 48px; font-weight: 800;
-    color: rgba(92,201,214,0.08);
-    line-height: 1; margin-bottom: 20px;
-    transition: color 0.2s;
-  }
-  .approach-step:hover .approach-step-num { color: rgba(92,201,214,0.18); }
-  .approach-step-name {
-    font-family: var(--font-display);
-    font-size: 16px; font-weight: 700;
-    color: var(--teal); margin-bottom: 10px;
-  }
-  .approach-step-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
-
-  /* ─── TECH ACROSS INDUSTRIES ─── */
-  .tech-section {
-    padding: 100px 80px;
-    border-top: 1px solid var(--divider);
-  }
-  .tech-pills {
-    display: flex; flex-wrap: wrap;
-    gap: 12px; justify-content: center;
-    margin-top: 52px;
-  }
-  .tech-pill {
-    display: flex; align-items: center; gap: 10px;
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 24px;
-    transition: all 0.2s;
-    cursor: default;
-  }
-  .tech-pill:hover { border-color: var(--teal); transform: translateY(-3px); background: var(--hover-slate); }
-  .tech-pill-icon { width: 22px; height: 22px; color: var(--teal); }
-  .tech-pill-name { font-size: 14px; font-weight: 600; color: var(--white); }
-
-  /* ─── CTA ─── */
-  .ind-cta {
-    padding: 120px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    position: relative; overflow: hidden;
-    background:
-      linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0) 15%),
-      radial-gradient(60% 90% at 22% 45%, #E0F6ED 0%, transparent 70%),
-      radial-gradient(55% 85% at 78% 40%, #F6FDEB 0%, transparent 72%),
-      radial-gradient(70% 120% at 55% 20%, #E4F7E1 0%, transparent 80%),
-      linear-gradient(100deg,
-        #E5F7F3 0%,
-        #E0F6ED 22%,
-        #E4F7E1 48%,
-        #EEFADB 72%,
-        #F6FDEB 88%,
-        #FEFFFC 100%);
-  }
-  .cta-label { font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); margin-bottom: 20px; }
-  .cta-h2 {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 3.5vw, 48px);
-    font-weight: 800; letter-spacing: -0.02em;
-    line-height: 1.08; margin-bottom: 20px;
-    color: var(--ink, #17262B);
-  }
-  .cta-p { font-size: 16px; color: var(--gray, #475569); line-height: 1.8; margin-bottom: 40px; }
-  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--orange); color: var(--white);
-    border: none; border-radius: 8px;
-    padding: 14px 28px; font-size: 15px; font-weight: 600;
-    cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block;
-  }
-  .btn-primary:hover { background: var(--orange-hover); transform: translateY(-1px); }
-  .btn-ghost {
-    background: transparent; color: var(--ink, #111418);
-    border: 1px solid var(--border); border-radius: 8px;
-    padding: 14px 28px; font-size: 15px; font-weight: 500;
-    cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block;
-  }
-  .btn-ghost:hover { border-color: var(--teal); transform: translateY(-1px); color: var(--ink); background: rgba(255,255,255,0.5); }
-
-  .cta-right {
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 48px 40px;
-  }
-  .cta-right-title {
-    font-family: var(--font-display);
-    font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 24px;
-  }
-  .cta-checklist { display: flex; flex-direction: column; gap: 14px; }
-  .cta-check {
-    display: flex; align-items: center; gap: 14px;
-    font-size: 14px; color: var(--gray);
-  }
-  .check-icon {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: rgba(92,201,214,0.12);
-    border: 1px solid rgba(92,201,214,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; color: var(--teal); flex-shrink: 0;
-  }
-
-  @media (max-width: 960px) {
-    .ind-hero { padding: 100px 24px 60px; }
-    .hero-floaters { display: none; }
-    .industries-section, .approach-section, .tech-section { padding: 60px 24px; }
-    .mosaic-row-3, .mosaic-row-4, .mosaic-row-4b { grid-template-columns: 1fr 1fr; }
-    .approach-grid { grid-template-columns: 1fr; }
-    .ind-cta { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
-  }
-`;
-
-const industries = [
-  { icon: IconHealthcare, name: "Healthcare", desc: "Digital healthcare systems, patient management, telemedicine, and secure healthcare platforms.", tags: ["EHR Systems", "Telemedicine", "HIPAA Compliant"], glow: "teal", row: 0 },
-  { icon: IconFinance, name: "Finance", desc: "FinTech applications, payment systems, digital banking, and financial analytics.", tags: ["Payments", "Digital Banking", "Compliance"], glow: "orange", row: 0 },
-  { icon: IconEducation, name: "Education", desc: "Learning Management Systems, EdTech platforms, and digital education solutions.", tags: ["LMS", "EdTech", "E-Learning"], glow: "amber", row: 0 },
-  { icon: IconRetail, name: "Retail & E-Commerce", desc: "Inventory management, omnichannel commerce, POS systems, and customer engagement.", tags: ["E-Commerce", "POS", "Omnichannel"], glow: "teal", row: 1 },
-  { icon: IconLogistics, name: "Logistics", desc: "Fleet management, shipment tracking, warehouse automation, and route optimization.", tags: ["Fleet", "Tracking", "Automation"], glow: "orange", row: 1 },
-  { icon: IconManufacturing, name: "Manufacturing", desc: "Factory automation, ERP systems, production analytics, and industrial monitoring.", tags: ["ERP", "IoT", "Analytics"], glow: "amber", row: 1 },
-  { icon: IconRealEstate, name: "Real Estate", desc: "Property management platforms, CRM solutions, and real estate marketplaces.", tags: ["Property Mgmt", "CRM", "Marketplace"], glow: "teal", row: 1 },
-  { icon: IconWeb, name: "Travel & Hospitality", desc: "Booking systems, customer portals, travel management, and hospitality automation.", tags: ["Booking", "CMS", "CRM"], glow: "orange", row: 2 },
-  { icon: IconWeb, name: "Agriculture", desc: "Smart farming, IoT integration, precision agriculture, and supply chain solutions.", tags: ["Smart Farming", "IoT", "Analytics"], glow: "amber", row: 2 },
-  { icon: IconStartup, name: "Startups", desc: "MVP development, product engineering, AI integration, and growth consulting.", tags: ["MVP", "AI", "Consulting"], glow: "teal", row: 2 },
-  { icon: IconShield, name: "Enterprise", desc: "Large-scale digital transformation, enterprise software, and intelligent automation.", tags: ["ERP", "Cloud Migration", "Automation"], glow: "orange", row: 2 },
+const INDUSTRIES = [
+  { icon: IconHealthcare, name: "Healthcare", desc: "Digital healthcare systems, patient management, telemedicine, and secure healthcare platforms.", tags: ["EHR Systems", "Telemedicine", "HIPAA Compliant"] },
+  { icon: IconFinance, name: "Finance", desc: "FinTech applications, payment systems, digital banking, and financial analytics.", tags: ["Payments", "Digital Banking", "Compliance"] },
+  { icon: IconEducation, name: "Education", desc: "Learning Management Systems, EdTech platforms, and digital education solutions.", tags: ["LMS", "EdTech", "E-Learning"] },
+  { icon: IconRetail, name: "Retail & E-Commerce", desc: "Inventory management, omnichannel commerce, POS systems, and customer engagement.", tags: ["E-Commerce", "POS", "Omnichannel"] },
+  { icon: IconLogistics, name: "Logistics", desc: "Fleet management, shipment tracking, warehouse automation, and route optimization.", tags: ["Fleet", "Tracking", "Automation"] },
+  { icon: IconManufacturing, name: "Manufacturing", desc: "Factory automation, ERP systems, production analytics, and industrial monitoring.", tags: ["ERP", "IoT", "Analytics"] },
+  { icon: IconRealEstate, name: "Real Estate", desc: "Property management platforms, CRM solutions, and real estate marketplaces.", tags: ["Property Mgmt", "CRM", "Marketplace"] },
+  { icon: IconWeb, name: "Travel & Hospitality", desc: "Booking systems, customer portals, travel management, and hospitality automation.", tags: ["Booking", "CMS", "CRM"] },
+  { icon: IconWeb, name: "Agriculture", desc: "Smart farming, IoT integration, precision agriculture, and supply chain solutions.", tags: ["Smart Farming", "IoT", "Analytics"] },
+  { icon: IconStartup, name: "Startups", desc: "MVP development, product engineering, AI integration, and growth consulting.", tags: ["MVP", "AI", "Consulting"] },
+  { icon: IconShield, name: "Enterprise", desc: "Large-scale digital transformation, enterprise software, and intelligent automation.", tags: ["ERP", "Cloud Migration", "Automation"] },
 ];
 
-const approaches = [
+const APPROACHES = [
   { name: "Understand", desc: "Every industry has unique workflows and operational requirements we study first." },
   { name: "Analyze", desc: "Identify opportunities for automation, optimization, and digital innovation." },
   { name: "Design", desc: "Develop customized digital experiences tailored to your users." },
@@ -392,7 +46,7 @@ const approaches = [
   { name: "Optimize", desc: "Continuously improve systems based on analytics and business insights." },
 ];
 
-const techPills = [
+const TECH_PILLS = [
   { icon: IconBrain, name: "Artificial Intelligence" },
   { icon: IconCloud, name: "Cloud Computing" },
   { icon: IconTools, name: "Automation" },
@@ -403,197 +57,103 @@ const techPills = [
   { icon: IconHandshake, name: "Enterprise Integration" },
 ];
 
-const floaters = [
-  { label: "Healthcare", top: "12%", left: "8%" },
-  { label: "FinTech", top: "18%", left: "72%" },
-  { label: "EdTech", top: "75%", left: "6%" },
-  { label: "Blockchain", top: "68%", left: "80%" },
-  { label: "AI", top: "40%", left: "88%" },
-  { label: "Cloud", top: "85%", left: "40%" },
-  { label: "IoT", top: "10%", left: "42%" },
-  { label: "Automation", top: "55%", left: "2%" },
-];
-
-export default function Industries() {
-  const [hovered, setHovered] = useState(null);
-
-  const row0 = industries.filter(i => i.row === 0);
-  const row1 = industries.filter(i => i.row === 1);
-  const row2 = industries.filter(i => i.row === 2);
-
+export default function IndustriesPage() {
   return (
     <>
-      <style>{css}</style>
-
-      {/* Hero */}
-      <section className="ind-hero">
-
-        <div className="hero-floaters">
-          {floaters.map((f, i) => (
-            <span key={i} className="hero-float" style={{ top: f.top, left: f.left }}>{f.label}</span>
-          ))}
-        </div>
-
-        <h1 className="ind-h1">
-          Industry-Focused<br /><span>Technology Solutions</span>
-        </h1>
-        <p className="ind-hero-desc">
-          Every industry faces unique operational challenges. Auxosys builds tailored software solutions designed to improve efficiency, automate processes, and create measurable business impact.
-        </p>
-        <div className="hero-count-row">
-          <div className="hero-count">
-            <p className="hero-count-num">11<sup>+</sup></p>
-            <p className="hero-count-label">Industries</p>
-          </div>
-          <div className="hero-count">
-            <p className="hero-count-num">50<sup>+</sup></p>
-            <p className="hero-count-label">Use Cases</p>
-          </div>
-          <div className="hero-count">
-            <p className="hero-count-num">8<sup>+</sup></p>
-            <p className="hero-count-label">Tech Domains</p>
+      {/* ===================== HERO ===================== */}
+      <section className="hero">
+        <div className="container hero-grid">
+          <div>
+            <h1>Industry-Focused <span className="accent">Technology Solutions</span></h1>
+            <span className="hero-highlight">Industries We Serve</span>
+            <p className="desc">
+              Every industry faces unique operational challenges. Auxosys builds tailored software solutions designed to improve efficiency, automate processes, and create measurable business impact.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Industries Mosaic */}
-      <section className="industries-section">
-        <p className="section-eyebrow">Coverage</p>
-        <h2 className="section-title">Every industry, every challenge</h2>
-
-        <div className="mosaic">
-          <div className="mosaic-row mosaic-row-3">
-            {row0.map((ind, i) => (
-              <div
-                key={ind.name}
-                className="ind-card"
-                data-glow={ind.glow}
-                onMouseEnter={() => setHovered(ind.name)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                <div className="ind-card-top">
-                  <div className="ind-card-icon"><ind.icon /></div>
-                  <span className="ind-card-arrow">↗</span>
-                </div>
-                <div>
-                  <p className="ind-card-name">{ind.name}</p>
-                  <p className="ind-card-desc">{ind.desc}</p>
-                  <div className="ind-card-tags">
-                    {ind.tags.map(t => <span className="ind-tag" key={t}>{t}</span>)}
+      {/* ===================== INDUSTRIES GRID ===================== */}
+      <section className="section alt" id="industries">
+        <div className="container">
+          <Reveal className="section-head">
+            <div className="eyebrow">Coverage</div>
+            <h2>Every industry, every challenge</h2>
+          </Reveal>
+          <Reveal>
+            <div className="card-grid cols-3">
+              {INDUSTRIES.map(({ name, desc, icon: Icon, tags }) => (
+                <div className="card" key={name}>
+                  <div className="card-icon"><Icon /></div>
+                  <h3>{name}</h3>
+                  <p>{desc}</p>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '16px' }}>
+                    {tags.map(tag => (
+                      <span key={tag} style={{ fontSize: '11px', color: 'var(--text-muted)', background: 'var(--border-subtle)', padding: '4px 10px', borderRadius: '4px' }}>
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mosaic-row mosaic-row-4">
-            {row1.map((ind) => (
-              <div
-                key={ind.name}
-                className="ind-card"
-                data-glow={ind.glow}
-                onMouseEnter={() => setHovered(ind.name)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                <div className="ind-card-top">
-                  <div className="ind-card-icon"><ind.icon /></div>
-                  <span className="ind-card-arrow">↗</span>
-                </div>
-                <div>
-                  <p className="ind-card-name">{ind.name}</p>
-                  <p className="ind-card-desc">{ind.desc}</p>
-                  <div className="ind-card-tags">
-                    {ind.tags.map(t => <span className="ind-tag" key={t}>{t}</span>)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mosaic-row mosaic-row-4b">
-            {row2.map((ind) => (
-              <div
-                key={ind.name}
-                className="ind-card"
-                data-glow={ind.glow}
-                onMouseEnter={() => setHovered(ind.name)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                <div className="ind-card-top">
-                  <div className="ind-card-icon"><ind.icon /></div>
-                  <span className="ind-card-arrow">↗</span>
-                </div>
-                <div>
-                  <p className="ind-card-name">{ind.name}</p>
-                  <p className="ind-card-desc">{ind.desc}</p>
-                  <div className="ind-card-tags">
-                    {ind.tags.map(t => <span className="ind-tag" key={t}>{t}</span>)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Our Approach */}
-      <section className="approach-section">
-        <p className="section-eyebrow">Our Approach</p>
-        <h2 className="section-title">How we engage with every industry</h2>
-        <div className="approach-grid">
-          {approaches.map((a, i) => (
-            <div className="approach-step" key={a.name}>
-              <p className="approach-step-num">0{i + 1}</p>
-              <p className="approach-step-name">{a.name}</p>
-              <p className="approach-step-desc">{a.desc}</p>
+              ))}
             </div>
-          ))}
+          </Reveal>
         </div>
       </section>
 
-      {/* Tech Across Industries */}
-      <section className="tech-section">
-        <p className="section-eyebrow">Technology Domains</p>
-        <h2 className="section-title">Cutting-edge tech across every vertical</h2>
-        <div className="tech-pills">
-          {techPills.map(t => (
-            <div className="tech-pill" key={t.name}>
-              <span className="tech-pill-icon"><t.icon /></span>
-              <span className="tech-pill-name">{t.name}</span>
+      {/* ===================== APPROACH ===================== */}
+      <section className="section">
+        <div className="container">
+          <Reveal className="section-head">
+            <div className="eyebrow">Our Approach</div>
+            <h2>How we engage with every industry</h2>
+          </Reveal>
+          <Reveal>
+            <div className="card-grid cols-5">
+              {APPROACHES.map((step, i) => (
+                <div className="card" key={step.name}>
+                  <div className="eyebrow" style={{ color: 'var(--teal)' }}>0{i + 1}</div>
+                  <h3 style={{ marginTop: '12px', fontSize: '16px' }}>{step.name}</h3>
+                  <p style={{ fontSize: '14px' }}>{step.desc}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          </Reveal>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="ind-cta">
-        <div>
-          <p className="cta-label">Ready to Transform?</p>
-          <h2 className="cta-h2">Let's build the future of your industry together.</h2>
-          <p className="cta-p">No matter your industry, our team combines technical expertise with business understanding to create solutions that deliver measurable value.</p>
-          <div className="cta-row">
-            <a href="/contact" className="btn-primary">Start Your Project</a>
-            <a href="/services" className="btn-ghost">View Our Services</a>
-          </div>
+      {/* ===================== TECH PILLS ===================== */}
+      <section className="section alt">
+        <div className="container">
+          <Reveal className="section-head">
+            <div className="eyebrow">Technology Domains</div>
+            <h2>Cutting-edge tech across every vertical</h2>
+          </Reveal>
+          <Reveal>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
+              {TECH_PILLS.map(({ name, icon: Icon }) => (
+                <div key={name} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '16px 24px', border: '1px solid var(--border-subtle)', borderRadius: '12px', background: 'var(--surface-bg)' }}>
+                  <Icon />
+                  <span style={{ fontWeight: 600 }}>{name}</span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
+      </section>
 
-        <div className="cta-right">
-          <p className="cta-right-title">What you can expect</p>
-          <div className="cta-checklist">
-            {[
-              "Deep industry-specific discovery sessions",
-              "Custom technology recommendations",
-              "Agile delivery with full transparency",
-              "Enterprise-grade architecture by default",
-              "Long-term partnership and support",
-              "Scalable solutions built for growth",
-            ].map(item => (
-              <div className="cta-check" key={item}>
-                <span className="check-icon">✓</span>
-                {item}
-              </div>
-            ))}
-          </div>
+      {/* ===================== CTA ===================== */}
+      <section className="section home-cta" id="contact">
+        <div className="container">
+          <Reveal className="cta-banner">
+            <div className="cta-content">
+              <h2>Success is measured by the value we create — not just the software we ship.</h2>
+              <p>At Auxosys, we build for the long term — for our clients, our community, and the future of technology.</p>
+            </div>
+            <div className="cta-actions">
+              <a href="/contact" className="btn btn-primary">Let's Build Together</a>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>
