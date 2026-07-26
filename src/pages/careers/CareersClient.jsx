@@ -202,7 +202,7 @@ export default function CareersClient({ initialJobs = [] }) {
       `}</style>
 
       {/* ===================== JOBS BOARD ===================== */}
-      <section className="section alt" id="openings">
+      <section className="section alt" id="openings" style={{ paddingTop: '160px' }}>
         <div className="container">
 
           <Reveal>
