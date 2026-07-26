@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Footer.module.css';
+import { Linkedin, Github, Twitter, Instagram } from 'lucide-react';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -57,10 +58,10 @@ export default function Footer() {
           <div className={styles.footerBrand}>
             <h2 className={styles.footerHeroText}>Empowering Businesses<br />Through Intelligent Technology.</h2>
             <div className={styles.footerSocial} style={{ marginTop: 24, marginBottom: 48 }}>
-              <a href="#" className={styles.socialIcon} aria-label="LinkedIn">in</a>
-              <a href="#" className={styles.socialIcon} aria-label="GitHub">gh</a>
-              <a href="#" className={styles.socialIcon} aria-label="X / Twitter">𝕏</a>
-              <a href="#" className={styles.socialIcon} aria-label="Instagram">ig</a>
+              <a href="#" className={styles.socialIcon} aria-label="LinkedIn"><Linkedin size={18} /></a>
+              <a href="#" className={styles.socialIcon} aria-label="GitHub"><Github size={18} /></a>
+              <a href="#" className={styles.socialIcon} aria-label="X / Twitter"><Twitter size={18} /></a>
+              <a href="#" className={styles.socialIcon} aria-label="Instagram"><Instagram size={18} /></a>
             </div>
 
             <div className={styles.footerSubscribe}>
@@ -138,12 +139,10 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className={styles.footerBottom}>
           <span>© 2026 Auxosys. All rights reserved.</span>
-          <span className={styles.footerBottomTag}>
-            <span className={styles.dot}></span>Engineering the Future, Together.
-          </span>
           <div className={styles.footerBottomLinks}>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
+            <span className={styles.footerBottomTag} style={{ margin: 0 }}>
+              <span className={styles.dot}></span>Engineering the Future, Together.
+            </span>
           </div>
         </div>
 
