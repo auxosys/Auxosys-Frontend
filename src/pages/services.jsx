@@ -105,10 +105,15 @@ export default function ServicesPage() {
         .hgv-name { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: white; margin-bottom: 6px; position: relative; z-index: 2; }
         .hgv-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; position: relative; z-index: 2; }
         @media (max-width: 960px) {
-          .hero-grid-visual { display: none; }
+          .hero-grid-visual { 
+            grid-template-columns: 1fr; 
+            min-height: auto;
+            margin-top: 32px;
+          }
+          .hgv-cell.span-2 { grid-row: auto; }
         }
       `}</style>
-      <section className="hero">
+      <section className="hero" style={{ overflowX: 'hidden' }}>
         <div className="container hero-grid" style={{ alignItems: 'center' }}>
           <div>
             <h1>Transforming Ideas Into <span className="accent">Powerful Solutions</span></h1>
@@ -165,7 +170,7 @@ export default function ServicesPage() {
                 <p style={{ margin: '12px 0 24px', opacity: 0.8 }}>
                   Book a free consultation call with our engineering team to discuss your project requirements.
                 </p>
-                <a href="/contact" className="btn" style={{ background: 'var(--orange)', color: '#fff', textAlign: 'center', padding: '12px', borderRadius: '8px' }}>
+                <a href="/contact" className="btn">
                   Book Consultation
                 </a>
               </div>

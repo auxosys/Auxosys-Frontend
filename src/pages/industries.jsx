@@ -64,6 +64,41 @@ export default function IndustriesPage() {
     <>
       {/* ===================== HERO ===================== */}
       <section className="hero" style={{ overflow: 'hidden' }}>
+        <style>{`
+          .industries-hero-visual {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            aspect-ratio: 520/460;
+            margin: 0 auto 40px auto;
+          }
+          .industries-stat-card {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.3) inset;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            max-width: 240px;
+          }
+          @media (min-width: 768px) {
+            .industries-hero-visual {
+              height: 460px;
+              margin-bottom: 0;
+            }
+            .industries-stat-card {
+              left: -20px;
+            }
+          }
+        `}</style>
         <div className="container hero-grid">
           <div>
             <h1>Industry-Focused <span className="accent">Technology Solutions</span></h1>
@@ -74,12 +109,12 @@ export default function IndustriesPage() {
           </div>
 
           {/* ---------- RIGHT SIDE VISUAL (blob shape) ---------- */}
-          <div style={{ position: 'relative', width: '100%', maxWidth: '520px', height: '460px', margin: '0 auto' }}>
+          <div className="industries-hero-visual">
 
             {/* Outline blob (behind, offset) - the thin white/light stroke accent */}
             <svg
               viewBox="0 0 520 460"
-              style={{ position: 'absolute', top: '20px', left: '20px', width: '100%', height: '100%', zIndex: 0 }}
+              style={{ position: 'absolute', top: '4%', left: '4%', width: '100%', height: '100%', zIndex: 0 }}
             >
               <path
                 d="M120,40 C220,-10 380,10 440,110 C500,210 480,330 400,400 C320,470 180,470 100,400 C20,330 0,210 40,130 C60,90 80,60 120,40 Z"
@@ -117,23 +152,7 @@ export default function IndustriesPage() {
             </svg>
 
             {/* Floating stat card, anchored safely within bounds */}
-            <div style={{
-              position: 'absolute',
-              bottom: '20px',
-              left: '-20px',
-              background: 'rgba(255, 255, 255, 0.85)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255, 255, 255, 0.6)',
-              borderRadius: '16px',
-              padding: '16px 20px',
-              boxShadow: '0 16px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.3) inset',
-              zIndex: 2,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '14px',
-              maxWidth: '240px',
-            }}>
+            <div className="industries-stat-card">
               <div style={{
                 width: '44px',
                 height: '44px',

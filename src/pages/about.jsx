@@ -171,19 +171,17 @@ export default function AboutPage() {
 
         @media (max-width: 900px) {
           .hero-grid { grid-template-columns: 1fr; }
-          .hero-visual.organic-hero { height: 400px; margin-top: 24px; margin-left: 0; }
-          .organic-image-container { width: 320px; height: 320px; }
-          .organic-blob-bg { width: 260px; height: 320px; left: -5%; }
+          .hero-visual.organic-hero { height: auto; min-height: 400px; margin-top: 48px; margin-left: 0; margin-bottom: 24px; }
+          .organic-image-container { width: min(85vw, 380px); height: auto; aspect-ratio: 1; }
+          .organic-blob-bg { width: min(75vw, 320px); height: auto; aspect-ratio: 320/420; left: 0%; bottom: 5%; }
           .weave-dots { height: 180px; }
         }
         @media (max-width: 480px) {
-          .hero-visual.organic-hero { height: 320px; }
-          .organic-image-container { width: 260px; height: 260px; }
-          .organic-blob-bg { width: 220px; height: 260px; left: 0%; }
+          .hero-visual.organic-hero { min-height: 320px; }
         }
       `}</style>
       {/* ===================== HERO ===================== */}
-      <section className="hero" style={{ position: 'relative' }}>
+      <section className="hero" style={{ position: 'relative', overflowX: 'hidden' }}>
         <div className="weave-dots" aria-hidden="true" />
         <div className="container hero-grid" style={{ zIndex: 1, position: 'relative' }}>
           <div>
@@ -198,7 +196,7 @@ export default function AboutPage() {
           {/* Right side — abstract product/engineering visual, fills the space that was blank */}
           <div className="hero-visual organic-hero" aria-hidden="true">
             <div className="organic-blob-bg" />
-            
+
             <div className="organic-image-container">
               <img src="/images/about-bg-3.jpg" alt="Team working" />
             </div>

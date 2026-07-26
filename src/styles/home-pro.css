@@ -838,7 +838,7 @@
   }
 
   .hero-right {
-    order: -1
+    /* Removed order: -1 so text appears first */
   }
 
   .timeline {
@@ -981,6 +981,18 @@ a.card:focus-visible,
   background: rgba(15, 23, 42, 0.08) !important;
   color: #0F172A !important;
   border-color: rgba(15, 23, 42, 0.1) !important;
+}
+
+.card--dark .btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.card--dark:hover .btn {
+  background: var(--ink) !important;
+  color: #fff !important;
+  border-color: var(--ink) !important;
 }
 
 /* 5) accent hairline on top — sweeps in for light cards */

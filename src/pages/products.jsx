@@ -54,7 +54,7 @@ export default function ProductsPage() {
   return (
     <>
       {/* ===================== HERO ===================== */}
-      <section className="hero">
+      <section className="hero" style={{ overflow: 'hidden' }}>
         <div className="container hero-grid">
           <div>
             <h1>Building Products That Solve <span className="accent">Real Problems</span></h1>
@@ -130,18 +130,18 @@ export default function ProductsPage() {
             <div className="card-grid cols-3">
               <div className="card card--dark">
                 <div className="card-icon"><IconSearch /></div>
-                <div className="eyebrow" style={{color: 'var(--teal)'}}>↗ Current</div>
-                <h3 style={{color: 'white', marginTop: '12px'}}>Building intelligent SaaS platforms for the modern workforce.</h3>
+                <div className="eyebrow" style={{ color: 'var(--teal)' }}>↗ Current</div>
+                <h3 style={{ color: 'white', marginTop: '12px' }}>Building intelligent SaaS platforms for the modern workforce.</h3>
               </div>
               <div className="card card--dark">
                 <div className="card-icon"><IconLightning /></div>
-                <div className="eyebrow" style={{color: 'var(--orange)'}}>⟳ Next</div>
-                <h3 style={{color: 'white', marginTop: '12px'}}>AI-powered enterprise products with deep automation capabilities.</h3>
+                <div className="eyebrow" style={{ color: 'var(--orange)' }}>⟳ Next</div>
+                <h3 style={{ color: 'white', marginTop: '12px' }}>AI-powered enterprise products with deep automation capabilities.</h3>
               </div>
               <div className="card card--dark">
                 <div className="card-icon"><IconScale /></div>
-                <div className="eyebrow" style={{color: 'var(--muted)'}}>◎ Future</div>
-                <h3 style={{color: 'white', marginTop: '12px'}}>Industry-specific software ecosystems that redefine digital operations.</h3>
+                <div className="eyebrow" style={{ color: 'var(--muted)' }}>◎ Future</div>
+                <h3 style={{ color: 'white', marginTop: '12px' }}>Industry-specific software ecosystems that redefine digital operations.</h3>
               </div>
             </div>
           </Reveal>
