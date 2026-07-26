@@ -1,3 +1,4 @@
+import React from 'react';
 import Reveal from '@/components/Reveal';
 import { ArrowUpRight } from 'lucide-react';
 import {
@@ -7,6 +8,7 @@ import {
   IconRealEstate, IconLogistics, IconStartup,
   IconLightning, IconShield, IconScale, IconSearch, IconHandshake, IconSupport,
 } from '@/components/Icons';
+import RelatedNews from '@/components/ui/RelatedNews';
 
 /* small arrow affordance reused by every card link */
 const Arrow = () => (
@@ -110,7 +112,7 @@ export default function ServicesPage() {
         <div className="container hero-grid" style={{ alignItems: 'center' }}>
           <div>
             <h1>Transforming Ideas Into <span className="accent">Powerful Solutions</span></h1>
-            <span className="hero-highlight">Technology Services</span>
+
             <p className="desc">
               From product strategy to deployment and long-term support, Auxosys becomes your technology partner at every stage of the journey.
             </p>
@@ -215,6 +217,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ===================== CTA ===================== */}
+      <RelatedNews relatedPage="services" />
       <section className="section home-cta" id="contact">
         <div className="container">
           <Reveal className="cta-banner">

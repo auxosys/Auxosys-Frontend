@@ -47,7 +47,7 @@
 }
 
 .section.alt {
-  background: var(--bg-alt);
+  background: var(--bg);
 }
 
 /* ---------- section header ---------- */
@@ -882,7 +882,10 @@
   }
 
   .cta-banner {
-    padding: 46px 24px
+    padding: 46px 24px;
+    flex-direction: column;
+    text-align: center;
+    gap: 32px;
   }
 }
 
@@ -950,19 +953,34 @@ a.card:focus-visible,
 .card.card--dark:hover,
 .card--dark:hover {
   transform: translateY(-6px);
-  background: #1b2a33 !important;
-  /* noticeably lighter dark-teal on hover */
-  border-color: rgba(15, 181, 166, .4);
-  box-shadow: 0 26px 52px -16px rgba(0, 0, 0, .6);
+  background: linear-gradient(135deg, #E5F7F3 0%, #EEFADB 100%) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 26px 52px -16px rgba(0, 0, 0, 0.15) !important;
 }
 
 .card--dark h3,
 .card--dark h4 {
   color: #fff;
+  transition: color 0.3s ease;
 }
 
 .card--dark p {
   color: rgba(255, 255, 255, .72);
+  transition: color 0.3s ease;
+}
+
+.card--dark:hover h3,
+.card--dark:hover h4,
+.card--dark:hover p,
+.card--dark:hover .eyebrow,
+.card--dark:hover .card-link {
+  color: #0F172A !important;
+}
+
+.card--dark:hover .card-icon {
+  background: rgba(15, 23, 42, 0.08) !important;
+  color: #0F172A !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
 }
 
 /* 5) accent hairline on top — sweeps in for light cards */

@@ -1,22 +1,24 @@
+import React from 'react';
 import Reveal from '@/components/Reveal';
 import { ArrowUpRight } from 'lucide-react';
-import { 
-  IconHealthcare, 
-  IconFinance, 
-  IconEducation, 
-  IconRetail, 
-  IconLogistics, 
-  IconManufacturing, 
-  IconRealEstate, 
-  IconStartup, 
-  IconWeb, 
-  IconShield, 
-  IconBrain, 
-  IconCloud, 
-  IconTools, 
-  IconBlockchain, 
-  IconSearch, 
-  IconHandshake 
+import RelatedNews from '@/components/ui/RelatedNews';
+import {
+  IconHealthcare,
+  IconFinance,
+  IconEducation,
+  IconRetail,
+  IconLogistics,
+  IconManufacturing,
+  IconRealEstate,
+  IconStartup,
+  IconWeb,
+  IconShield,
+  IconBrain,
+  IconCloud,
+  IconTools,
+  IconBlockchain,
+  IconSearch,
+  IconHandshake
 } from '@/components/Icons';
 
 /* small arrow affordance reused by every card link */
@@ -61,14 +63,108 @@ export default function IndustriesPage() {
   return (
     <>
       {/* ===================== HERO ===================== */}
-      <section className="hero">
+      <section className="hero" style={{ overflow: 'hidden' }}>
         <div className="container hero-grid">
           <div>
             <h1>Industry-Focused <span className="accent">Technology Solutions</span></h1>
-            <span className="hero-highlight">Industries We Serve</span>
+
             <p className="desc">
               Every industry faces unique operational challenges. Auxosys builds tailored software solutions designed to improve efficiency, automate processes, and create measurable business impact.
             </p>
+          </div>
+
+          {/* ---------- RIGHT SIDE VISUAL (blob shape) ---------- */}
+          <div style={{ position: 'relative', width: '100%', maxWidth: '520px', height: '460px', margin: '0 auto' }}>
+
+            {/* Outline blob (behind, offset) - the thin white/light stroke accent */}
+            <svg
+              viewBox="0 0 520 460"
+              style={{ position: 'absolute', top: '20px', left: '20px', width: '100%', height: '100%', zIndex: 0 }}
+            >
+              <path
+                d="M120,40 C220,-10 380,10 440,110 C500,210 480,330 400,400 C320,470 180,470 100,400 C20,330 0,210 40,130 C60,90 80,60 120,40 Z"
+                fill="none"
+                stroke="var(--teal)"
+                strokeWidth="2"
+                opacity="0.4"
+              />
+            </svg>
+
+            {/* Solid blob with clipped image inside */}
+            <svg viewBox="0 0 520 460" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
+              <defs>
+                <clipPath id="industryBlobClip" clipPathUnits="userSpaceOnUse">
+                  <path d="M100,20 C210,-30 380,0 440,100 C500,200 490,320 410,390 C330,460 180,460 100,390 C20,320 -10,200 30,110 C50,70 70,45 100,20 Z" />
+                </clipPath>
+              </defs>
+
+              {/* fallback solid fill so the shape reads even before/without an image */}
+              <path
+                d="M100,20 C210,-30 380,0 440,100 C500,200 490,320 410,390 C330,460 180,460 100,390 C20,320 -10,200 30,110 C50,70 70,45 100,20 Z"
+                fill="var(--teal)"
+                opacity="0.9"
+              />
+
+              <image
+                href="/images/industries-hero-2.jpg"
+                x="0"
+                y="0"
+                width="520"
+                height="460"
+                preserveAspectRatio="xMidYMid slice"
+                clipPath="url(#industryBlobClip)"
+              />
+            </svg>
+
+            {/* Floating stat card, anchored safely within bounds */}
+            <div style={{
+              position: 'absolute',
+              bottom: '20px',
+              left: '-20px',
+              background: 'rgba(255, 255, 255, 0.85)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.6)',
+              borderRadius: '16px',
+              padding: '16px 20px',
+              boxShadow: '0 16px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.3) inset',
+              zIndex: 2,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+              maxWidth: '240px',
+            }}>
+              <div style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, var(--teal), #00d2ff)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#fff',
+                fontWeight: 800,
+                fontSize: '15px',
+                flexShrink: 0,
+                boxShadow: '0 4px 12px rgba(12, 128, 116, 0.3)'
+              }}>11+</div>
+              <div>
+                <div style={{ fontWeight: 800, fontSize: '14px', color: 'var(--text)' }}>Industries Served</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>Across every vertical</div>
+              </div>
+            </div>
+
+            {/* Decorative dot grid, contained within the visual box, not overflowing the section */}
+            <div style={{
+              position: 'absolute',
+              top: '0px',
+              right: '0px',
+              width: '70px',
+              height: '70px',
+              backgroundImage: 'radial-gradient(rgba(148, 172, 206, 0.5) 2px, transparent 2px)',
+              backgroundSize: '14px 14px',
+              zIndex: 0,
+            }} />
           </div>
         </div>
       </section>
@@ -143,6 +239,7 @@ export default function IndustriesPage() {
       </section>
 
       {/* ===================== CTA ===================== */}
+      <RelatedNews relatedPage="industries" />
       <section className="section home-cta" id="contact">
         <div className="container">
           <Reveal className="cta-banner">

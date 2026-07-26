@@ -1,3 +1,4 @@
+import React from 'react';
 import Reveal from '@/components/Reveal';
 import { ProductPhone } from '@/components/ProductPhone';
 import { ArrowUpRight } from 'lucide-react';
@@ -8,6 +9,7 @@ import {
   IconRealEstate, IconLogistics, IconStartup,
   IconLightning, IconShield, IconScale, IconSearch, IconHandshake, IconSupport,
 } from '@/components/Icons';
+import RelatedNews from '@/components/ui/RelatedNews';
 
 /* small arrow affordance reused by every card link */
 const Arrow = () => (
@@ -56,15 +58,12 @@ export default function ProductsPage() {
         <div className="container hero-grid">
           <div>
             <h1>Building Products That Solve <span className="accent">Real Problems</span></h1>
-            <span className="hero-highlight">Product Ecosystem</span>
+
             <p className="desc">
               Alongside delivering technology services, Auxosys develops innovative software products
               that simplify operations, improve productivity, and accelerate business growth.
             </p>
-            <div className="hero-actions">
-              <a href="#products" className="btn btn-primary">Explore products</a>
-              <a href="/contact" className="btn btn-outline">Book a demo</a>
-            </div>
+
           </div>
 
           <div className="hero-right">
@@ -150,6 +149,7 @@ export default function ProductsPage() {
       </section>
 
       {/* ===================== CTA ===================== */}
+      <RelatedNews relatedPage="products" />
       <section className="section home-cta" id="contact">
         <div className="container">
           <Reveal className="cta-banner">

@@ -1,0 +1,316 @@
+/* ===================================================================
+   AUXOSYS FOOTER  —  Handshake-style dark footer with giant wordmark
+   =================================================================== */
+
+.siteFooter {
+  background: var(--auxo-ink, #17262B);
+  color: var(--auxo-white, #FFFFFF);
+  overflow: hidden;
+  padding-top: 72px;
+  
+  --auxo-volt: var(--orange, #FF6B35);
+  --auxo-volt-hover: var(--orange-hover, #FF824D);
+  --f-heading: rgba(255, 255, 255, 0.55);
+  --f-link: rgba(255, 255, 255, 0.82);
+  --f-link-hover: #FFFFFF;
+  --f-border: rgba(255, 255, 255, 0.10);
+  --f-muted: rgba(255, 255, 255, 0.45);
+}
+
+.footerContainer {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.footerTop {
+  display: grid;
+  grid-template-columns: 1.8fr repeat(4, 1fr);
+  gap: 40px;
+  padding-bottom: 12px;
+}
+
+.footerHeroText {
+  font-family: var(--font-heading, var(--font-display));
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--auxo-white, #FFFFFF);
+  letter-spacing: -0.02em;
+}
+
+.footerLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.footerLogoText {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.02em;
+  color: var(--auxo-white, #FFFFFF);
+}
+
+.footerTag {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--f-link);
+  margin-bottom: 24px;
+}
+
+.footerSocial {
+  display: flex;
+  gap: 10px;
+}
+
+.socialIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--f-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--f-link);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.socialIcon:hover {
+  background: var(--auxo-volt);
+  color: var(--auxo-ink);
+  border-color: var(--auxo-volt);
+}
+
+.footerLinks {
+  display: contents;
+}
+
+.footerCol h5 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--f-heading);
+  margin: 0 0 18px;
+}
+
+.footerCol ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footerCol li {
+  margin-bottom: 12px;
+}
+
+.footerCol a {
+  font-size: 15px;
+  color: var(--f-link);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footerCol a:hover {
+  color: var(--f-link-hover);
+}
+
+.footerSubscribe {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footerSubscribe p {
+  font-size: 14px;
+  color: var(--f-link);
+  margin: 0;
+}
+
+.subscribeForm {
+  display: flex;
+  gap: 10px;
+}
+
+.subscribeForm input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--f-border);
+  border-radius: 9999px;
+  padding: 12px 20px;
+  font-size: 15px;
+  color: var(--auxo-white, #FFFFFF);
+  min-width: 260px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.subscribeForm input::placeholder {
+  color: var(--f-muted);
+}
+
+.subscribeForm input:focus {
+  border-color: var(--auxo-volt);
+}
+
+.subscribeForm button {
+  background: var(--auxo-volt);
+  color: var(--auxo-ink);
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 26px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+
+.subscribeForm button:hover {
+  background: var(--auxo-volt-hover);
+}
+
+.subscribeForm button:active {
+  transform: scale(0.98);
+}
+
+.subscribeForm button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.subscribeMsg {
+  width: 100%;
+  font-size: 14px;
+  margin: 12px 0 0;
+}
+
+.subscribeMsg.isSuccess {
+  color: #9BE6A0;
+}
+
+.subscribeMsg.isError {
+  color: #F5A3A3;
+}
+
+.footerWordmark {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(64px, 15vw, 240px);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  text-align: center;
+  margin: 16px 0 0;
+  margin-left: -2vw;
+  margin-right: -2vw;
+  user-select: none;
+  
+  /* Animated Shine Effect */
+  background: linear-gradient(
+    to right, 
+    var(--auxo-volt) 20%, 
+    #fff 45%, 
+    #fff 55%, 
+    var(--auxo-volt) 80%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shineWordmark 6s linear infinite;
+}
+
+@keyframes shineWordmark {
+  to {
+    background-position: -200% center;
+  }
+}
+
+.footerBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 28px 0 40px;
+  font-size: 14px;
+  color: var(--f-muted);
+}
+
+.footerBottomTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footerBottomTag .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--auxo-volt);
+}
+
+.footerBottomLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.footerBottomLinks a {
+  color: var(--f-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footerBottomLinks a:hover {
+  color: var(--auxo-white, #FFFFFF);
+}
+
+@media(max-width: 1080px) {
+  .footerTop {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .footerBrand {
+    grid-column: 1 / -1;
+    margin-bottom: 16px;
+  }
+}
+
+@media(max-width: 680px) {
+  .footerContainer {
+    padding: 0 22px;
+  }
+
+  .footerTop {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .footerSubscribe {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .subscribeForm {
+    width: 100%;
+  }
+
+  .subscribeForm input {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .footerWordmark {
+    font-size: 14vw;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

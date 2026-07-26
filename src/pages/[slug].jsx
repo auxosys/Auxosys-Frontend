@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { notFound, useParams } from "next/navigation";
+import { useRouter } from "next/router";
+import Error from "next/error";
 import DOMPurify from "dompurify";
 
 // ── Brand tokens (matching News/Career details pages) ─────────
@@ -88,8 +89,8 @@ function ArticleSkeleton() {
 
 // ── Main Page ─────────────────────────────────────────────────
 export default function LegalPage() {
-  const params = useParams();
-  const slug = params?.slug;
+  const router = useRouter();
+  const slug = router.query.slug;
 
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -130,8 +131,8 @@ export default function LegalPage() {
     return <div style={{ minHeight: "100vh", background: T.cream, paddingTop: 80 }}><ArticleSkeleton /></div>;
   }
 
-  if (notFoundFlag || !pageData) {
-    return notFound();
+  if (notFoundFlag || (!loading && !pageData)) {
+    return <Error statusCode={404} />;
   }
 
   const formatDate = (dateString) => {

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import styles from './Footer.module.css';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -47,24 +48,24 @@ export default function Footer() {
   };
 
   return (
-    <footer className="site-footer">
-      <div className="footer-container">
+    <footer className={styles.siteFooter}>
+      <div className={styles.footerContainer}>
 
         {/* Top Grid: Brand + Links */}
-        <div className="footer-top">
+        <div className={styles.footerTop}>
 
-          <div className="footer-brand">
-            <h2 className="footer-hero-text">The digital network<br />for the AI economy</h2>
-            <div className="footer-social" style={{ marginTop: 24, marginBottom: 48 }}>
-              <a href="#" className="social-icon" aria-label="LinkedIn">in</a>
-              <a href="#" className="social-icon" aria-label="GitHub">gh</a>
-              <a href="#" className="social-icon" aria-label="X / Twitter">𝕏</a>
-              <a href="#" className="social-icon" aria-label="Instagram">ig</a>
+          <div className={styles.footerBrand}>
+            <h2 className={styles.footerHeroText}>The digital network<br />for the AI economy</h2>
+            <div className={styles.footerSocial} style={{ marginTop: 24, marginBottom: 48 }}>
+              <a href="#" className={styles.socialIcon} aria-label="LinkedIn">in</a>
+              <a href="#" className={styles.socialIcon} aria-label="GitHub">gh</a>
+              <a href="#" className={styles.socialIcon} aria-label="X / Twitter">𝕏</a>
+              <a href="#" className={styles.socialIcon} aria-label="Instagram">ig</a>
             </div>
 
-            <div className="footer-subscribe">
+            <div className={styles.footerSubscribe}>
               <p>Get the latest product updates, technology insights, and news.</p>
-              <form className="subscribe-form" onSubmit={handleSubscribe}>
+              <form className={styles.subscribeForm} onSubmit={handleSubscribe}>
                 <input
                   type="email"
                   placeholder="Enter your email"
@@ -77,15 +78,15 @@ export default function Footer() {
                 </button>
               </form>
               {status.message && (
-                <p className={`subscribe-msg ${status.type === 'success' ? 'is-success' : 'is-error'}`}>
+                <p className={`${styles.subscribeMsg} ${status.type === 'success' ? styles.isSuccess : styles.isError}`}>
                   {status.message}
                 </p>
               )}
             </div>
           </div>
 
-          <div className="footer-links">
-            <div className="footer-col">
+          <div className={styles.footerLinks}>
+            <div className={styles.footerCol}>
               <h5>Company</h5>
               <ul>
                 <li><Link href="/about">Who We Are</Link></li>
@@ -94,7 +95,7 @@ export default function Footer() {
                 <li><Link href="/contact">Contact Us</Link></li>
               </ul>
             </div>
-            <div className="footer-col">
+            <div className={styles.footerCol}>
               <h5>Solutions</h5>
               <ul>
                 <li><Link href="/products">Products</Link></li>
@@ -102,7 +103,7 @@ export default function Footer() {
                 <li><Link href="/industries">Industries</Link></li>
               </ul>
             </div>
-            <div className="footer-col">
+            <div className={styles.footerCol}>
               <h5>Technologies</h5>
               <ul>
                 <li><Link href="#">AI</Link></li>
@@ -112,7 +113,7 @@ export default function Footer() {
                 <li><Link href="#">Web & Mobile</Link></li>
               </ul>
             </div>
-            <div className="footer-col">
+            <div className={styles.footerCol}>
               <h5>Legal</h5>
               <ul>
                 {legalPages.length > 0 ? (
@@ -122,7 +123,7 @@ export default function Footer() {
                     </li>
                   ))
                 ) : (
-                  <li><span className="footer-empty">No pages yet</span></li>
+                  <li><span className={styles.footerEmpty}>No pages yet</span></li>
                 )}
               </ul>
             </div>
@@ -130,17 +131,17 @@ export default function Footer() {
         </div>
 
         {/* Giant Signature Wordmark */}
-        <div className="footer-wordmark">
+        <div className={styles.footerWordmark}>
           AUXOSYS
         </div>
 
         {/* Bottom Bar */}
-        <div className="footer-bottom">
+        <div className={styles.footerBottom}>
           <span>© 2026 Auxosys. All rights reserved.</span>
-          <span className="footer-bottom-tag">
-            <span className="dot"></span>Engineering the Future, Together.
+          <span className={styles.footerBottomTag}>
+            <span className={styles.dot}></span>Engineering the Future, Together.
           </span>
-          <div className="footer-bottom-links">
+          <div className={styles.footerBottomLinks}>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
           </div>

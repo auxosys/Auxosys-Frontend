@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Menu, X } from 'lucide-react';
+import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -28,16 +29,16 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
-        <div className="nav-inner">
-          <Link href="/" className="logo">
-            <span className="logo-word">AUXOSYS</span>
-            <span className="logo-mark" style={{ background: 'transparent' }}>
+      <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
+        <div className={styles.navInner}>
+          <Link href="/" className={styles.logo}>
+            <span className={styles.logoWord}>AUXOSYS</span>
+            <span className={styles.logoMark} style={{ background: 'transparent' }}>
               <Image src="/Auxosys-icon-mono-dark.svg" alt="Auxosys Logo" width={40} height={40} />
             </span>
           </Link>
 
-          <ul className="nav-links">
+          <ul className={styles.navLinks}>
             {navLinks.map((link) => (
               <li key={link.name}>
                 <Link href={link.href}>{link.name}</Link>
@@ -45,8 +46,8 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="nav-actions hidden md:flex items-center">
-            <Link href="/contact" className="nav-btn nav-btn-primary flex items-center">
+          <div className={`${styles.navActions} hidden md:flex items-center`}>
+            <Link href="/contact" className={`${styles.navBtn} ${styles.navBtnPrimary} flex items-center`}>
               Connect Us <ArrowRight className="inline ml-1" size={16} />
             </Link>
           </div>

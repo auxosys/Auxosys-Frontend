@@ -1,7 +1,7 @@
 "use client";
 import DOMPurify from "dompurify";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 // ── Brand tokens ──────────────────────────────────────────────
@@ -144,7 +144,8 @@ function RelatedCard({ item }) {
 
 // ── Main ──────────────────────────────────────────────────────
 export default function Blogpage() {
-    const { slug } = useParams();
+    const router = useRouter();
+    const slug = router.query.slug;
     const [post, setPost] = useState(null);
     const [related, setRelated] = useState([]);
     const [loading, setLoading] = useState(true);
