@@ -55,7 +55,7 @@ export default function Footer() {
         <div className={styles.footerTop}>
 
           <div className={styles.footerBrand}>
-            <h2 className={styles.footerHeroText}>The digital network<br />for the AI economy</h2>
+            <h2 className={styles.footerHeroText}>Empowering Businesses<br />Through Intelligent Technology.</h2>
             <div className={styles.footerSocial} style={{ marginTop: 24, marginBottom: 48 }}>
               <a href="#" className={styles.socialIcon} aria-label="LinkedIn">in</a>
               <a href="#" className={styles.socialIcon} aria-label="GitHub">gh</a>
