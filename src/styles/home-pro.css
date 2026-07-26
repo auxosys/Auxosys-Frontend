@@ -831,14 +831,32 @@
    ============================================================ */
 @media (max-width:1000px) {
 
+  .hero {
+    overflow: hidden;
+  }
+
   .hero-grid,
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 36px
+    gap: 36px;
+    position: relative;
+  }
+
+  .hero-left {
+    position: relative;
+    z-index: 10;
   }
 
   .hero-right {
-    order: -1
+    position: absolute !important;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(1.35) !important;
+    width: 100vw !important;
+    height: 100vw !important;
+    margin: 0 !important;
+    z-index: 0;
+    pointer-events: none;
   }
 
   .timeline {
