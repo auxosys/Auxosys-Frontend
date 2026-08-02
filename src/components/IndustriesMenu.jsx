@@ -5,18 +5,18 @@ import styles from './IndustriesMenu.module.css';
 
 const INDUSTRIES_DATA = {
   col1: [
-    { name: "Healthcare & Life Sciences", href: "/industries" },
-    { name: "Retail & E-Commerce", href: "/industries" },
-    { name: "Manufacturing & Industrial", href: "/industries" },
-    { name: "Banking, Finance & Insurance", href: "/industries" },
-    { name: "Education & EdTech", href: "/industries" },
+    { name: "Healthcare & Life Sciences", href: "/industries/healthcare-and-life-sciences" },
+    { name: "Retail & E-Commerce", href: "/industries/retail-and-e-commerce" },
+    { name: "Manufacturing & Industrial", href: "/industries/manufacturing-and-industrial" },
+    { name: "Banking, Finance & Insurance", href: "/industries/banking-finance-and-insurance" },
+    { name: "Education & EdTech", href: "/industries/education-and-edtech" },
   ],
   col2: [
-    { name: "Logistics & Supply Chain", href: "/industries" },
-    { name: "Hospitality & Travel", href: "/industries" },
-    { name: "Real Estate & Construction", href: "/industries" },
-    { name: "Energy & Utilities", href: "/industries" },
-    { name: "Agriculture & AgriTech", href: "/industries" },
+    { name: "Logistics & Supply Chain", href: "/industries/logistics-and-supply-chain" },
+    { name: "Hospitality & Travel", href: "/industries/hospitality-and-travel" },
+    { name: "Real Estate & Construction", href: "/industries/real-estate-and-construction" },
+    { name: "Energy & Utilities", href: "/industries/energy-and-utilities" },
+    { name: "Agriculture & AgriTech", href: "/industries/agriculture-and-agritech" },
   ]
 };
 

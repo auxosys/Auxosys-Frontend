@@ -7,34 +7,34 @@ const SERVICES_DATA = {
   col1: {
     title: "Business & Consulting",
     items: [
-      { name: "Digital Strategy Consulting", href: "/services" },
-      { name: "Product Strategy & Roadmapping", href: "/services" },
-      { name: "UX Research & Product Design", href: "/services" },
-      { name: "Marketing & GTM Strategy", href: "/services" },
-      { name: "Operations & Process Optimization", href: "/services" },
-      { name: "Business Analytics", href: "/services" },
+      { name: "Digital Strategy Consulting", href: "/services/digital-strategy-consulting" },
+      { name: "Product Strategy & Roadmapping", href: "/services/product-strategy-and-roadmapping" },
+      { name: "UX Research & Product Design", href: "/services/ux-research-and-product-design" },
+      { name: "Marketing & GTM Strategy", href: "/services/marketing-and-gtm-strategy" },
+      { name: "Operations & Process Optimization", href: "/services/operations-and-process-optimization" },
+      { name: "Business Analytics", href: "/services/business-analytics" },
     ]
   },
   col2: {
     title: "Software Development",
     items: [
-      { name: "Custom Software Development", href: "/services" },
-      { name: "SaaS Product Development", href: "/services" },
-      { name: "Enterprise Applications", href: "/services" },
-      { name: "Web Development", href: "/services" },
-      { name: "Mobile App Development", href: "/services" },
-      { name: "API Development", href: "/services" },
+      { name: "Custom Software Development", href: "/services/custom-software-development" },
+      { name: "SaaS Product Development", href: "/services/saas-product-development" },
+      { name: "Enterprise Applications", href: "/services/enterprise-applications" },
+      { name: "Web Development", href: "/services/web-development" },
+      { name: "Mobile App Development", href: "/services/mobile-app-development" },
+      { name: "API Development", href: "/services/api-development" },
     ]
   },
   col3: {
     title: "AI, Cloud & Enterprise",
     items: [
-      { name: "AI & Intelligent Automation", href: "/services" },
-      { name: "Cloud Services", href: "/services" },
-      { name: "CRM & ERP Solutions", href: "/services" },
-      { name: "WhatsApp Business Solutions", href: "/services" },
-      { name: "Cybersecurity", href: "/services" },
-      { name: "DevOps & Integrations", href: "/services" },
+      { name: "AI & Intelligent Automation", href: "/services/ai-and-intelligent-automation" },
+      { name: "Cloud Services", href: "/services/cloud-services" },
+      { name: "CRM & ERP Solutions", href: "/services/crm-and-erp-solutions" },
+      { name: "WhatsApp Business Solutions", href: "/services/whatsapp-business-solutions" },
+      { name: "Cybersecurity", href: "/services/cybersecurity" },
+      { name: "DevOps & Integrations", href: "/services/devops-and-integrations" },
     ]
   }
 };
