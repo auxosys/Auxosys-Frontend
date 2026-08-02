@@ -17,6 +17,7 @@ const INDUSTRIES_DATA = {
     { name: "Real Estate & Construction", href: "/industries/real-estate-and-construction" },
     { name: "Energy & Utilities", href: "/industries/energy-and-utilities" },
     { name: "Agriculture & AgriTech", href: "/industries/agriculture-and-agritech" },
+    { name: "Blockchain & Web3", href: "/industries/blockchain-and-web3" },
   ]
 };
 

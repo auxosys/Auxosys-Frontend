@@ -5,7 +5,7 @@ import styles from './MegaMenu.module.css';
 
 const MEGA_MENU_DATA = {
   featured: {
-    title: "Auxosys AI and Product Workspace",
+    title: "Auxosys Products Workspace",
     description: "Discover how intelligent agents can transform your enterprise productivity and operational scale.",
     badge: null,
     link: "/contact",
@@ -17,12 +17,15 @@ const MEGA_MENU_DATA = {
     { name: "WhatsApp Business Platform", href: "/products/whatsapp", icon: null },
     { name: "Learning & Training Platform", href: "/products/learning", icon: null },
     { name: "Healthcare Operations Suite", href: "/products/healthcare", icon: null },
+    { name: "Business Operations Suite", href: "/products/business-ops", icon: Building2 },
   ],
   columnTwo: [
-    { name: "Business Operations Suite", href: "/products/business-ops", icon: Building2 },
     { name: "People & Workforce Hub", href: "/products/workforce", icon: null },
     { name: "Inventory & Supply Management", href: "/products/inventory", icon: null },
     { name: "Project & Team Collaboration Suite", href: "/products/collaboration", icon: Workflow },
+    { name: "Enterprise Blockchain Platform", href: "/products/enterprise-blockchain-platform", icon: null },
+    { name: "DAO Management Platform", href: "/products/dao-management-platform", icon: null },
+    { name: "Digital Asset Tokenization Platform", href: "/products/digital-asset-tokenization-platform", icon: null },
   ]
 };
 

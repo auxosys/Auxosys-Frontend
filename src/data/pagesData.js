@@ -25,6 +25,9 @@ export const PRODUCTS_DATA = [
   { slug: "workforce", ...generateDetails("People & Workforce Hub", "product") },
   { slug: "inventory", ...generateDetails("Inventory & Supply Management", "product") },
   { slug: "collaboration", ...generateDetails("Project & Team Collaboration Suite", "product") },
+  { slug: "enterprise-blockchain-platform", ...generateDetails("Enterprise Blockchain Platform", "product") },
+  { slug: "dao-management-platform", ...generateDetails("DAO Management Platform", "product") },
+  { slug: "digital-asset-tokenization-platform", ...generateDetails("Digital Asset Tokenization Platform", "product") },
 ];
 
 export const SERVICES_DATA = [
@@ -45,7 +48,13 @@ export const SERVICES_DATA = [
   { slug: "crm-and-erp-solutions", ...generateDetails("CRM & ERP Solutions", "service") },
   { slug: "whatsapp-business-solutions", ...generateDetails("WhatsApp Business Solutions", "service") },
   { slug: "cybersecurity", ...generateDetails("Cybersecurity", "service") },
-  { slug: "devops-and-integrations", ...generateDetails("DevOps & Integrations", "service") }
+  { slug: "devops-and-integrations", ...generateDetails("DevOps & Integrations", "service") },
+  { slug: "smart-contract-development", ...generateDetails("Smart Contract Development", "service") },
+  { slug: "dapp-development", ...generateDetails("dApp Development", "service") },
+  { slug: "enterprise-blockchain-solutions", ...generateDetails("Enterprise Blockchain Solutions", "service") },
+  { slug: "crypto-wallet-development", ...generateDetails("Crypto Wallet Development", "service") },
+  { slug: "tokenization-solutions", ...generateDetails("Tokenization Solutions", "service") },
+  { slug: "web3-integration", ...generateDetails("Web3 Integration", "service") }
 ];
 
 export const INDUSTRIES_DATA = [
@@ -58,5 +67,6 @@ export const INDUSTRIES_DATA = [
   { slug: "hospitality-and-travel", ...generateDetails("Hospitality & Travel", "industry") },
   { slug: "real-estate-and-construction", ...generateDetails("Real Estate & Construction", "industry") },
   { slug: "energy-and-utilities", ...generateDetails("Energy & Utilities", "industry") },
-  { slug: "agriculture-and-agritech", ...generateDetails("Agriculture & AgriTech", "industry") }
+  { slug: "agriculture-and-agritech", ...generateDetails("Agriculture & AgriTech", "industry") },
+  { slug: "blockchain-and-web3", ...generateDetails("Blockchain & Web3", "industry") }
 ];

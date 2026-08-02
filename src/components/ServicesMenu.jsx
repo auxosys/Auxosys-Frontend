@@ -36,6 +36,17 @@ const SERVICES_DATA = {
       { name: "Cybersecurity", href: "/services/cybersecurity" },
       { name: "DevOps & Integrations", href: "/services/devops-and-integrations" },
     ]
+  },
+  col4: {
+    title: "Blockchain & Web3",
+    items: [
+      { name: "Smart Contract Development", href: "/services/smart-contract-development" },
+      { name: "dApp Development", href: "/services/dapp-development" },
+      { name: "Enterprise Blockchain Solutions", href: "/services/enterprise-blockchain-solutions" },
+      { name: "Crypto Wallet Development", href: "/services/crypto-wallet-development" },
+      { name: "Tokenization Solutions", href: "/services/tokenization-solutions" },
+      { name: "Web3 Integration", href: "/services/web3-integration" },
+    ]
   }
 };
 
@@ -69,6 +80,7 @@ export default function ServicesMenu({ isOpen, isMobile, onClose }) {
         <MobileServiceGroup group={SERVICES_DATA.col1} onClose={onClose} />
         <MobileServiceGroup group={SERVICES_DATA.col2} onClose={onClose} />
         <MobileServiceGroup group={SERVICES_DATA.col3} onClose={onClose} />
+        <MobileServiceGroup group={SERVICES_DATA.col4} onClose={onClose} />
         
         <div style={{ marginTop: 12 }}>
           <Link href="/services" onClick={onClose} style={{ fontWeight: 700, color: 'var(--auxo-teal)' }}>
@@ -97,15 +109,20 @@ export default function ServicesMenu({ isOpen, isMobile, onClose }) {
           <ServiceGroup group={SERVICES_DATA.col3} onClose={onClose} />
         </div>
 
-        {/* Column 4 - CTA */}
+        {/* Column 4 */}
         <div className={styles.linkCol}>
-          <div className={styles.ctaCard}>
+          <ServiceGroup group={SERVICES_DATA.col4} onClose={onClose} />
+        </div>
+
+        {/* Full-width Horizontal CTA */}
+        <div className={styles.ctaCard}>
+          <div className={styles.ctaText}>
             <p>Need a Custom Solution?</p>
             <span className={styles.ctaDesc}>Let's build software designed around your business.</span>
-            <Link href="/services" className={styles.ctaLink} onClick={onClose}>
-              Explore Our Services <ArrowRight size={18} strokeWidth={2.5} />
-            </Link>
           </div>
+          <Link href="/services" className={styles.ctaLink} onClick={onClose}>
+            Explore Our Services <ArrowRight size={18} strokeWidth={2.5} />
+          </Link>
         </div>
       </div>
     </div>
