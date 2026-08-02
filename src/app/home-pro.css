@@ -1,0 +1,1431 @@
+/* ============================================================
+   AUXOSYS — PRO Card System  (Infosys / Handshake grade)
+   Superset of home.css. Adds editorial media cards, feature
+   cards, arrow-link affordances, and premium hover states.
+   Replace home.css with this, or load it after it.
+   ============================================================ */
+:root {
+  --ink: #0E1B21;
+  --ink-2: #14232A;
+  --accent: #0FB5A6;
+  --accent-2: #17A77E;
+  --accent-deep: #0C8074;
+  --volt: #C6E736;
+
+  --bg: #FFFFFF;
+  --bg-alt: #F5F8F8;
+  --surface: #FFFFFF;
+
+  --text: #10201F;
+  --text-muted: #56656B;
+  --text-soft: #7C8A8F;
+
+  --border: #E7ECEC;
+  --border-2: #D8E0E0;
+
+  --shadow-xs: 0 1px 2px rgba(14, 27, 33, .05);
+  --shadow-sm: 0 2px 10px rgba(14, 27, 33, .06);
+  --shadow-md: 0 14px 34px rgba(14, 27, 33, .10);
+  --shadow-lg: 0 26px 60px rgba(14, 27, 33, .16);
+
+  --radius: 20px;
+  --radius-sm: 14px;
+  --radius-lg: 26px;
+  --container: 1200px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 96px 0;
+  background: var(--bg);
+}
+
+.section.alt {
+  background: var(--bg-alt);
+}
+
+/* ---------- section header ---------- */
+.section-head {
+  max-width: 740px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin-bottom: 14px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--volt);
+  box-shadow: 0 0 0 3px rgba(198, 231, 54, .25);
+}
+
+.section h2 {
+  font-size: clamp(30px, 3.6vw, 42px);
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin: 0 0 14px;
+}
+
+.section-head p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+/* ============================================================
+   GRID
+   ============================================================ */
+.card-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.card-grid.cols-2 {
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+}
+
+.card-grid.cols-3 {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.card-grid.cols-4 {
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+}
+
+/* ============================================================
+   BASE CARD  (icon + title + desc + arrow link)
+   ============================================================ */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow-xs);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-2);
+}
+
+/* corner glow accent */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -30%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(15, 181, 166, .10), transparent 70%);
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+  pointer-events: none;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 20px;
+  background: linear-gradient(145deg, rgba(15, 181, 166, .14), rgba(198, 231, 54, .14));
+  color: var(--accent);
+  position: relative;
+  z-index: 1;
+}
+
+.card-icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+.card h3 {
+  font-size: 19.5px;
+  font-weight: 680;
+  color: var(--text);
+  margin: 0 0 9px;
+  letter-spacing: -0.01em;
+  position: relative;
+  z-index: 1;
+}
+
+.card p {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--text-muted);
+  margin: 0;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- arrow link (the key premium affordance) ---------- */
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  font-size: 14.5px;
+  font-weight: 650;
+  color: var(--accent-deep);
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+}
+
+.card-link svg,
+.card-link .arw {
+  transition: transform .3s var(--ease);
+}
+
+.card:hover .card-link svg,
+.card:hover .card-link .arw {
+  transform: translate(4px, -4px);
+}
+
+.card-link .arw {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* status tags */
+.status-tag {
+  align-self: flex-start;
+  margin-top: 18px;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .02em;
+  padding: 5px 13px;
+  border-radius: 999px;
+  position: relative;
+  z-index: 1;
+}
+
+.status-soon {
+  background: rgba(15, 181, 166, .12);
+  color: #0C8074
+}
+
+.status-dev {
+  background: rgba(198, 231, 54, .2);
+  color: #68760F
+}
+
+.status-research {
+  background: rgba(124, 138, 143, .14);
+  color: #55636A
+}
+
+.status-planned {
+  background: rgba(14, 27, 33, .06);
+  color: #56656B
+}
+
+/* ============================================================
+   MEDIA CARD  (image/visual on top — Infosys / Handshake style)
+   ============================================================ */
+.card--media {
+  padding: 0;
+}
+
+.card-media {
+  position: relative;
+  aspect-ratio: 2/1;
+  overflow: hidden;
+  background: linear-gradient(135deg, #EAF7F4, #F3FBE6);
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s var(--ease);
+}
+
+.card--media:hover .card-media img {
+  transform: scale(1.06);
+}
+
+/* icon-panel variant: soft gradient panel with a centered glass icon/svg */
+.card-media.icon-panel {
+  display: grid;
+  place-items: center;
+}
+
+.card-media.icon-panel svg {
+  width: 28%;
+  height: 28%;
+  filter: drop-shadow(0 8px 16px rgba(14, 27, 33, .14));
+}
+
+/* category chip floating on media */
+.card-cat {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(255, 255, 255, .9);
+  backdrop-filter: blur(6px);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.card--media .card-body {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card--media .card-body h3 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+
+.card--media .card-body p {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  margin: 0;
+  flex: 1;
+}
+
+/* ============================================================
+   FEATURE CARD  (spans 2 cols — media left, content right)
+   ============================================================ */
+.card--feature {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  padding: 0;
+  align-items: stretch;
+}
+
+.card--feature .card-media {
+  aspect-ratio: auto;
+  height: 100%;
+  min-height: 300px;
+}
+
+.card--feature .card-body {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card--feature .card-body h3 {
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+}
+
+.card--feature .card-body p {
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* ============================================================
+   DARK CARD  (premium contrast — Infosys uses these)
+   ============================================================ */
+.card--dark {
+  background: var(--ink);
+  border-color: rgba(255, 255, 255, .08);
+}
+
+.card--dark::before {
+  background: radial-gradient(circle, rgba(198, 231, 54, .18), transparent 70%);
+}
+
+.card--dark h3 {
+  color: #fff;
+}
+
+.card--dark p {
+  color: rgba(255, 255, 255, .68);
+}
+
+.card--dark .card-icon {
+  background: linear-gradient(145deg, rgba(15, 181, 166, .28), rgba(198, 231, 54, .22));
+  color: #EAFFB0;
+}
+
+.card--dark .card-link {
+  color: var(--volt);
+}
+
+.card--dark .card-link .arw {
+  background: var(--volt);
+  color: var(--ink);
+}
+
+/* ============================================================
+   BUTTONS / HERO / VALUES / TIMELINE / TECH / STATS / CTA
+   (carried from home.css, lightly refined)
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 650;
+  padding: 13px 26px;
+  border-radius: 999px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform .12s var(--ease), background .18s, border-color .18s;
+}
+
+.btn:active {
+  transform: scale(.98)
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: #fff
+}
+
+.btn-primary:hover {
+  background: #1B2E36
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border-2)
+}
+
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent)
+}
+
+.section-cta {
+  text-align: center;
+  margin-top: 44px
+}
+
+.btn-glass-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--ink);
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 650;
+  padding: 13px 16px 13px 24px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-md);
+  transition: transform .12s var(--ease), box-shadow .2s
+}
+
+.btn-glass-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg)
+}
+
+.btn-glass-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--volt);
+  color: var(--ink)
+}
+
+.hero {
+  padding: 110px 0 76px;
+  background: radial-gradient(120% 80% at 85% 0%, rgba(15, 181, 166, .08), transparent 60%), radial-gradient(90% 70% at 0% 20%, rgba(198, 231, 54, .07), transparent 55%), var(--bg)
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 48px;
+  align-items: center
+}
+
+.hero h1 {
+  font-size: clamp(34px, 4.6vw, 56px);
+  line-height: 1.05;
+  font-weight: 780;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0 0 18px
+}
+
+.hero-highlight {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--accent-2);
+  background: rgba(15, 181, 166, .08);
+  border: 1px solid rgba(15, 181, 166, .2);
+  padding: 7px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px
+}
+
+.hero .desc {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0 0 28px;
+  max-width: 560px
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap
+}
+
+.hero-right {
+  display: grid;
+  place-items: center
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: start
+}
+
+.about-grid>div:first-child p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 0 0 16px
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px
+}
+
+.value-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  transition: transform .2s var(--ease), box-shadow .2s
+}
+
+.value-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md)
+}
+
+.value-card .num {
+  font-size: 26px;
+  font-weight: 780;
+  color: var(--accent);
+  opacity: .35;
+  margin-bottom: 8px
+}
+
+.value-card h4 {
+  font-size: 17px;
+  font-weight: 680;
+  color: var(--text);
+  margin: 0 0 6px
+}
+
+.value-card p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  position: relative
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 22px;
+  left: 6%;
+  right: 6%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--volt));
+  opacity: .4
+}
+
+.tl-step {
+  text-align: center;
+  position: relative
+}
+
+.tl-dot {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  background: var(--ink);
+  border: 3px solid var(--bg-alt);
+  position: relative;
+  z-index: 1
+}
+
+.tl-step h4 {
+  font-size: 16px;
+  font-weight: 680;
+  color: var(--text);
+  margin: 0 0 6px
+}
+
+.tl-step p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0
+}
+
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center
+}
+
+.tech-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 11px 22px;
+  font-size: 14.5px;
+  font-weight: 650;
+  color: var(--text);
+  transition: transform .15s var(--ease), border-color .15s, color .15s
+}
+
+.tech-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--accent)
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px
+}
+
+.why-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px;
+  transition: transform .3s var(--ease), box-shadow .3s, border-color .3s;
+  position: relative;
+  overflow: hidden
+}
+
+.why-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-2)
+}
+
+.why-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  color: var(--accent);
+  background: linear-gradient(145deg, rgba(15, 181, 166, .14), rgba(198, 231, 54, .14))
+}
+
+.why-icon svg {
+  width: 24px;
+  height: 24px
+}
+
+.why-card h4 {
+  font-size: 17.5px;
+  font-weight: 680;
+  color: var(--text);
+  margin: 0 0 8px
+}
+
+.why-card p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 28px 18px;
+  text-align: center
+}
+
+.stat-num {
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 780;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--ink), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 6px
+}
+
+.stat-label {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  font-weight: 500
+}
+
+.home-cta {
+  padding: 160px 0;
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--bg) 0%, rgba(255, 255, 255, 0) 25%),
+    linear-gradient(0deg, var(--bg) 0%, rgba(255, 255, 255, 0) 25%),
+    radial-gradient(60% 90% at 22% 45%, #E0F6ED 0%, transparent 70%),
+    radial-gradient(55% 85% at 78% 40%, #F6FDEB 0%, transparent 72%),
+    radial-gradient(70% 120% at 55% 20%, #E4F7E1 0%, transparent 80%),
+    linear-gradient(90deg, #E5F7F3 0%, #E4F7E1 40%, #EEFADB 70%, #FEFFFC 100%);
+  overflow: hidden;
+}
+
+/* Remove the 1px seam border from globals.css so the gradient blends perfectly */
+.home-cta::before {
+  display: none !important;
+}
+
+.home-cta .container {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-banner {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  text-align: left;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.cta-banner .cta-content {
+  max-width: 680px;
+}
+
+.cta-banner h2 {
+  font-size: clamp(28px, 3.6vw, 40px);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  color: #111418;
+  margin: 0 0 16px;
+}
+
+.cta-banner p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #5C6B70;
+  margin: 0;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.cta-banner .btn-primary {
+  background: var(--ink);
+  color: #fff;
+  padding: 16px 32px;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.cta-banner .btn-primary:hover {
+  background: #1a2a32;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1000px) {
+
+  .hero-grid,
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 36px
+  }
+
+  .hero-right {
+    order: -1
+  }
+
+  .timeline {
+    grid-template-columns: repeat(3, 1fr)
+  }
+
+  .timeline::before {
+    display: none
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+  .card--feature {
+    grid-column: span 1;
+    grid-template-columns: 1fr
+  }
+
+  .card--feature .card-media {
+    min-height: 220px
+  }
+}
+
+@media (max-width:620px) {
+  .section {
+    padding: 66px 0
+  }
+
+  .values-grid,
+  .why-grid {
+    grid-template-columns: 1fr 1fr
+  }
+
+  .timeline {
+    grid-template-columns: 1fr 1fr
+  }
+
+  .cta-banner {
+    padding: 46px 24px
+  }
+}
+
+/* ============================================================
+   CARD HOVER FIX  v2  — append/replace after home-pro.css
+   • removes browser focus/tap defaults on <a> cards
+   • LIGHT cards: clean white + lift + teal glow on hover
+   • DARK cards (.card--dark): stay DARK at rest AND on hover
+     (v1 bug: base .card white overrode .card--dark at rest)
+   ============================================================ */
+
+/* 1) kill browser defaults that caused the grey/blue artifact */
+a.card,
+.card,
+.card--media,
+.card--feature {
+  text-decoration: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+a.card:focus-visible,
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* 2) REST background — LIGHT cards only (never touch dark cards) */
+.card:not(.card--dark),
+.card--media:not(.card--dark),
+.card--feature:not(.card--dark) {
+  background: var(--surface, #fff);
+  transition:
+    transform .32s cubic-bezier(.22, .61, .36, 1),
+    box-shadow .32s cubic-bezier(.22, .61, .36, 1),
+    border-color .32s ease;
+}
+
+/* 3) HOVER — LIGHT cards: lift + stay white + soft teal glow */
+.card:not(.card--dark):hover,
+.card--media:not(.card--dark):hover,
+.card--feature:not(.card--dark):hover {
+  transform: translateY(-6px);
+  background: #fff;
+  border-color: rgba(15, 181, 166, .38);
+  box-shadow:
+    0 22px 46px -14px rgba(15, 181, 166, .28),
+    0 10px 24px -10px rgba(14, 27, 33, .12);
+}
+
+/* 4) DARK cards — dark at REST and on HOVER (the actual fix) */
+.card.card--dark,
+.card--dark {
+  background: var(--ink) !important;
+  /* beats the base .card rule */
+  color: #fff;
+  transition:
+    transform .32s cubic-bezier(.22, .61, .36, 1),
+    background .32s ease,
+    box-shadow .32s ease,
+    border-color .32s ease;
+}
+
+.card.card--dark:hover,
+.card--dark:hover {
+  transform: translateY(-6px);
+  background: #1b2a33 !important;
+  /* noticeably lighter dark-teal on hover */
+  border-color: rgba(15, 181, 166, .4);
+  box-shadow: 0 26px 52px -16px rgba(0, 0, 0, .6);
+}
+
+.card--dark h3,
+.card--dark h4 {
+  color: #fff;
+}
+
+.card--dark p {
+  color: rgba(255, 255, 255, .72);
+}
+
+/* 5) accent hairline on top — sweeps in for light cards */
+.card:not(.card--dark)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--volt));
+  border-radius: 2px;
+  opacity: 0;
+  transform: scaleX(.4);
+  transform-origin: left;
+  transition: opacity .3s ease, transform .35s ease;
+}
+
+.card:not(.card--dark):hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* dark card keeps a steady volt top line */
+.card--dark::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--volt), var(--accent));
+  border-radius: 2px;
+  opacity: .9;
+}
+
+/* 6) icon pop + arrow nudge (both card types) */
+.card-icon {
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.card:hover .card-icon {
+  transform: scale(1.06) translateY(-1px);
+}
+
+.card:not(.card--dark):hover .card-icon {
+  box-shadow: 0 8px 18px rgba(15, 181, 166, .22);
+}
+
+.card:hover .card-link .arw {
+  transform: translate(3px, -3px);
+}
+
+/* ============================================================
+   PRODUCTS HERO — ANIMATED PHONE MOCKUP
+   Fills the right column of the Products hero with a floating
+   device showing an app UI + micro-animations. On-brand
+   (violet→teal header, volt accents). Append after home-pro.css.
+   ============================================================ */
+:root {
+  --pf-violet: #8A5CF5;
+  --pf-teal: #2BD1BE;
+  --pf-volt: #DFFF4F;
+  --pf-ink: #14232A;
+}
+
+.pf-stage {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  display: grid;
+  place-items: center;
+}
+
+/* soft brand glow behind the phone */
+.pf-glow {
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+      rgba(138, 92, 245, .28), rgba(43, 209, 190, .18) 45%, transparent 70%);
+  filter: blur(30px);
+  animation: pf-glowpulse 6s ease-in-out infinite;
+}
+
+@keyframes pf-glowpulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: .85
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 1
+  }
+}
+
+/* ---------------- PHONE ---------------- */
+.phone {
+  position: relative;
+  z-index: 2;
+  width: 270px;
+  height: 540px;
+  border-radius: 44px;
+  background: linear-gradient(160deg, #20323a, #0e181d);
+  padding: 12px;
+  box-shadow:
+    0 40px 80px -20px rgba(14, 27, 33, .55),
+    0 0 0 2px rgba(255, 255, 255, .04) inset;
+  animation: pf-float 6s ease-in-out infinite;
+}
+
+@keyframes pf-float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg)
+  }
+
+  50% {
+    transform: translateY(-16px) rotate(0.5deg)
+  }
+}
+
+.phone-notch {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 26px;
+  background: #0e181d;
+  border-radius: 0 0 16px 16px;
+  z-index: 3;
+}
+
+.phone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 34px;
+  overflow: hidden;
+  background: #F5F8FA;
+  display: flex;
+  flex-direction: column;
+}
+
+/* app header */
+.app-top {
+  background: linear-gradient(135deg, var(--pf-violet), var(--pf-teal));
+  padding: 34px 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-title {
+  color: #fff;
+  font-weight: 750;
+  font-size: 16px;
+  letter-spacing: -.01em
+}
+
+.app-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .28);
+  border: 2px solid rgba(255, 255, 255, .55)
+}
+
+.app-greet {
+  padding: 16px 18px 6px;
+  font-size: 13px;
+  color: #5C6B70
+}
+
+.app-h {
+  padding: 0 18px 12px;
+  font-size: 18px;
+  font-weight: 750;
+  color: var(--pf-ink);
+  letter-spacing: -.02em
+}
+
+/* animated feature cards */
+.app-card {
+  margin: 0 18px 10px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(14, 27, 33, .06);
+  border: 1px solid #EAEFEF;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: pf-in .6s cubic-bezier(.22, .61, .36, 1) forwards;
+}
+
+.app-card .ac-ico {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: linear-gradient(145deg, rgba(138, 92, 245, .16), rgba(43, 209, 190, .16));
+  color: var(--pf-violet);
+  font-weight: 800;
+  font-size: 15px
+}
+
+.app-card .ac-t {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--pf-ink)
+}
+
+.app-card .ac-s {
+  font-size: 11.5px;
+  color: #7C8A8F;
+  margin-top: 2px
+}
+
+.app-card.c1 {
+  animation-delay: .25s
+}
+
+.app-card.c2 {
+  animation-delay: .45s
+}
+
+@keyframes pf-in {
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+/* progress bar that fills on a loop */
+.app-progress {
+  margin: 6px 18px 4px;
+  height: 8px;
+  border-radius: 99px;
+  background: #E6ECEC;
+  overflow: hidden
+}
+
+.app-progress-bar {
+  height: 100%;
+  width: 30%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--pf-violet), var(--pf-teal));
+  animation: pf-fill 3.4s ease-in-out infinite
+}
+
+@keyframes pf-fill {
+  0% {
+    width: 12%
+  }
+
+  50% {
+    width: 82%
+  }
+
+  100% {
+    width: 12%
+  }
+}
+
+.app-plabel {
+  padding: 2px 18px 12px;
+  font-size: 11px;
+  color: #7C8A8F;
+  display: flex;
+  justify-content: space-between
+}
+
+/* mini list rows */
+.app-row {
+  margin: 0 18px 8px;
+  height: 34px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #EEF2F2;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: pf-in .5s cubic-bezier(.22, .61, .36, 1) forwards
+}
+
+.app-row.r1 {
+  animation-delay: .6s
+}
+
+.app-row.r2 {
+  animation-delay: .72s
+}
+
+.app-row.r3 {
+  animation-delay: .84s
+}
+
+/* floating action button with pulse */
+.app-fab {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--pf-ink);
+  color: var(--pf-volt);
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: 400;
+  box-shadow: 0 10px 22px rgba(14, 27, 33, .3)
+}
+
+.app-fab::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--pf-teal);
+  opacity: 0;
+  animation: pf-ring 2.6s ease-out infinite
+}
+
+@keyframes pf-ring {
+  0% {
+    transform: scale(.8);
+    opacity: .6
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 0
+  }
+}
+
+/* ---------------- floating chips outside the phone ---------------- */
+.pf-chip {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #fff;
+  border: 1px solid #E6ECEC;
+  border-radius: 12px;
+  padding: 9px 13px;
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--pf-ink);
+  box-shadow: 0 14px 30px rgba(14, 27, 33, .12)
+}
+
+.pf-chip .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%
+}
+
+.pf-chip.chip1 {
+  top: 16%;
+  left: 2%;
+  animation: pf-floatA 5s ease-in-out infinite
+}
+
+.pf-chip.chip2 {
+  bottom: 18%;
+  right: 1%;
+  animation: pf-floatB 5.6s ease-in-out infinite
+}
+
+.pf-chip.chip1 .dot {
+  background: var(--pf-teal)
+}
+
+.pf-chip.chip2 .dot {
+  background: var(--pf-volt);
+  box-shadow: 0 0 0 3px rgba(223, 255, 79, .3);
+  animation: pf-blink 1.6s ease-in-out infinite
+}
+
+@keyframes pf-floatA {
+
+  0%,
+  100% {
+    transform: translateY(0)
+  }
+
+  50% {
+    transform: translateY(-14px)
+  }
+}
+
+@keyframes pf-floatB {
+
+  0%,
+  100% {
+    transform: translateY(0)
+  }
+
+  50% {
+    transform: translateY(12px)
+  }
+}
+
+@keyframes pf-blink {
+
+  0%,
+  100% {
+    opacity: 1
+  }
+
+  50% {
+    opacity: .4
+  }
+}
+
+/* respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+
+  .phone,
+  .pf-glow,
+  .app-card,
+  .app-row,
+  .app-progress-bar,
+  .app-fab::after,
+  .pf-chip,
+  .pf-chip .dot {
+    animation: none !important
+  }
+
+  .app-card,
+  .app-row {
+    opacity: 1;
+    transform: none
+  }
+}
+
+/* responsive: hide the phone below the two-col breakpoint (hero stacks) */
+@media (max-width:1000px) {
+  .pf-stage {
+    min-height: 440px;
+    margin-top: 8px
+  }
+
+  .phone {
+    width: 240px;
+    height: 480px
+  }
+}
+
+@media (max-width:460px) {
+  .pf-chip {
+    display: none
+  }
+}

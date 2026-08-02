@@ -18,7 +18,8 @@ import {
   IconTools,
   IconBlockchain,
   IconSearch,
-  IconHandshake
+  IconHandshake,
+  IconLightning
 } from '@/components/Icons';
 
 /* small arrow affordance reused by every card link */
@@ -27,17 +28,16 @@ const Arrow = () => (
 );
 
 const INDUSTRIES = [
-  { icon: IconHealthcare, name: "Healthcare", desc: "Digital healthcare systems, patient management, telemedicine, and secure healthcare platforms.", tags: ["EHR Systems", "Telemedicine", "HIPAA Compliant"] },
-  { icon: IconFinance, name: "Finance", desc: "FinTech applications, payment systems, digital banking, and financial analytics.", tags: ["Payments", "Digital Banking", "Compliance"] },
-  { icon: IconEducation, name: "Education", desc: "Learning Management Systems, EdTech platforms, and digital education solutions.", tags: ["LMS", "EdTech", "E-Learning"] },
+  { icon: IconHealthcare, name: "Healthcare & Life Sciences", desc: "Digital healthcare systems, patient management, telemedicine, and secure healthcare platforms.", tags: ["EHR Systems", "Telemedicine", "HIPAA"] },
   { icon: IconRetail, name: "Retail & E-Commerce", desc: "Inventory management, omnichannel commerce, POS systems, and customer engagement.", tags: ["E-Commerce", "POS", "Omnichannel"] },
-  { icon: IconLogistics, name: "Logistics", desc: "Fleet management, shipment tracking, warehouse automation, and route optimization.", tags: ["Fleet", "Tracking", "Automation"] },
-  { icon: IconManufacturing, name: "Manufacturing", desc: "Factory automation, ERP systems, production analytics, and industrial monitoring.", tags: ["ERP", "IoT", "Analytics"] },
-  { icon: IconRealEstate, name: "Real Estate", desc: "Property management platforms, CRM solutions, and real estate marketplaces.", tags: ["Property Mgmt", "CRM", "Marketplace"] },
-  { icon: IconWeb, name: "Travel & Hospitality", desc: "Booking systems, customer portals, travel management, and hospitality automation.", tags: ["Booking", "CMS", "CRM"] },
-  { icon: IconWeb, name: "Agriculture", desc: "Smart farming, IoT integration, precision agriculture, and supply chain solutions.", tags: ["Smart Farming", "IoT", "Analytics"] },
-  { icon: IconStartup, name: "Startups", desc: "MVP development, product engineering, AI integration, and growth consulting.", tags: ["MVP", "AI", "Consulting"] },
-  { icon: IconShield, name: "Enterprise", desc: "Large-scale digital transformation, enterprise software, and intelligent automation.", tags: ["ERP", "Cloud Migration", "Automation"] },
+  { icon: IconManufacturing, name: "Manufacturing & Industrial", desc: "Factory automation, ERP systems, production analytics, and industrial monitoring.", tags: ["ERP", "IoT", "Analytics"] },
+  { icon: IconFinance, name: "Banking, Finance & Insurance", desc: "FinTech applications, payment systems, digital banking, and financial analytics.", tags: ["Payments", "Banking", "Compliance"] },
+  { icon: IconEducation, name: "Education & EdTech", desc: "Learning Management Systems, EdTech platforms, and digital education solutions.", tags: ["LMS", "EdTech", "E-Learning"] },
+  { icon: IconLogistics, name: "Logistics & Supply Chain", desc: "Fleet management, shipment tracking, warehouse automation, and route optimization.", tags: ["Fleet", "Tracking", "Automation"] },
+  { icon: IconWeb, name: "Hospitality & Travel", desc: "Booking systems, customer portals, travel management, and hospitality automation.", tags: ["Booking", "CMS", "CRM"] },
+  { icon: IconRealEstate, name: "Real Estate & Construction", desc: "Property management platforms, CRM solutions, and real estate marketplaces.", tags: ["Property Mgmt", "CRM", "Marketplace"] },
+  { icon: IconLightning, name: "Energy & Utilities", desc: "Smart grid management, energy analytics, IoT integration, and resource optimization.", tags: ["Smart Grid", "IoT", "Analytics"] },
+  { icon: IconWeb, name: "Agriculture & AgriTech", desc: "Smart farming, IoT integration, precision agriculture, and supply chain solutions.", tags: ["Smart Farming", "IoT", "Analytics"] },
 ];
 
 const APPROACHES = [

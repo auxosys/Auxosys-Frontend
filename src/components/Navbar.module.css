@@ -76,6 +76,16 @@
   pointer-events: none;
 }
 
+.navLinks li {
+  position: relative;
+}
+
+.megaMenuItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .logo {
   position: relative;
   display: flex;

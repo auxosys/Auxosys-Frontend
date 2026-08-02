@@ -15,16 +15,40 @@ const Arrow = () => (
   <span className="arw"><ArrowUpRight size={13} strokeWidth={2.5} /></span>
 );
 
-const SERVICES = [
-  { title: 'AI Development', href: '/services/ai', Icon: IconAI, desc: 'Intelligent applications using LLMs, automation, computer vision, and machine learning.' },
-  { title: 'SaaS Development', href: '/services/saas', Icon: IconSaaS, desc: 'Secure, scalable, cloud-native SaaS platforms built for long-term business growth.' },
-  { title: 'Web Development', href: '/services/web', Icon: IconWeb, desc: 'High-performance websites and web applications using modern technologies.' },
-  { title: 'Mobile App Development', href: '/services/mobile', Icon: IconMobile, desc: 'Cross-platform mobile applications with native-like performance and UX.' },
-  { title: 'Cloud Solutions', href: '/services/cloud', Icon: IconCloud, desc: 'Cloud migration, DevOps, infrastructure automation, monitoring, and optimization.' },
-  { title: 'Blockchain Development', href: '/services/blockchain', Icon: IconBlockchain, desc: 'Decentralized applications, smart contracts, and secure blockchain solutions.' },
-  { title: 'UI / UX Design', href: '/services/design', Icon: IconDesign, desc: 'Research-driven interfaces that deliver exceptional user experiences and conversion.' },
-  { title: 'API Development', href: '/services/api', Icon: IconTools, desc: 'REST APIs, GraphQL APIs, third-party integrations, and enterprise connectivity.' },
-  { title: 'Product Consulting', href: '/services/consulting', Icon: IconBulb, desc: 'Helping founders validate ideas, define roadmaps, and launch successful products.' },
+const SERVICES_GROUPS = [
+  {
+    category: "Business & Consulting",
+    items: [
+      { title: "Digital Strategy Consulting", href: "/services", Icon: IconBulb, desc: "Align technology with your business objectives." },
+      { title: "Product Strategy & Roadmapping", href: "/services", Icon: IconScale, desc: "Plan and prioritize features for maximum impact." },
+      { title: "UX Research & Product Design", href: "/services", Icon: IconDesign, desc: "Create intuitive, user-centric interfaces." },
+      { title: "Marketing & GTM Strategy", href: "/services", Icon: IconSearch, desc: "Successfully launch and position your products." },
+      { title: "Operations & Process Optimization", href: "/services", Icon: IconManufacturing, desc: "Streamline workflows for efficiency." },
+      { title: "Business Analytics", href: "/services", Icon: IconFinance, desc: "Data-driven insights for better decisions." }
+    ]
+  },
+  {
+    category: "Software Development",
+    items: [
+      { title: "Custom Software Development", href: "/services", Icon: IconTools, desc: "Bespoke solutions tailored to your unique needs." },
+      { title: "SaaS Product Development", href: "/services", Icon: IconSaaS, desc: "Scalable, secure, and multi-tenant platforms." },
+      { title: "Enterprise Applications", href: "/services", Icon: IconHealthcare, desc: "Robust software for large-scale operations." },
+      { title: "Web Development", href: "/services", Icon: IconWeb, desc: "High-performance, responsive web experiences." },
+      { title: "Mobile App Development", href: "/services", Icon: IconMobile, desc: "Native and cross-platform mobile applications." },
+      { title: "API Development", href: "/services", Icon: IconCloud, desc: "Secure integrations and enterprise connectivity." }
+    ]
+  },
+  {
+    category: "AI, Cloud & Enterprise",
+    items: [
+      { title: "AI & Intelligent Automation", href: "/services", Icon: IconAI, desc: "Leverage machine learning to automate tasks." },
+      { title: "Cloud Services", href: "/services", Icon: IconCloud, desc: "Cloud migration, hosting, and infrastructure." },
+      { title: "CRM & ERP Solutions", href: "/services", Icon: IconCRM, desc: "Streamline customer and resource management." },
+      { title: "WhatsApp Business Solutions", href: "/services", Icon: IconSupport, desc: "Automate communication and support on WhatsApp." },
+      { title: "Cybersecurity", href: "/services", Icon: IconShield, desc: "Protect your data and digital assets." },
+      { title: "DevOps & Integrations", href: "/services", Icon: IconLightning, desc: "Continuous delivery and seamless connections." }
+    ]
+  }
 ];
 
 const PROCESS = [
@@ -172,21 +196,31 @@ export default function ServicesPage() {
             <h2>End-to-end technology services</h2>
           </Reveal>
           <Reveal>
-            <div className="card-grid cols-3">
-              {SERVICES.map(({ title, href, Icon, desc }) => (
-                <a href={href} className="card" key={title}>
-                  <div className="card-icon"><Icon /></div>
-                  <h3>{title}</h3>
-                  <p>{desc}</p>
-                  <span className="card-link">Learn more <Arrow /></span>
-                </a>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '64px' }}>
+              {SERVICES_GROUPS.map((group) => (
+                <div key={group.category}>
+                  <h3 style={{ fontSize: '28px', fontWeight: 700, color: 'var(--auxo-ink)', marginBottom: '24px', paddingBottom: '12px', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
+                    {group.category}
+                  </h3>
+                  <div className="card-grid cols-3">
+                    {group.items.map(({ title, href, Icon, desc }) => (
+                      <a href={href} className="card" key={title}>
+                        <div className="card-icon"><Icon /></div>
+                        <h3>{title}</h3>
+                        <p>{desc}</p>
+                        <span className="card-link">Learn more <Arrow /></span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
               ))}
-              <div className="card card--dark" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <h3>Not sure where to start?</h3>
-                <p style={{ margin: '12px 0 24px', opacity: 0.8 }}>
-                  Book a free consultation call with our engineering team to discuss your project requirements.
+              
+              <div className="card card--dark" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', alignItems: 'center', padding: '48px', marginTop: '24px' }}>
+                <h3 style={{ fontSize: '24px' }}>Not sure where to start?</h3>
+                <p style={{ margin: '16px 0 24px', opacity: 0.8, maxWidth: '600px' }}>
+                  Book a free consultation call with our engineering team to discuss your project requirements and let's build software designed around your business.
                 </p>
-                <a href="/contact" className="btn">
+                <a href="/contact" className="btn btn-primary" style={{ background: '#0FB5A6', color: '#ffffff', border: 'none' }}>
                   Book Consultation
                 </a>
               </div>

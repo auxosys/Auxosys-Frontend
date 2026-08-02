@@ -1,14 +1,23 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Menu, X } from 'lucide-react';
+import MegaMenu from './MegaMenu';
+import ServicesMenu from './ServicesMenu';
+import IndustriesMenu from './IndustriesMenu';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+  const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
+  const [industriesMenuOpen, setIndustriesMenuOpen] = useState(false);
+  const megaMenuTimeoutRef = useRef(null);
+  const servicesMenuTimeoutRef = useRef(null);
+  const industriesMenuTimeoutRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +36,39 @@ export default function Navbar() {
     { name: 'Careers', href: '/careers' },
   ];
 
+  const handleMouseEnter = () => {
+    if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
+    setMegaMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    megaMenuTimeoutRef.current = setTimeout(() => {
+      setMegaMenuOpen(false);
+    }, 150);
+  };
+
+  const handleServicesMouseEnter = () => {
+    if (servicesMenuTimeoutRef.current) clearTimeout(servicesMenuTimeoutRef.current);
+    setServicesMenuOpen(true);
+  };
+
+  const handleServicesMouseLeave = () => {
+    servicesMenuTimeoutRef.current = setTimeout(() => {
+      setServicesMenuOpen(false);
+    }, 150);
+  };
+
+  const handleIndustriesMouseEnter = () => {
+    if (industriesMenuTimeoutRef.current) clearTimeout(industriesMenuTimeoutRef.current);
+    setIndustriesMenuOpen(true);
+  };
+
+  const handleIndustriesMouseLeave = () => {
+    industriesMenuTimeoutRef.current = setTimeout(() => {
+      setIndustriesMenuOpen(false);
+    }, 150);
+  };
+
   return (
     <>
       <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
@@ -40,11 +82,58 @@ export default function Navbar() {
           </Link>
 
           <ul className={styles.navLinks}>
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link href={link.href}>{link.name}</Link>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              if (link.name === 'Products') {
+                return (
+                  <li 
+                    key={link.name} 
+                    className={styles.megaMenuItem}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <Link href={link.href} className="flex items-center gap-1">
+                      {link.name}
+                    </Link>
+                    <MegaMenu isOpen={megaMenuOpen} isMobile={false} onClose={() => setMegaMenuOpen(false)} />
+                  </li>
+                );
+              }
+              if (link.name === 'Industries') {
+                return (
+                  <li 
+                    key={link.name} 
+                    className={styles.megaMenuItem}
+                    onMouseEnter={handleIndustriesMouseEnter}
+                    onMouseLeave={handleIndustriesMouseLeave}
+                  >
+                    <Link href={link.href} className="flex items-center gap-1">
+                      {link.name}
+                    </Link>
+                    <IndustriesMenu isOpen={industriesMenuOpen} isMobile={false} onClose={() => setIndustriesMenuOpen(false)} />
+                  </li>
+                );
+              }
+              if (link.name === 'Services') {
+                return (
+                  <li 
+                    key={link.name} 
+                    className={styles.megaMenuItem}
+                    onMouseEnter={handleServicesMouseEnter}
+                    onMouseLeave={handleServicesMouseLeave}
+                  >
+                    <Link href={link.href} className="flex items-center gap-1">
+                      {link.name}
+                    </Link>
+                    <ServicesMenu isOpen={servicesMenuOpen} isMobile={false} onClose={() => setServicesMenuOpen(false)} />
+                  </li>
+                );
+              }
+              return (
+                <li key={link.name}>
+                  <Link href={link.href}>{link.name}</Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className={`${styles.navActions} hidden md:flex items-center`}>
@@ -75,16 +164,57 @@ export default function Navbar() {
             </div>
 
             <nav className="drawer-nav">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="drawer-link"
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                if (link.name === 'Products') {
+                  return (
+                    <div key={link.name} className="drawer-item-container">
+                      <button 
+                        className="drawer-link flex justify-between w-full"
+                        onClick={() => setMegaMenuOpen(!megaMenuOpen)}
+                      >
+                        {link.name}
+                      </button>
+                      <MegaMenu isOpen={megaMenuOpen} isMobile={true} onClose={() => { setMegaMenuOpen(false); setMobileMenuOpen(false); }} />
+                    </div>
+                  );
+                }
+                if (link.name === 'Services') {
+                  return (
+                    <div key={link.name} className="drawer-item-container">
+                      <button 
+                        className="drawer-link flex justify-between w-full"
+                        onClick={() => setServicesMenuOpen(!servicesMenuOpen)}
+                      >
+                        {link.name}
+                      </button>
+                      <ServicesMenu isOpen={servicesMenuOpen} isMobile={true} onClose={() => { setServicesMenuOpen(false); setMobileMenuOpen(false); }} />
+                    </div>
+                  );
+                }
+                if (link.name === 'Industries') {
+                  return (
+                    <div key={link.name} className="drawer-item-container">
+                      <button 
+                        className="drawer-link flex justify-between w-full"
+                        onClick={() => setIndustriesMenuOpen(!industriesMenuOpen)}
+                      >
+                        {link.name}
+                      </button>
+                      <IndustriesMenu isOpen={industriesMenuOpen} isMobile={true} onClose={() => { setIndustriesMenuOpen(false); setMobileMenuOpen(false); }} />
+                    </div>
+                  );
+                }
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="drawer-link"
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
             </nav>
 
             <Link href="/contact"

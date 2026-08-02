@@ -18,25 +18,50 @@ const Arrow = () => (
 
 const PRODUCTS = [
   {
-    cat: 'Productivity', title: 'Auxosys AI Workspace', href: '#', Icon: IconBrain,
+    cat: 'AI & Automation', title: 'AI Workspace & Intelligent Agents', href: '/products/ai-workspace', Icon: IconBrain,
     desc: 'An AI-powered productivity platform designed to automate repetitive tasks, generate intelligent insights, and improve team collaboration at scale.',
     status: 'Coming Soon', statusClass: 'status-soon'
   },
   {
-    cat: 'Sales', title: 'Auxosys CRM', href: '#', Icon: IconCRM,
-    desc: 'A modern customer relationship management platform tailored for startups and growing businesses who need clarity without complexity.',
+    cat: 'AI & Automation', title: 'Customer Experience Platform (CXP)', href: '/products/cxp', Icon: IconSupport,
+    desc: 'A modern customer experience platform tailored for growing businesses to elevate customer satisfaction and retention.',
     status: 'In Development', statusClass: 'status-dev'
   },
   {
-    cat: 'Collaboration', title: 'Cloud Workspace', href: '#', Icon: IconCloud,
-    desc: 'Secure cloud document management and collaborative workspace built for distributed teams who need real-time access and version control.',
-    status: 'Research Phase', statusClass: 'status-research'
+    cat: 'AI & Automation', title: 'WhatsApp Business Platform', href: '/products/whatsapp', Icon: IconMobile,
+    desc: 'Leverage the world\'s most popular messaging app for scalable customer support, sales, and automated marketing.',
+    status: 'In Development', statusClass: 'status-dev'
   },
   {
-    cat: 'Operations', title: 'Business Automation Suite', href: '#', Icon: IconTools,
+    cat: 'Business Platforms', title: 'Business Operations Suite', href: '/products/business-ops', Icon: IconTools,
     desc: 'Automate workflows, approvals, notifications, and repetitive operational tasks to free your team for higher-value work.',
     status: 'Planned', statusClass: 'status-planned'
   },
+  {
+    cat: 'Business Platforms', title: 'People & Workforce Hub', href: '/products/workforce', Icon: IconHandshake,
+    desc: 'A centralized hub for HR, talent acquisition, onboarding, and employee engagement.',
+    status: 'Coming Soon', statusClass: 'status-soon'
+  },
+  {
+    cat: 'Business Platforms', title: 'Inventory & Supply Management', href: '/products/inventory', Icon: IconLogistics,
+    desc: 'Real-time tracking, predictive ordering, and seamless logistics management for your entire supply chain.',
+    status: 'Planned', statusClass: 'status-planned'
+  },
+  {
+    cat: 'Industry Solutions', title: 'Learning & Training Platform', href: '/products/learning', Icon: IconEducation,
+    desc: 'Empower your workforce with scalable, interactive training modules and comprehensive learning management.',
+    status: 'Research Phase', statusClass: 'status-research'
+  },
+  {
+    cat: 'Industry Solutions', title: 'Healthcare Operations Suite', href: '/products/healthcare', Icon: IconHealthcare,
+    desc: 'Streamline patient management, scheduling, and compliance with our dedicated healthcare operations platform.',
+    status: 'Planned', statusClass: 'status-planned'
+  },
+  {
+    cat: 'Industry Solutions', title: 'Project & Team Collaboration Suite', href: '/products/collaboration', Icon: IconCloud,
+    desc: 'Secure cloud document management and collaborative workspace built for distributed teams who need real-time access and version control.',
+    status: 'Research Phase', statusClass: 'status-research'
+  }
 ];
 
 const FEATURES = [
@@ -80,7 +105,7 @@ export default function ProductsPage() {
             <h2>The Auxosys Ecosystem</h2>
           </Reveal>
           <Reveal>
-            <div className="card-grid cols-2">
+            <div className="card-grid cols-3">
               {PRODUCTS.map(({ cat, title, desc, href, Icon, status, statusClass }) => (
                 <a href={href} className="card card--media" key={title}>
                   <div className="card-media icon-panel">
