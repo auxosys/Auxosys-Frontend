@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { CheckCircle2, Layers, ArrowRight } from 'lucide-react';
 import Reveal from '@/components/Reveal';
+import RelatedNews from '@/components/ui/RelatedNews';
 import styles from './DetailTemplate.module.css';
 
 export default function DetailTemplate({ pageData, breadcrumbParent }) {
@@ -55,7 +56,9 @@ export default function DetailTemplate({ pageData, breadcrumbParent }) {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Related News Section */}
+      <RelatedNews relatedPage={pageData.slug} />
+
       {/* CTA Section */}
       <section className="section home-cta" id="contact">
         <div className="container">
