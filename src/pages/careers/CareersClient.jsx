@@ -375,7 +375,7 @@ export default function CareersClient({ initialJobs = [] }) {
 
                         <div className="job-side">
                           <span className={`status-tag ${typeClass[job.employment_type] || "status-planned"}`}>{job.employment_type}</span>
-                          <span className="job-id">#{job.id.substring(0, 8)}</span>
+                          <span className="job-id">{job.public_id || ('#' + job.id.substring(0, 8))}</span>
                         </div>
                       </div>
 

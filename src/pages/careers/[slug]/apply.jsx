@@ -371,7 +371,7 @@ export default function JobApplicationForm() {
   }, [slug]);
 
   const [form, setForm] = useState({
-    firstName: "", lastName: "", email: "", phone: "", country: "",
+    firstName: "", lastName: "", email: "", phone: "", country: "", gender: "", dob: "",
     linkedin: "", github: "", portfolio: "",
     currentCompany: "", currentDesignation: "",
     currentCtc: "", expectedCtc: "", noticePeriod: "", experience: "", qualification: "",
@@ -446,6 +446,8 @@ export default function JobApplicationForm() {
       else if (!/^\S+@\S+\.\S+$/.test(form.email)) newErrors.email = "Invalid format";
       if (!form.phone.trim()) newErrors.phone = "Required";
       if (!form.country.trim()) newErrors.country = "Required";
+      if (!form.gender.trim()) newErrors.gender = "Required";
+      if (!form.dob.trim()) newErrors.dob = "Required";
     }
     
     if (stepId === "documents") {
@@ -493,7 +495,7 @@ export default function JobApplicationForm() {
       } else {
         if (!form.skills.trim()) newErrors.skills = "Required";
       }
-      if (!form.whyAuxosys.trim()) newErrors.whyAuxosys = "Required";
+      // if (!form.whyAuxosys.trim()) newErrors.whyAuxosys = "Required";
     }
     
     if (stepId === "submit") {
@@ -771,6 +773,18 @@ export default function JobApplicationForm() {
                       <Field label="Phone Number" required error={errors.phone}>
                         <Input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="+1 (555) 000-0000" error={errors.phone} />
                       </Field>
+                      <Field label="Gender" required error={errors.gender}>
+                        <Select name="gender" value={form.gender} onChange={handleChange} error={errors.gender}>
+                          <option value="">Select Gender</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                          <option value="Prefer not to say">Prefer not to say</option>
+                        </Select>
+                      </Field>
+                      <Field label="Date of Birth" required error={errors.dob}>
+                        <Input type="date" name="dob" value={form.dob} onChange={handleChange} error={errors.dob} />
+                      </Field>
                       <FullWidth>
                         <Field label="Country of Residence" required error={errors.country}>
                           <Input name="country" value={form.country} onChange={handleChange} placeholder="e.g. United States, India" error={errors.country} />
@@ -926,7 +940,7 @@ export default function JobApplicationForm() {
                           <Input name="skills" value={form.skills} onChange={handleChange} placeholder="React, Node.js, TypeScript, Project Management…" error={errors.skills} />
                         </Field>
                       )}
-                      <Field label="Why do you want to join Auxosys?" required error={errors.whyAuxosys}>
+                      <Field label="Why do you want to join Auxosys?" error={errors.whyAuxosys}>
                         <Textarea
                           name="whyAuxosys"
                           value={form.whyAuxosys}
@@ -961,6 +975,8 @@ export default function JobApplicationForm() {
                       <div className="review-row"><div className="review-label">Name</div><div className="review-value">{form.firstName} {form.lastName}</div></div>
                       <div className="review-row"><div className="review-label">Email</div><div className="review-value">{form.email}</div></div>
                       <div className="review-row"><div className="review-label">Phone</div><div className="review-value">{form.phone}</div></div>
+                      <div className="review-row"><div className="review-label">Gender</div><div className="review-value">{form.gender}</div></div>
+                      <div className="review-row"><div className="review-label">DOB</div><div className="review-value">{form.dob}</div></div>
                       <div className="review-row"><div className="review-label">Country</div><div className="review-value">{form.country}</div></div>
 
                       <div style={{ height: 1, background: T.border, margin: "24px 0" }} />
@@ -1032,17 +1048,17 @@ export default function JobApplicationForm() {
 
                     <button
                       onClick={handleSubmit}
-                      disabled={loading}
+                      disabled={loading || !form.consent || !form.privacy}
                       style={{
                         width: "100%",
                         padding: "16px 28px",
-                        background: loading ? T.hover : T.orange,
+                        background: (loading || !form.consent || !form.privacy) ? T.hover : T.orange,
                         border: "none",
                         borderRadius: 14,
-                        color: loading ? T.muted : "#ffffff",
+                        color: (loading || !form.consent || !form.privacy) ? T.muted : "#ffffff",
                         fontSize: 16,
                         fontWeight: 700,
-                        cursor: loading ? "not-allowed" : "pointer",
+                        cursor: (loading || !form.consent || !form.privacy) ? "not-allowed" : "pointer",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
