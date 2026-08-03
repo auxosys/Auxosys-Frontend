@@ -741,7 +741,6 @@ export default function JobApplicationForm() {
                   "We auto-save your progress locally.",
                   "Upload a PDF resume for best results.",
                   "Double check your contact info.",
-                  "Be specific in your 'Why Auxosys' answer.",
                 ].map((tip) => (
                   <div key={tip} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
                     <span style={{ color: T.teal, flexShrink: 0, marginTop: 2 }}>·</span>
@@ -940,16 +939,6 @@ export default function JobApplicationForm() {
                           <Input name="skills" value={form.skills} onChange={handleChange} placeholder="React, Node.js, TypeScript, Project Management…" error={errors.skills} />
                         </Field>
                       )}
-                      <Field label="Why do you want to join Auxosys?" error={errors.whyAuxosys}>
-                        <Textarea
-                          name="whyAuxosys"
-                          value={form.whyAuxosys}
-                          onChange={handleChange}
-                          rows={5}
-                          placeholder="Tell us why you're a great fit and what excites you about this role…"
-                          error={errors.whyAuxosys}
-                        />
-                      </Field>
                       <Field label="Anything else we should know?">
                         <Textarea
                           name="additionalNotes"
@@ -1064,7 +1053,7 @@ export default function JobApplicationForm() {
                         justifyContent: "center",
                         gap: 10,
                         transition: "all 0.2s",
-                        boxShadow: !loading ? "0 0 24px rgba(255,107,53,0.35)" : "none",
+                        boxShadow: "none",
                         fontFamily: "inherit",
                       }}
                     >
