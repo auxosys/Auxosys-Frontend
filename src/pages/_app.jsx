@@ -42,7 +42,7 @@ export default function App({ Component, pageProps }) {
         <meta property="og:url" content="https://auxosys.vercel.app/" />
         <meta property="og:title" content="Auxosys | Secure & Scalable Digital Products" />
         <meta property="og:description" content="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products." />
-        <meta property="og:image" content="https://auxosys.vercel.app/images/og-image.jpg" />
+        <meta property="og:image" content="https://auxosys.vercel.app/images/og-image.jpg?v=2" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         
@@ -56,7 +56,7 @@ export default function App({ Component, pageProps }) {
         <meta property="twitter:url" content="https://auxosys.vercel.app/" />
         <meta property="twitter:title" content="Auxosys | Secure & Scalable Digital Products" />
         <meta property="twitter:description" content="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products." />
-        <meta property="twitter:image" content="https://auxosys.vercel.app/images/og-image.jpg" />
+        <meta name="twitter:image" content="https://auxosys.vercel.app/images/og-image.jpg?v=2" />
       </Head>
       <div className={`${archivo.variable} ${interTight.variable} ${inter.variable}`} data-scroll-behavior="smooth">
         <Navbar />
