@@ -103,7 +103,7 @@ export default function LegalPage() {
       try {
         setLoading(true);
         setNotFoundFlag(false);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5002"}/public/legal/${slug}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.vercel.app'}/public/legal/${slug}`);
         if (!res.ok) {
           if (res.status === 404) setNotFoundFlag(true);
           throw new Error("Failed to fetch legal page");

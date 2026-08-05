@@ -333,7 +333,7 @@ export default function JobApplicationForm() {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job/${slug}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.vercel.app'}/job/${slug}`);
         const data = await res.json();
         if (data.success && data.data) {
           setJob(data.data);
@@ -528,7 +528,7 @@ export default function JobApplicationForm() {
       if (files.resume) formData.append("resume", files.resume);
       if (files.coverLetter) formData.append("coverLetter", files.coverLetter);
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job/${slug}/apply`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.vercel.app'}/job/${slug}/apply`, {
         method: "POST",
         body: formData,
       });

@@ -19,10 +19,12 @@ const CookieBanner = () => {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const res = await fetch('http://localhost:5002/cookies/config');
-        const json = await res.json();
-        if (json.data && json.data.config) {
-          const fetchedTheme = json.data.config.theme || 'light';
+        const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'http://localhost:5002' : 'https://auxosys-backend.vercel.app');
+        const res = await fetch(`${API_URL}/cookies/config`);
+        const data = await res.json();
+        if (data.success && data.data && data.data.config) {
+          const fetchedTheme = data.data.config.theme || 'light';
           if (fetchedTheme === 'auto') {
             const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             setTheme(isDark ? 'dark' : 'light');
@@ -41,9 +43,7 @@ const CookieBanner = () => {
     // Check if consent has already been given locally
     const consent = localStorage.getItem('auxosys_cookie_consent');
     if (!consent) {
-      // Small delay for better UX (don't flash immediately)
-      const timer = setTimeout(() => setShowBanner(true), 1500);
-      return () => clearTimeout(timer);
+      setShowBanner(true);
     }
 
     // Listen for events to reopen banner
@@ -96,9 +96,27 @@ const CookieBanner = () => {
       functionality_storage: f ? 'granted' : 'denied'
     });
 
+    // Collect UTM parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const utm_source = urlParams.get('utm_source') || null;
+    const utm_medium = urlParams.get('utm_medium') || null;
+    const utm_campaign = urlParams.get('utm_campaign') || null;
+    
+    // Fetch Country Code (Silent fallback if fails)
+    let country_code = 'Unknown';
+    try {
+      const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json');
+      if (geoRes.ok) {
+        const geoData = await geoRes.json();
+        country_code = geoData.country; // returns 2-letter ISO code
+      }
+    } catch (e) { console.error('Geo fetch failed', e); }
+
     // Send to Backend
     try {
-      await fetch('http://localhost:5002/cookies/consent', {
+      const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'http://localhost:5002' : 'https://auxosys-backend.vercel.app');
+      await fetch(`${API_URL}/cookies/consent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -107,9 +125,13 @@ const CookieBanner = () => {
           session_id: sessionId,
           categories: bitmask,
           status: 1, // Active
+          country_code: country_code,
           device_type: window.innerWidth > 1024 ? 'desktop' : window.innerWidth > 768 ? 'tablet' : 'mobile',
           page_slug: window.location.pathname,
           referrer: document.referrer,
+          utm_source,
+          utm_medium,
+          utm_campaign,
           consent_version: 'v1.0'
         })
       });
@@ -268,8 +290,8 @@ const CookieBanner = () => {
         .theme-dark .btn-primary:hover { background: #0D9F91; }
         .theme-dark .btn-secondary { background: #1A2E35; border-color: #2A3A41; color: #E7ECEC; }
         .theme-dark .btn-secondary:hover { background: #233B44; }
-        .theme-dark .btn-secondary.outline { background: #0E1B21; border-color: #3B4E56; color: #FFFFFF; }
-        .theme-dark .btn-secondary.outline:hover { background: #1A2E35; border-color: #0FB5A6; }
+        .theme-dark .btn-secondary.outline { background: #1A2E35 !important; border: 1px solid #2A3A41 !important; color: #E7ECEC !important; }
+        .theme-dark .btn-secondary.outline:hover { background: #233B44 !important; border: 1px solid #2A3A41 !important; }
         .theme-dark.modal { background: #0E1B21; }
         .theme-dark .modal-header, .theme-dark .modal-footer { background: #14232A; border-color: #2A3A41; }
         .theme-dark .modal-header h2, .theme-dark .category-row h3 { color: #FFFFFF; }
@@ -295,8 +317,13 @@ const CookieBanner = () => {
               <div className="banner-content">
                 <div className="banner-head">
                   <div className="banner-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
+                      <path d="M8.5 8.5v.01" />
+                      <path d="M16 15.5v.01" />
+                      <path d="M12 12v.01" />
+                      <path d="M11 17v.01" />
+                      <path d="M7 14v.01" />
                     </svg>
                   </div>
                   <h2>Your privacy matters</h2>

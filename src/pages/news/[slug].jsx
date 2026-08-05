@@ -156,7 +156,7 @@ export default function Blogpage() {
         (async () => {
             try {
                 setLoading(true); setError(null);
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/news/${slug}`);
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.vercel.app'}/news/${slug}`);
                 if (!res.ok) throw new Error("Failed to load article.");
                 const data = await res.json();
                 
