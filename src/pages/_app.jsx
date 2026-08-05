@@ -3,6 +3,7 @@ import '@/styles/ds.css'
 import '@/styles/home-pro.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/layout/Footer'
+import CookieBanner from '@/components/CookieBanner'
 import Head from 'next/head'
 import { Archivo, Inter_Tight, Inter } from 'next/font/google'
 
@@ -38,6 +39,7 @@ export default function App({ Component, pageProps }) {
       <div className={`${archivo.variable} ${interTight.variable} ${inter.variable}`} data-scroll-behavior="smooth">
         <Navbar />
         <Component {...pageProps} />
+        <CookieBanner />
         <Footer />
       </div>
     </>

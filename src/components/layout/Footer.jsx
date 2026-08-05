@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Footer.module.css';
 import { Linkedin, Github, Twitter, Instagram } from 'lucide-react';
+import CookieSettingsTrigger from '@/components/CookieSettingsTrigger';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -126,6 +127,8 @@ export default function Footer() {
                 ) : (
                   <li><span className={styles.footerEmpty}>No pages yet</span></li>
                 )}
+                <li><Link href="/legal/CookiePolicy">Cookie Policy</Link></li>
+                <li><CookieSettingsTrigger /></li>
               </ul>
             </div>
           </div>
