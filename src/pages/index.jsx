@@ -179,8 +179,8 @@ export default function HomePage() {
           display: inline-flex;
           align-items: center;
           gap: 16px;
-          background: #0fb5a6;
-          border: 1px solid #0fb5a6;
+          background: #2fab9fff;
+          border: 1px solid #0c9689;
           border-radius: 9999px;
           padding: 8px 10px 8px 24px;
           color: #ffffff;
@@ -215,6 +215,11 @@ export default function HomePage() {
         .home-legacy-hero .hero-right {
           display: grid;
           place-items: center;
+        }
+        @media (min-width: 961px) {
+          .home-legacy-hero .hero-right {
+            transform: scale(1.130);
+          }
         }
         @media (max-width: 960px) {
           .home-legacy-hero .hero-grid { 
