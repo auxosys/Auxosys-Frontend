@@ -179,22 +179,22 @@ export default function HomePage() {
           display: inline-flex;
           align-items: center;
           gap: 16px;
-          background: #11262b;
-          border: 1px solid #11262b;
+          background: #0fb5a6;
+          border: 1px solid #0fb5a6;
           border-radius: 9999px;
           padding: 8px 10px 8px 24px;
           color: #ffffff;
           font-weight: 600;
           font-size: 15px;
           text-decoration: none;
-          box-shadow: 0 4px 14px rgba(17, 38, 43, 0.15);
+          box-shadow: 0 4px 14px rgba(15, 181, 166, 0.25);
           transition: all 0.3s ease;
           cursor: pointer;
         }
         .home-legacy-hero .btn-glass-pill:hover {
-          background: #0fb5a6;
-          border-color: #0fb5a6;
-          box-shadow: 0 6px 20px rgba(15, 181, 166, 0.3);
+          background: #11262b;
+          border-color: #11262b;
+          box-shadow: 0 6px 20px rgba(17, 38, 43, 0.25);
           transform: translateY(-2px);
         }
         .home-legacy-hero .btn-glass-icon {
