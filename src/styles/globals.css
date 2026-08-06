@@ -656,9 +656,6 @@ h4 {
 /* hero 3D globe slot */
 .hero-right {
   position: relative;
-  height: 560px;
-  margin-right: -60px;
-  margin-left: -20px;
   display: flex;
   align-items: center;
   justify-content: center;

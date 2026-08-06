@@ -114,9 +114,7 @@ export default function HomePage() {
       {/* ===================== HERO ===================== */}
       <style>{`
         .home-legacy-hero {
-          padding: calc(5px + var(--nav-h)) 0 40px;
-          min-height: 100vh;
-          max-height: 950px;
+          padding: calc(30px + var(--nav-h)) 0 30px;
           display: flex;
           align-items: center;
           position: relative;
@@ -217,13 +215,12 @@ export default function HomePage() {
         }
         @media (min-width: 1101px) {
           .home-legacy-hero .hero-right {
-            transform: scale(1.130);
+            transform: none;
           }
         }
         @media (min-width: 961px) and (max-width: 1100px) {
-          .home-legacy-hero h1 { font-size: 42px; }
           .home-legacy-hero .hero-right {
-            transform: scale(0.9);
+            transform: none;
             margin-left: 0;
             margin-right: 0;
           }
