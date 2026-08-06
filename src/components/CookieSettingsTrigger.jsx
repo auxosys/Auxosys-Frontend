@@ -9,7 +9,7 @@ const CookieSettingsTrigger = ({ className }) => {
   return (
     <button 
       onClick={handleOpenSettings}
-      className={`text-gray-400 hover:text-white transition-colors text-sm ${className || ''}`}
+      className={className || ''}
       aria-label="Manage Cookie Preferences"
     >
       Manage Cookie Preferences

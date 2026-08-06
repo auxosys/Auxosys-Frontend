@@ -38,33 +38,32 @@ const PRODUCTS = [
     desc: 'An intelligent workspace for automating workflows, content generation, and AI-assisted productivity.'
   },
   {
-    cat: 'CRM', title: 'Auxosys CRM', href: '/products/crm', Icon: IconCRM,
+    cat: 'CXP', title: 'Customer Experience Platform', href: '/products/crm', Icon: IconCRM,
     desc: 'A lightweight customer relationship platform for startups and growing businesses.'
   },
   {
-    cat: 'Cloud', title: 'Cloud Workspace', href: '/products/cloud-workspace', Icon: IconCloud,
+    cat: 'Blockchain', title: 'Enterprise Blockchain Platform', href: '/products/cloud-workspace', Icon: IconCloud,
     desc: 'Secure document management and a collaborative cloud platform for modern teams.'
   },
 ];
 
 const SERVICES = [
-  { title: 'AI Development', href: '/services/ai', Icon: IconAI, desc: 'Custom AI applications, chatbots, recommendation systems, and intelligent automation.' },
-  { title: 'SaaS Development', href: '/services/saas', Icon: IconSaaS, desc: 'Scalable multi-tenant SaaS platforms designed for rapid business growth.' },
-  { title: 'Web Development', href: '/services/web', Icon: IconWeb, desc: 'Modern, responsive, high-performance websites and web applications.' },
-  { title: 'Mobile Development', href: '/services/mobile', Icon: IconMobile, desc: 'Cross-platform Android and iOS applications.' },
-  { title: 'Cloud Solutions', href: '/services/cloud', Icon: IconCloud, desc: 'Cloud-native infrastructure, migration, DevOps, and monitoring.' },
-  { title: 'Blockchain Development', href: '/services/blockchain', Icon: IconBlockchain, desc: 'Smart contracts, decentralized applications, and Web3 solutions.' },
-  { title: 'Product Consulting', href: '/services/consulting', Icon: IconBulb, desc: 'Helping startups validate, design, and launch successful products.' },
-  { title: 'UI/UX Design', href: '/services/design', Icon: IconDesign, desc: 'Human-centered interfaces with exceptional user experiences.' },
+  { title: 'AI & Intelligent Automation', href: '/services/ai-and-intelligent-automation', Icon: IconAI, desc: 'Custom AI applications, chatbots, recommendation systems, and intelligent automation.' },
+  { title: 'SaaS Product Development', href: '/services/saas-product-development', Icon: IconSaaS, desc: 'Scalable multi-tenant SaaS platforms designed for rapid business growth.' },
+  { title: 'Custom Software Development', href: '/services/custom-software-development', Icon: IconWeb, desc: 'Modern, responsive, high-performance websites and enterprise applications.' },
+  { title: 'Mobile App Development', href: '/services/mobile-app-development', Icon: IconMobile, desc: 'Cross-platform Android and iOS mobile applications.' },
+  { title: 'Cloud Services', href: '/services/cloud-services', Icon: IconCloud, desc: 'Cloud-native infrastructure, migration, DevOps, and monitoring.' },
+  { title: 'Enterprise Blockchain Solutions', href: '/services/enterprise-blockchain-solutions', Icon: IconBlockchain, desc: 'Smart contracts, decentralized applications, and Web3 enterprise solutions.' },
+  { title: 'Digital Strategy Consulting', href: '/services/digital-strategy-consulting', Icon: IconBulb, desc: 'Helping startups validate, design, and launch successful products.' }
 ];
 
 const INDUSTRIES = [
-  { Icon: IconHealthcare, title: 'Healthcare', desc: 'Secure healthcare software and patient management systems.' },
-  { Icon: IconFinance, title: 'Finance', desc: 'Digital banking, fintech, payment systems, and analytics.' },
-  { Icon: IconEducation, title: 'Education', desc: 'Learning management and digital education platforms.' },
-  { Icon: IconRetail, title: 'Retail', desc: 'Omnichannel commerce and inventory management.' },
-  { Icon: IconLogistics, title: 'Logistics', desc: 'Fleet tracking and logistics optimization.' },
-  { Icon: IconStartup, title: 'Startups', desc: 'MVP development and product engineering.' },
+  { Icon: IconHealthcare, title: 'Healthcare & Life Sciences', href: '/industries/healthcare-and-life-sciences', desc: 'Secure healthcare software and patient management systems.' },
+  { Icon: IconFinance, title: 'Banking, Finance & Insurance', href: '/industries/banking-finance-and-insurance', desc: 'Digital banking, fintech, payment systems, and analytics.' },
+  { Icon: IconEducation, title: 'Education & EdTech', href: '/industries/education-and-edtech', desc: 'Learning management and digital education platforms.' },
+  { Icon: IconRetail, title: 'Retail & E-Commerce', href: '/industries/retail-and-e-commerce', desc: 'Omnichannel commerce and inventory management.' },
+  { Icon: IconLogistics, title: 'Logistics & Supply Chain', href: '/industries/logistics-and-supply-chain', desc: 'Fleet tracking and logistics optimization.' },
+  { Icon: IconBlockchain, title: 'Blockchain & Web3', href: '/industries/blockchain-and-web3', desc: 'Decentralized platforms and digital asset ecosystems.' },
   // TRIMMED — bring back as case studies land:
   // { Icon: IconManufacturing, title: 'Manufacturing', desc: 'Factory automation and operational intelligence.' },
   // { Icon: IconRealEstate, title: 'Real Estate', desc: 'Property management and smart real estate platforms.' },
@@ -155,7 +154,7 @@ export default function HomePage() {
           font-family: var(--font-display);
           font-weight: 600;
           font-size: 15px;
-          color: var(--teal);
+          color: #0EA5E9;
           letter-spacing: 0.04em;
           margin-bottom: 22px;
           display: block;
@@ -329,11 +328,10 @@ export default function HomePage() {
               <article className="card card--feature">
                 <div className="card-media icon-panel"><IconBrain /></div>
                 <div className="card-body">
-                  <span className="eyebrow">Enterprise AI</span>
-                  <h3>Ship intelligent products faster</h3>
-                  <p>A unified platform combining AI automation, cloud infrastructure, and
-                    enterprise-grade security — everything you need to build and scale, in one place.</p>
-                  <a href="/platform" className="card-link">Explore the platform <Arrow /></a>
+                  <span className="eyebrow">Auxosys Products Workspace</span>
+                  <h3>AI Workspace & Intelligent Agents</h3>
+                  <p>Discover how intelligent agents can transform your enterprise productivity and operational scale, all in one platform.</p>
+                  <a href="/products/ai-workspace" className="card-link">Explore the product <Arrow /></a>
                 </div>
               </article>
             </div>
@@ -353,10 +351,14 @@ export default function HomePage() {
             <div className="card-grid cols-4">
               {SERVICES.map(({ title, desc, href, Icon }) => (
                 <a href={href} className="card" key={title}>
-                  <div className="card-icon"><Icon /></div>
-                  <h3>{title}</h3>
-                  <p>{desc}</p>
-                  <span className="card-link">Learn more <Arrow /></span>
+                  <div className="card-header">
+                    <div className="card-icon"><Icon /></div>
+                    <h3>{title}</h3>
+                  </div>
+                  <div className="card-content">
+                    <p>{desc}</p>
+                    <span className="card-link">Learn more <Arrow /></span>
+                  </div>
                 </a>
               ))}
 
@@ -366,7 +368,7 @@ export default function HomePage() {
                   <h3>Not sure where to start?</h3>
                   <p>Tell us about your project and we&apos;ll help scope the right approach — no commitment.</p>
                 </div>
-                <a href="/contact" className="btn">Talk to our team <ArrowUpRight size={16} strokeWidth={2.5} /></a>
+                <a href="/contact" className="btn" style={{ marginTop: 'auto' }}>Talk to our team <ArrowUpRight size={16} strokeWidth={2.5} /></a>
               </div>
             </div>
           </Reveal>
@@ -403,10 +405,17 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <div className="card-grid cols-3">
-              {INDUSTRIES.map(({ Icon, title, desc }) => (
-                <div className="card" key={title}>
-                  <div className="card-icon"><Icon /></div><h3>{title}</h3><p>{desc}</p>
-                </div>
+              {INDUSTRIES.map(({ Icon, title, desc, href }) => (
+                <a href={href} className="card" key={title}>
+                  <div className="card-header">
+                    <div className="card-icon"><Icon /></div>
+                    <h3>{title}</h3>
+                  </div>
+                  <div className="card-content">
+                    <p>{desc}</p>
+                    <span className="card-link">Learn more <Arrow /></span>
+                  </div>
+                </a>
               ))}
             </div>
           </Reveal>
@@ -439,8 +448,14 @@ export default function HomePage() {
           <Reveal>
             <div className="why-grid">
               {WHY.map(({ Icon, title, desc }) => (
-                <div className="why-card" key={title}>
-                  <div className="why-icon"><Icon /></div><h4>{title}</h4><p>{desc}</p>
+                <div className="card" key={title}>
+                  <div className="card-header">
+                    <div className="why-icon"><Icon /></div>
+                    <h3>{title}</h3>
+                  </div>
+                  <div className="card-content">
+                    <p>{desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -491,7 +506,7 @@ export default function HomePage() {
           <Reveal className="cta-banner">
             <div className="cta-content">
               <h2>Success is measured by the value we create — not just the software we ship.</h2>
-              <p>At Auxosys, we build for the long term — for our clients, our community, and the future of technology.</p>
+              <p>At Auxosys, we build for the long term - for our clients, our community, and the future of technology.</p>
             </div>
             <div className="cta-actions">
               <a href="/contact" className="btn btn-primary">Let's Build Together</a>

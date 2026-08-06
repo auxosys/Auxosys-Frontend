@@ -128,7 +128,6 @@ export default function Footer() {
                 ) : (
                   <li><span className={styles.footerEmpty}>No pages yet</span></li>
                 )}
-                <li><Link href="/legal/CookiePolicy">Cookie Policy</Link></li>
                 <li><CookieSettingsTrigger /></li>
               </ul>
             </div>

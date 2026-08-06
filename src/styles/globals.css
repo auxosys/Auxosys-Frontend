@@ -6,8 +6,8 @@
   --bg-footer: #F1F5F9;
   --bg-footer-surface: #E2E8F0;
   --hover-slate: #E2E8F0;
-  --teal: #0EA5E9;
-  --teal-rgb: 14, 165, 233;
+  --teal: #14B8A6;
+  --teal-rgb: 20, 184, 166;
   --orange: #FF6B35;
   --orange-rgb: 255, 107, 53;
   --orange-hover: #a5d0ca;
@@ -796,7 +796,7 @@ h4 {
 /* ---------- CARDS GRID ---------- */
 .card-grid {
   display: grid;
-  gap: 24px;
+  gap: 20px;
 }
 
 .card-grid.cols-4 {
@@ -810,8 +810,8 @@ h4 {
 .card {
   background: var(--bg-1);
   border: 1px solid var(--border);
-  border-radius: 22px;
-  padding: 30px;
+  border-radius: 20px;
+  padding: 22px;
   transition: transform .25s ease, border-color .25s ease, background .25s ease;
   display: flex;
   flex-direction: column;
@@ -824,37 +824,179 @@ h4 {
 }
 
 .card-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(var(--teal-rgb), 0.08);
   border: 1px solid rgba(var(--teal-rgb), 0.22);
   color: var(--teal);
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   flex-shrink: 0;
-  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease, border-color 0.3s ease;
+  transform-origin: top left;
 }
 
 .card-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
 }
 
 .card:hover .card-icon {
   background: rgba(var(--teal-rgb), 0.16);
   border-color: rgba(var(--teal-rgb), 0.45);
-  transform: translateY(-2px);
 }
 
 .card h3 {
-  font-size: 18.5px;
-  margin-bottom: 10px;
+  font-size: 17.5px;
+  margin-bottom: 8px;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translate(0, 0);
+  line-height: 1.4;
+  z-index: 2;
+  position: relative;
 }
 
-.card p {
+/* Services / Industries / Why Auxosys cards — content always visible, no hover-only reveal */
+.card:not(.card--media):not(.card--feature):not(.card--cta) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  height: 100%;
+  overflow: hidden;
+  border-top: 3px solid transparent;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+/* Icon + title, top of card, normal flow */
+.card:not(.card--media):not(.card--feature):not(.card--cta) .card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+/* Ensure margin is removed when inside card-header so they align perfectly */
+.card-header .card-icon,
+.card-header .why-icon,
+.card-header h3 {
+  margin: 0;
+}
+
+.card:not(.card--media):not(.card--feature):not(.card--cta) .card-icon,
+.card:not(.card--media):not(.card--feature):not(.card--cta) .why-icon {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--teal-rgb), 0.08);
+  border: 1px solid rgba(var(--teal-rgb), 0.22);
+  color: var(--teal);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.card:not(.card--media):not(.card--feature):not(.card--cta) .card-icon { border-radius: 12px; }
+.card:not(.card--media):not(.card--feature):not(.card--cta) .why-icon { border-radius: 50%; }
+.card:not(.card--media):not(.card--feature):not(.card--cta) .card-icon svg,
+.card:not(.card--media):not(.card--feature):not(.card--cta) .why-icon svg { width: 22px; height: 22px; }
+
+.card:not(.card--media):not(.card--feature):not(.card--cta) h3 {
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.card:not(.card--media):not(.card--feature):not(.card--cta) .card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card:not(.card--media):not(.card--feature):not(.card--cta) p {
+  color: var(--gray);
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin: 0 0 18px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card:not(.card--media):not(.card--feature):not(.card--cta) .card-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--teal);
+  padding: 4px 0;
+}
+.card:not(.card--media):not(.card--feature):not(.card--cta) .card-link .arw {
+  display: inline-flex;
+  transition: transform 0.25s ease;
+}
+
+/* ═══════════ DESKTOP / MOUSE ONLY — hover effects live here ═══════════
+   (hover: hover) + (pointer: fine) excludes touch entirely, so tapping
+   a card on mobile never leaves it stuck in a "hovered" state. */
+@media (hover: hover) and (pointer: fine) {
+  .card:not(.card--media):not(.card--feature):not(.card--cta):hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px -20px rgba(15, 23, 42, 0.18);
+    border-color: rgba(var(--teal-rgb), 0.4);
+    border-top-color: var(--teal);
+  }
+  .card:not(.card--media):not(.card--feature):not(.card--cta):hover .card-icon,
+  .card:not(.card--media):not(.card--feature):not(.card--cta):hover .why-icon {
+    background: rgba(var(--teal-rgb), 0.16);
+    border-color: rgba(var(--teal-rgb), 0.45);
+    transform: scale(1.06);
+  }
+  .card:not(.card--media):not(.card--feature):not(.card--cta):hover .card-link .arw {
+    transform: translate(3px, -3px);
+  }
+}
+
+/* ═══════════ MOBILE / TOUCH — own sizing, no hover dependency ═══════════ */
+@media (max-width: 760px) {
+  .card:not(.card--media):not(.card--feature):not(.card--cta) {
+    padding: 22px;
+    border-top-color: rgba(var(--teal-rgb), 0.35);
+  }
+  .card:not(.card--media):not(.card--feature):not(.card--cta) .card-header {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .card:not(.card--media):not(.card--feature):not(.card--cta) .card-icon,
+  .card:not(.card--media):not(.card--feature):not(.card--cta) .why-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .card:not(.card--media):not(.card--feature):not(.card--cta) .card-icon svg,
+  .card:not(.card--media):not(.card--feature):not(.card--cta) .why-icon svg {
+    width: 19px;
+    height: 19px;
+  }
+  .card:not(.card--media):not(.card--feature):not(.card--cta) h3 {
+    font-size: 16px;
+  }
+  .card:not(.card--media):not(.card--feature):not(.card--cta) p {
+    font-size: 14px;
+    -webkit-line-clamp: 2;
+    margin-bottom: 14px;
+  }
+  .card:not(.card--media):not(.card--feature):not(.card--cta):active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+.card--media p, .card--feature p, .card--cta p {
   color: var(--gray);
   font-size: 14.5px;
   flex: 1;
@@ -897,58 +1039,11 @@ h4 {
 }
 
 /* ---------- WHY CHOOSE ---------- */
+/* WHY SECTION GRID (now uses standard .card elements) */
 .why-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-}
-
-.why-card {
-  padding: 34px 28px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: linear-gradient(160deg, var(--bg-1), rgba(15, 36, 54, 0.4));
-  transition: transform .25s ease, border-color .25s ease;
-}
-
-.why-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(var(--teal-rgb), 0.35);
-}
-
-.why-card h4 {
-  font-size: 18px;
-  margin: 16px 0 8px;
-}
-
-.why-card p {
-  color: var(--gray);
-  font-size: 14.5px;
-}
-
-.why-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(var(--teal-rgb), 0.08);
-  border: 1px solid rgba(var(--teal-rgb), 0.22);
-  color: var(--teal);
-  margin-bottom: 16px;
-  flex-shrink: 0;
-  transition: background .2s ease, border-color .2s ease;
-}
-
-.why-icon svg {
-  width: 24px;
-  height: 24px;
-}
-
-.why-card:hover .why-icon {
-  background: rgba(var(--teal-rgb), 0.16);
-  border-color: rgba(var(--teal-rgb), 0.45);
 }
 
 /* ---------- PROCESS TIMELINE ---------- */
@@ -1669,6 +1764,68 @@ footer .container {
   border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
   overflow: hidden;
+}
+
+/* ==========================================================================
+   COOKIE POLICY SPECIFIC STYLES
+   ========================================================================== */
+.cookie-type {
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: #F5F8F8;
+  margin-bottom: 16px;
+  border-left: 4px solid #E7ECEC;
+}
+.cookie-type.necessary { border-color: #0FB5A6; background: rgba(15,181,166,0.04); }
+.cookie-type.analytics { border-color: #3B82F6; }
+.cookie-type.functional { border-color: #F59E0B; }
+.cookie-type.marketing { border-color: #8B5CF6; }
+
+.cookie-type h3 {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #0E1B21;
+  margin: 0 0 8px;
+}
+.cookie-type p {
+  font-size: 14.5px;
+  margin: 0 0 12px;
+  line-height: 1.6;
+}
+.cookie-meta {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #7C8A8F;
+  background: #FFFFFF;
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #E7ECEC;
+}
+.cookie-meta.always-active {
+  color: #0FB5A6;
+  border-color: rgba(15,181,166,0.25);
+  background: rgba(15,181,166,0.05);
+}
+
+.btn-manage {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 14px 28px;
+  background: #0E1B21;
+  color: #FFFFFF;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.btn-manage:hover {
+  background: #162932;
+}
+.btn-manage:active {
+  transform: scale(0.98);
 }
 
 /* Left Panel */
