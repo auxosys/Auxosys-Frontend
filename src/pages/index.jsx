@@ -214,8 +214,16 @@ export default function HomePage() {
           place-items: center;
         }
         @media (min-width: 1101px) {
+          .home-legacy-hero {
+            padding: calc(5px + var(--nav-h)) 0 40px;
+            min-height: 100vh;
+            max-height: 950px;
+          }
           .home-legacy-hero .hero-right {
-            transform: none;
+            height: 560px;
+            margin-right: -60px;
+            margin-left: -20px;
+            transform: scale(1.130);
           }
         }
         @media (min-width: 961px) and (max-width: 1100px) {
