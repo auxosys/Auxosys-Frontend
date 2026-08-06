@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '@/components/SEO';
 import Reveal from '@/components/Reveal';
 import { ArrowUpRight } from 'lucide-react';
 import RelatedNews from '@/components/ui/RelatedNews';
@@ -59,9 +60,17 @@ const TECH_PILLS = [
   { icon: IconHandshake, name: "Enterprise Integration" },
 ];
 
-export default function IndustriesPage() {
+import { fetchSeoData } from '@/utils/fetchSeo';
+
+export default function IndustriesPage({ globalSeo }) {
   return (
     <>
+      <SEO 
+        globalSeo={globalSeo}
+        title="Industries | Tech Solutions for Every Sector - Auxosys"
+        description="Auxosys provides specialized digital transformation, cloud architecture, and secure software development for healthcare, finance, retail, logistics, and more."
+        urlPath="/industries"
+      />
       {/* ===================== HERO ===================== */}
       <section className="hero" style={{ overflow: 'hidden' }}>
         <style>{`
@@ -274,4 +283,15 @@ export default function IndustriesPage() {
       </section>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const globalSeo = await fetchSeoData('/industries');
+  
+  return {
+    props: {
+      globalSeo
+    },
+    revalidate: 60,
+  };
 }

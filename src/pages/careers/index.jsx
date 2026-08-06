@@ -1,7 +1,17 @@
 import CareersClient from './CareersClient';
+import SEO from '@/components/SEO';
 
 export default function CareersPage({ initialJobs }) {
-  return <CareersClient initialJobs={initialJobs} />;
+  return (
+    <>
+      <SEO 
+        title="Careers | Join the Auxosys Team"
+        description="We are always looking for talented individuals to join our growing team. Explore open positions and build the future with us."
+        urlPath="/careers"
+      />
+      <CareersClient initialJobs={initialJobs} />
+    </>
+  );
 }
 
 export async function getServerSideProps() {

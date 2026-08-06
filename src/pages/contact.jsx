@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import SEO from '@/components/SEO';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Clock, Phone, Mail, MapPin, MessageSquare, CheckCircle, X } from 'lucide-react';
 import { COUNTRY_CODES } from '@/utils/countryCodes';
 
-export default function ContactUs() {
+import { fetchSeoData } from '@/utils/fetchSeo';
+
+export default function ContactUs({ globalSeo }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,7 +31,7 @@ export default function ContactUs() {
 
     try {
       const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'http://localhost:5002' : 'https://auxosys-backend.vercel.app');
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'http://localhost:5002' : 'https://auxosys-backend.vercel.app');
       const response = await fetch(`${API_URL}/public/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -38,16 +41,17 @@ export default function ContactUs() {
           phone: `${formData.countryCode} ${formData.phone}`,
           subject: formData.subject,
           message: formData.message
-        })
+        }),
       });
 
       const data = await response.json();
+
       if (data.success) {
         setShowModal(true);
         setFormData({
           name: '',
           email: '',
-          countryCode: '+91 (India)',
+          countryCode: '+91',
           phone: '',
           subject: '',
           message: ''
@@ -62,7 +66,25 @@ export default function ContactUs() {
     }
   };
   return (
-    <div className="contact-page">
+    <>
+      <SEO 
+        globalSeo={globalSeo}
+        title="Contact Us | Start Your Digital Project - Auxosys"
+        description="Get in touch with Auxosys to discuss your next digital product, custom software, or enterprise transformation project."
+        urlPath="/contact"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "name": "Contact Auxosys",
+          "url": `${process.env.NEXT_PUBLIC_SITE_URL}/contact`,
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "hello@auxosys.com",
+            "contactType": "customer support"
+          }
+        }}
+      />
+      <div className="contact-page">
       <style jsx>{`
         .contact-page {
           min-height: 100vh;
@@ -581,5 +603,17 @@ export default function ContactUs() {
         </div>
       )}
     </div>
+    </>
   );
+}
+
+export async function getStaticProps() {
+  const globalSeo = await fetchSeoData('/contact');
+  
+  return {
+    props: {
+      globalSeo
+    },
+    revalidate: 60,
+  };
 }

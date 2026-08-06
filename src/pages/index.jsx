@@ -1,5 +1,6 @@
 import HeroGlobe from '@/components/HeroGlobe';
 import Reveal from '@/components/Reveal';
+import SEO from '@/components/SEO';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import {
   IconBrain, IconCRM, IconCloud, IconTools,
@@ -107,10 +108,46 @@ const STATS = [
 const TECH = ['React', 'Next.js', 'TypeScript', 'Node.js', 'NestJS', 'Supabase', 'PostgreSQL',
   'Docker', 'Kubernetes', 'AWS', 'Google Cloud', 'OpenAI', 'Gemini', 'Claude', 'Python', 'Blockchain'];
 
+import { fetchSeoData } from '@/utils/fetchSeo';
+
 /* ---------------- PAGE ---------------- */
-export default function HomePage() {
+export default function HomePage({ globalSeo }) {
   return (
     <>
+      <SEO 
+        globalSeo={globalSeo}
+        title="Auxosys | Intelligent Digital Products & Enterprise Solutions"
+        description="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products."
+        urlPath="/"
+
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/#website`,
+              "url": process.env.NEXT_PUBLIC_SITE_URL,
+              "name": "Auxosys"
+            },
+            {
+              "@type": "WebPage",
+              "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/#webpage`,
+              "url": process.env.NEXT_PUBLIC_SITE_URL,
+              "name": "Auxosys | Intelligent Digital Products & Enterprise Solutions",
+              "isPartOf": { "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/#website` }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": process.env.NEXT_PUBLIC_SITE_URL
+              }]
+            }
+          ]
+        }}
+      />
       {/* ===================== HERO ===================== */}
       <style>{`
         .home-legacy-hero {
@@ -528,7 +565,7 @@ export default function HomePage() {
         <div className="container">
           <Reveal className="cta-banner">
             <div className="cta-content">
-              <h2>Success is measured by the value we create — not just the software we ship.</h2>
+              <h1>Success is measured by the value we create — not just the software we ship.</h1>
               <p>At Auxosys, we build for the long term - for our clients, our community, and the future of technology.</p>
             </div>
             <div className="cta-actions">
@@ -539,4 +576,15 @@ export default function HomePage() {
       </section>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const globalSeo = await fetchSeoData('/');
+  
+  return {
+    props: {
+      globalSeo
+    },
+    revalidate: 60, // Refetch SEO data every 60 seconds
+  };
 }

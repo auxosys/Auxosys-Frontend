@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '@/components/SEO';
 import Reveal from '@/components/Reveal';
 import { ArrowUpRight } from 'lucide-react';
 import {
@@ -70,9 +71,27 @@ const WHY = [
   { Icon: IconHandshake, title: "Long-term Support", desc: "Partners for the lifetime of your product." },
 ];
 
-export default function ServicesPage() {
+import { fetchSeoData } from '@/utils/fetchSeo';
+
+export default function ServicesPage({ globalSeo }) {
   return (
     <>
+      <SEO 
+        globalSeo={globalSeo}
+        title="Services | Custom Software, AI & Cloud Solutions - Auxosys"
+        description="Explore Auxosys's comprehensive digital services including AI automation, custom software, SaaS product development, and enterprise cloud solutions."
+        urlPath="/services"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "provider": {
+            "@type": "Organization",
+            "name": "Auxosys"
+          },
+          "serviceType": ["Software Development", "AI & Cloud Solutions", "Digital Consulting"],
+          "areaServed": "Global"
+        }}
+      />
       {/* ===================== HERO ===================== */}
       <style>{`
         .hero-grid-visual {
@@ -288,4 +307,15 @@ export default function ServicesPage() {
       </section>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const globalSeo = await fetchSeoData('/services');
+  
+  return {
+    props: {
+      globalSeo
+    },
+    revalidate: 60,
+  };
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import SEO from '@/components/SEO';
 import Reveal from '@/components/Reveal';
 import { ArrowUpRight } from 'lucide-react';
 import {
@@ -39,9 +40,17 @@ const TECH_GROUPS = [
 ];
 
 
-export default function AboutPage() {
+import { fetchSeoData } from '@/utils/fetchSeo';
+
+export default function AboutPage({ globalSeo }) {
   return (
     <>
+      <SEO 
+        globalSeo={globalSeo}
+        title="About Auxosys | Empowering Digital Transformation"
+        description="Learn about Auxosys, our mission, values, and how we build enterprise-grade software solutions for modern businesses."
+        urlPath="/about"
+      />
       <style jsx>{`
         .values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .value-card {
@@ -333,4 +342,15 @@ export default function AboutPage() {
       </section>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const globalSeo = await fetchSeoData('/about');
+  
+  return {
+    props: {
+      globalSeo
+    },
+    revalidate: 60,
+  };
 }

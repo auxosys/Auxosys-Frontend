@@ -2,6 +2,7 @@
 import React, { useEffect, useState, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import SEO from "@/components/SEO";
 
 // ── Brand tokens ──────────────────────────────────────────────
 const T = {
@@ -257,6 +258,21 @@ export default function Blog() {
 
     return (
         <>
+            <SEO 
+                title="Newsroom | Insights & Announcements - Auxosys"
+                description="Stay updated with the latest news, announcements, and insights from the Auxosys team."
+                urlPath="/news"
+                jsonLd={{
+                    "@context": "https://schema.org",
+                    "@type": "Blog",
+                    "name": "Auxosys Newsroom",
+                    "url": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://auxosys.com'}/news`,
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "Auxosys"
+                    }
+                }}
+            />
             <style>{`
         * { box-sizing: border-box; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }

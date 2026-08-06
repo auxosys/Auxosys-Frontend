@@ -1,0 +1,17 @@
+/* TEAM */
+Company: Auxosys
+Website: https://auxosys.com
+Location: Global
+Contact: hello@auxosys.com
+
+/* SITE */
+Last update: 2024
+Language: English
+Doctype: HTML5
+IDE: Cursor / VSCode
+
+/* TECHNOLOGY STACK */
+Frontend: Next.js, React, TypeScript
+Styling: Tailwind CSS, CSS Modules
+Backend/API: Node.js, Vercel
+Infrastructure: Vercel, Supabase

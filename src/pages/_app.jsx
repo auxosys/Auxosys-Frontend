@@ -32,32 +32,30 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="theme-color" content="#17262B" />
+        
+        {/* Web Manifest & Favicons */}
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        
+        {/* Preconnects */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Search Console Verification (Enabled via env in production) */}
+        {process.env.NEXT_PUBLIC_GSC_VERIFICATION && (
+          <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GSC_VERIFICATION} />
+        )}
+
+        {/* Global Fallback Title (Pages will override this) */}
         <title>Auxosys | Intelligent Digital Products & Enterprise Solutions</title>
         <meta name="description" content="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         
-        {/* Open Graph / Facebook / WhatsApp */}
-        <meta property="og:site_name" content="Auxosys" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://auxosys.vercel.app/" />
-        <meta property="og:title" content="Auxosys | Digital Products & IT Services" />
-        <meta property="og:description" content="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products." />
-        <meta property="og:image" content="https://auxosys.vercel.app/images/og-image.jpg?v=2" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        
-        {/* Schema.org for strict parsers */}
-        <meta itemProp="name" content="Auxosys | Secure & Scalable Digital Products" />
-        <meta itemProp="description" content="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products." />
-        <meta itemProp="image" content="https://auxosys.vercel.app/images/og-image.jpg" />
-        
-        {/* Twitter / Telegram */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://auxosys.vercel.app/" />
-        <meta property="twitter:title" content="Auxosys | Digital Products & IT Services" />
-        <meta property="twitter:description" content="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products." />
-        <meta name="twitter:image" content="https://auxosys.vercel.app/images/og-image.jpg?v=2" />
-
+        {/* Global Organization JSON-LD Base */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -65,9 +63,8 @@ export default function App({ Component, pageProps }) {
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "Auxosys",
-              "url": "https://auxosys.vercel.app/",
-              "logo": "https://auxosys.vercel.app/Auxosys-social-icon.png",
-              "description": "Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products.",
+              "url": process.env.NEXT_PUBLIC_SITE_URL || "https://auxosys.vercel.app",
+              "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://auxosys.vercel.app"}/Auxosys-social-icon.png`,
               "sameAs": [
                 "https://github.com/auxosys"
               ]

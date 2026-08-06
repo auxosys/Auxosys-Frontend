@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '@/components/SEO';
 import Reveal from '@/components/Reveal';
 import { ProductPhone } from '@/components/ProductPhone';
 import { ArrowUpRight } from 'lucide-react';
@@ -75,9 +76,24 @@ const FEATURES = [
   { Icon: IconTools, name: "API Integrations" },
 ];
 
-export default function ProductsPage() {
+import { fetchSeoData } from '@/utils/fetchSeo';
+
+export default function ProductsPage({ globalSeo }) {
   return (
     <>
+      <SEO 
+        globalSeo={globalSeo}
+        title="Products | Intelligent SaaS & Automation Platforms - Auxosys"
+        description="Discover Auxosys's suite of intelligent software products, from AI workspaces to enterprise business operations and collaboration platforms."
+        urlPath="/products"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Auxosys Products Suite",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web, iOS, Android"
+        }}
+      />
       {/* ===================== HERO ===================== */}
       <section className="hero" style={{ overflow: 'hidden' }}>
         <div className="container hero-grid">
@@ -190,4 +206,15 @@ export default function ProductsPage() {
       </section>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const globalSeo = await fetchSeoData('/products');
+  
+  return {
+    props: {
+      globalSeo
+    },
+    revalidate: 60,
+  };
 }
