@@ -135,9 +135,13 @@ export default function HomePage() {
         .home-legacy-hero .hero-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
+          grid-template-areas: "text globe";
           gap: 48px;
           align-items: center;
           width: 100%;
+        }
+        .home-legacy-hero .hero-grid > div:first-child {
+          grid-area: text;
         }
         .home-legacy-hero h1 {
           font-size: 54px;
@@ -220,6 +224,7 @@ export default function HomePage() {
             max-height: 950px;
           }
           .home-legacy-hero .hero-right {
+            grid-area: globe;
             height: 560px;
             margin-right: -60px;
             margin-left: -20px;
@@ -228,9 +233,14 @@ export default function HomePage() {
         }
         @media (min-width: 961px) and (max-width: 1100px) {
           .home-legacy-hero .hero-right {
-            transform: none;
+            grid-area: globe;
+            transform: scale(0.9);
             margin-left: 0;
             margin-right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
         }
         @media (max-width: 960px) {
