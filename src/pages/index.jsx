@@ -215,9 +215,17 @@ export default function HomePage() {
           display: grid;
           place-items: center;
         }
-        @media (min-width: 961px) {
+        @media (min-width: 1101px) {
           .home-legacy-hero .hero-right {
             transform: scale(1.130);
+          }
+        }
+        @media (min-width: 961px) and (max-width: 1100px) {
+          .home-legacy-hero h1 { font-size: 42px; }
+          .home-legacy-hero .hero-right {
+            transform: scale(0.9);
+            margin-left: 0;
+            margin-right: 0;
           }
         }
         @media (max-width: 960px) {
