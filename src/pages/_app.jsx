@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Auxosys</title>
+        <title>Auxosys | Intelligent Digital Products & Enterprise Solutions</title>
         <meta name="description" content="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
@@ -57,6 +57,23 @@ export default function App({ Component, pageProps }) {
         <meta property="twitter:title" content="Auxosys | Digital Products & IT Services" />
         <meta property="twitter:description" content="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products." />
         <meta name="twitter:image" content="https://auxosys.vercel.app/images/og-image.jpg?v=2" />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Auxosys",
+              "url": "https://auxosys.vercel.app/",
+              "logo": "https://auxosys.vercel.app/Auxosys-social-icon.png",
+              "description": "Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products.",
+              "sameAs": [
+                "https://github.com/auxosys"
+              ]
+            })
+          }}
+        />
       </Head>
       <div className={`${archivo.variable} ${interTight.variable} ${inter.variable}`} data-scroll-behavior="smooth">
         <Navbar />
