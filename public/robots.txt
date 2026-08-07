@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /verify/
+
+Sitemap: https://www.auxosys.com/sitemap.xml

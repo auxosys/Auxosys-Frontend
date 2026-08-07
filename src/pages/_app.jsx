@@ -63,7 +63,7 @@ export default function App({ Component, pageProps }) {
               "@type": "Organization",
               "name": "Auxosys",
               "url": process.env.NEXT_PUBLIC_SITE_URL || "https://www.auxosys.com",
-              "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.auxosys.com"}/Auxosys-social-icon.png`,
+              "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.auxosys.com"}/apple-touch-icon.png`,
               "sameAs": [
                 "https://github.com/auxosys"
               ]
