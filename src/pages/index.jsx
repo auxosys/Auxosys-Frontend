@@ -341,7 +341,7 @@ export default function HomePage({ globalSeo }) {
           <Reveal className="values-grid">
             {VALUES.map((v) => (
               <div className="value-card" key={v.n}>
-                <div className="num">{v.n}</div><h4>{v.title}</h4><p>{v.desc}</p>
+                <div className="num">{v.n}</div><h3>{v.title}</h3><p>{v.desc}</p>
               </div>
             ))}
           </Reveal>
@@ -447,7 +447,7 @@ export default function HomePage({ globalSeo }) {
             <div className="timeline">
               {PROCESS.map(({ n, title, desc }) => (
                 <div className="tl-step" key={n}>
-                  <div className="tl-dot">{n}</div><h4>{title}</h4><p>{desc}</p>
+                  <div className="tl-dot">{n}</div><h3>{title}</h3><p>{desc}</p>
                 </div>
               ))}
             </div>

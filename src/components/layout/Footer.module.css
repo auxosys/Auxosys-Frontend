@@ -92,7 +92,7 @@
   display: contents;
 }
 
-.footerCol h5 {
+.footerHeading {
   font-size: 15px;
   font-weight: 500;
   color: var(--f-heading);
@@ -168,7 +168,7 @@
 
 .subscribeForm button {
   background: var(--auxo-volt);
-  color: var(--auxo-ink);
+  color: #020617; /* High contrast text */
   border: none;
   border-radius: 9999px;
   padding: 12px 26px;
@@ -248,7 +248,7 @@
   flex-wrap: wrap;
   padding: 28px 0 40px;
   font-size: 14px;
-  color: var(--f-muted);
+  color: #A3B1C6; /* Improved contrast */
 }
 
 .footerBottomTag {
@@ -270,7 +270,7 @@
 }
 
 .footerBottomLinks a {
-  color: var(--f-muted);
+  color: #A3B1C6; /* Improved contrast */
   text-decoration: none;
   transition: color 0.15s ease;
 }

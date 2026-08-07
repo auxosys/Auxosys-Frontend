@@ -286,7 +286,7 @@ const CookieBanner = () => {
         .theme-dark { background: rgba(14, 27, 33, 0.98); border-color: #2A3A41; }
         .theme-dark .banner-head h2, .theme-dark .banner-content p strong { color: #FFFFFF; }
         .theme-dark .banner-content p { color: #A0ABB0; }
-        .theme-dark .btn-primary { background: #0FB5A6; color: #FFFFFF; }
+        .theme-dark .btn-primary { background: #0FB5A6; color: #022C22; }
         .theme-dark .btn-primary:hover { background: #0D9F91; box-shadow: 0 10px 30px -8px rgba(15, 181, 166, 0.5); }
         .theme-dark .btn-secondary { background: #1A2E35; border-color: #2A3A41; color: #E7ECEC; }
         .theme-dark .btn-secondary:hover { background: #233B44; }

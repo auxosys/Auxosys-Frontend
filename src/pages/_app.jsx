@@ -43,8 +43,7 @@ export default function App({ Component, pageProps }) {
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         
         {/* Preconnects */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
         
         {/* Search Console Verification (Enabled via env in production) */}
         {process.env.NEXT_PUBLIC_GSC_VERIFICATION && (
@@ -74,7 +73,9 @@ export default function App({ Component, pageProps }) {
       </Head>
       <div className={`${archivo.variable} ${interTight.variable} ${inter.variable}`} data-scroll-behavior="smooth">
         <Navbar />
-        <Component {...pageProps} />
+        <main>
+          <Component {...pageProps} />
+        </main>
         <CookieBanner />
         <Footer />
       </div>

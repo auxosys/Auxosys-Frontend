@@ -90,7 +90,7 @@ export default function Footer() {
 
           <div className={styles.footerLinks}>
             <div className={styles.footerCol}>
-              <h5>Company</h5>
+              <div className={styles.footerHeading}>Company</div>
               <ul>
                 <li><Link href="/about">Who We Are</Link></li>
                 <li><Link href="/careers">Careers</Link></li>
@@ -99,7 +99,7 @@ export default function Footer() {
               </ul>
             </div>
             <div className={styles.footerCol}>
-              <h5>Solutions</h5>
+              <div className={styles.footerHeading}>Solutions</div>
               <ul>
                 <li><Link href="/products">Products</Link></li>
                 <li><Link href="/services">Services</Link></li>
@@ -107,7 +107,7 @@ export default function Footer() {
               </ul>
             </div>
             <div className={styles.footerCol}>
-              <h5>Technologies</h5>
+              <div className={styles.footerHeading}>Technologies</div>
               <ul>
                 <li><Link href="#">AI</Link></li>
                 <li><Link href="#">Cloud</Link></li>
@@ -117,7 +117,7 @@ export default function Footer() {
               </ul>
             </div>
             <div className={styles.footerCol}>
-              <h5>Legal</h5>
+              <div className={styles.footerHeading}>Legal</div>
               <ul>
                 {legalPages.length > 0 ? (
                   legalPages.map((page) => (

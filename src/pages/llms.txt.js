@@ -3,7 +3,7 @@ export default function LlmsTxt() {
 }
 
 export async function getServerSideProps({ res }) {
-  let content = "Auxosys AI capabilities and rules can be defined here.";
+  let content = "# Auxosys AI Capabilities\n\nAuxosys helps startups and enterprises build intelligent digital products.\n\nLearn more at [Auxosys Website](https://www.auxosys.com/)";
   
   try {
     const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com';
