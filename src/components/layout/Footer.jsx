@@ -71,6 +71,9 @@ export default function Footer() {
               <form className={styles.subscribeForm} onSubmit={handleSubscribe}>
                 <input
                   type="email"
+                  name="email"
+                  id="footer-email-subscribe"
+                  aria-label="Email address"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
