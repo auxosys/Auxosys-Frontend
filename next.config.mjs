@@ -36,19 +36,8 @@ const nextConfig = {
     ];
   },
   async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'verify.auxosys.com',
-          },
-        ],
-        destination: '/verify/:path*',
-      },
-    ];
-  },
+    return [];
+  }
 };
 
 export default nextConfig;
