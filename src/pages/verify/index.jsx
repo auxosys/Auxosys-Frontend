@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { Search, ShieldCheck } from 'lucide-react';
 import styles from './VerifyPortal.module.css';
@@ -8,6 +9,7 @@ import styles from './VerifyPortal.module.css';
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com';
 
 export default function VerifyPortal() {
+  const router = useRouter();
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
@@ -32,7 +34,14 @@ export default function VerifyPortal() {
         throw new Error(data.error || 'Failed to search');
       }
 
-      setResults(data.results || []);
+      const foundResults = data.results || [];
+      if (foundResults.length === 1) {
+        // Automatically redirect to the certificate page if exactly 1 result is found
+        router.push(`/verify/${foundResults[0].id}`);
+        return; // Don't hide loading state yet so it feels seamless
+      }
+      
+      setResults(foundResults);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -48,13 +57,6 @@ export default function VerifyPortal() {
       </Head>
 
       <div className={styles.container}>
-        <div className={styles.header}>
-          <Link href="https://auxosys.com" className={styles.logo}>
-            <Image src="/Auxosys-icon-mono-dark.svg" alt="Auxosys Logo" width={32} height={32} />
-            <span>AUXOSYS</span>
-          </Link>
-        </div>
-
         <main className={styles.main}>
           <div className={styles.heroSection}>
             <div className={styles.iconWrapper}>
