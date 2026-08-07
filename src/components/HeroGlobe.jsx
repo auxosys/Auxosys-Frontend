@@ -65,7 +65,8 @@ export default function HeroGlobe() {
 
     /* --- Particle sphere with carved "wave" cutouts --- */
     const RADIUS = 2.0;
-    const SAMPLES = 24000;
+    const isMobile = window.innerWidth < 768;
+    const SAMPLES = isMobile ? 4000 : 18000;
 
     function carveMask(theta, phi) {
       const w1 = Math.sin(theta * 3.1 + phi * 1.6);
@@ -193,7 +194,9 @@ export default function HeroGlobe() {
     let frameId;
 
     function animate() {
-      frameId = requestAnimationFrame(animate);
+      if (!isMobile) {
+        frameId = requestAnimationFrame(animate);
+      }
       const t = (performance.now() - t0) / 1000;
 
       sphereGroup.rotation.y = t * 0.18;
@@ -215,7 +218,7 @@ export default function HeroGlobe() {
 
     return () => {
       window.removeEventListener('resize', resize);
-      cancelAnimationFrame(frameId);
+      if (frameId) cancelAnimationFrame(frameId);
       renderer.dispose();
       geo.dispose();
       mat.dispose();
