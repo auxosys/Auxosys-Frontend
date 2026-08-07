@@ -95,28 +95,28 @@ export default function Footer() {
             <div className={styles.footerCol}>
               <div className={styles.footerHeading}>Company</div>
               <ul>
-                <li><Link href="/about">Who We Are</Link></li>
-                <li><Link href="/careers">Careers</Link></li>
-                <li><Link href="/news">Newsroom</Link></li>
-                <li><Link href="/contact">Contact Us</Link></li>
+                <li><Link prefetch={false} href="/about">Who We Are</Link></li>
+                <li><Link prefetch={false} href="/careers">Careers</Link></li>
+                <li><Link prefetch={false} href="/news">Newsroom</Link></li>
+                <li><Link prefetch={false} href="/contact">Contact Us</Link></li>
               </ul>
             </div>
             <div className={styles.footerCol}>
               <div className={styles.footerHeading}>Solutions</div>
               <ul>
-                <li><Link href="/products">Products</Link></li>
-                <li><Link href="/services">Services</Link></li>
-                <li><Link href="/industries">Industries</Link></li>
+                <li><Link prefetch={false} href="/products">Products</Link></li>
+                <li><Link prefetch={false} href="/services">Services</Link></li>
+                <li><Link prefetch={false} href="/industries">Industries</Link></li>
               </ul>
             </div>
             <div className={styles.footerCol}>
               <div className={styles.footerHeading}>Technologies</div>
               <ul>
-                <li><Link href="#">AI</Link></li>
-                <li><Link href="#">Cloud</Link></li>
-                <li><Link href="#">SaaS</Link></li>
-                <li><Link href="#">Blockchain</Link></li>
-                <li><Link href="#">Web & Mobile</Link></li>
+                <li><Link prefetch={false} href="#">AI</Link></li>
+                <li><Link prefetch={false} href="#">Cloud</Link></li>
+                <li><Link prefetch={false} href="#">SaaS</Link></li>
+                <li><Link prefetch={false} href="#">Blockchain</Link></li>
+                <li><Link prefetch={false} href="#">Web & Mobile</Link></li>
               </ul>
             </div>
             <div className={styles.footerCol}>
@@ -125,7 +125,7 @@ export default function Footer() {
                 {legalPages.length > 0 ? (
                   legalPages.map((page) => (
                     <li key={page.slug}>
-                      <Link href={`/${page.slug}`}>{page.title}</Link>
+                      <Link prefetch={false} href={`/${page.slug}`}>{page.title}</Link>
                     </li>
                   ))
                 ) : (

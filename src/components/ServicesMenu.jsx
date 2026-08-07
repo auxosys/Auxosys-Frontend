@@ -83,7 +83,7 @@ export default function ServicesMenu({ isOpen, isMobile, onClose }) {
         <MobileServiceGroup group={SERVICES_DATA.col4} onClose={onClose} />
         
         <div style={{ marginTop: 12 }}>
-          <Link href="/services" onClick={onClose} style={{ fontWeight: 700, color: 'var(--auxo-teal)' }}>
+          <Link prefetch={false} href="/services" onClick={onClose} style={{ fontWeight: 700, color: 'var(--auxo-teal)' }}>
             Explore Our Services →
           </Link>
         </div>
@@ -120,7 +120,7 @@ export default function ServicesMenu({ isOpen, isMobile, onClose }) {
             <p>Need a Custom Solution?</p>
             <span className={styles.ctaDesc}>Let's build software designed around your business.</span>
           </div>
-          <Link href="/services" className={styles.ctaLink} onClick={onClose}>
+          <Link prefetch={false} href="/services" className={styles.ctaLink} onClick={onClose}>
             Explore Our Services <ArrowRight size={18} strokeWidth={2.5} />
           </Link>
         </div>

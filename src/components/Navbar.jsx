@@ -73,7 +73,7 @@ export default function Navbar() {
     <>
       <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
         <div className={styles.navInner}>
-          <Link href="/" className={styles.logo}>
+          <Link prefetch={false} href="/" className={styles.logo}>
             <Image src="/Auxosys-icon-mono-dark.svg" alt="Auxosys Mobile Logo" width={47} height={47} className={styles.mobileLogo} />
             <span className={styles.logoWord}>AUXOSYS</span>
             <span className={styles.logoMark} style={{ background: 'transparent' }}>
@@ -91,7 +91,7 @@ export default function Navbar() {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                   >
-                    <Link href={link.href} className="flex items-center gap-1">
+                    <Link prefetch={false} href={link.href} className="flex items-center gap-1">
                       {link.name}
                     </Link>
                     <MegaMenu isOpen={megaMenuOpen} isMobile={false} onClose={() => setMegaMenuOpen(false)} />
@@ -106,7 +106,7 @@ export default function Navbar() {
                     onMouseEnter={handleIndustriesMouseEnter}
                     onMouseLeave={handleIndustriesMouseLeave}
                   >
-                    <Link href={link.href} className="flex items-center gap-1">
+                    <Link prefetch={false} href={link.href} className="flex items-center gap-1">
                       {link.name}
                     </Link>
                     <IndustriesMenu isOpen={industriesMenuOpen} isMobile={false} onClose={() => setIndustriesMenuOpen(false)} />
@@ -121,7 +121,7 @@ export default function Navbar() {
                     onMouseEnter={handleServicesMouseEnter}
                     onMouseLeave={handleServicesMouseLeave}
                   >
-                    <Link href={link.href} className="flex items-center gap-1">
+                    <Link prefetch={false} href={link.href} className="flex items-center gap-1">
                       {link.name}
                     </Link>
                     <ServicesMenu isOpen={servicesMenuOpen} isMobile={false} onClose={() => setServicesMenuOpen(false)} />
@@ -130,14 +130,14 @@ export default function Navbar() {
               }
               return (
                 <li key={link.name}>
-                  <Link href={link.href}>{link.name}</Link>
+                  <Link prefetch={false} href={link.href}>{link.name}</Link>
                 </li>
               );
             })}
           </ul>
 
           <div className={`${styles.navActions} hidden md:flex items-center`}>
-            <Link href="/contact" className={`${styles.navBtn} ${styles.navBtnPrimary} flex items-center`}>
+            <Link prefetch={false} href="/contact" className={`${styles.navBtn} ${styles.navBtnPrimary} flex items-center`}>
               Connect Us <ArrowRight className="inline ml-1" size={16} />
             </Link>
           </div>
@@ -145,6 +145,7 @@ export default function Navbar() {
           {/* Mobile Hamburger */}
           <button
             className="md:hidden flex items-center justify-center p-2 text-black hover:bg-gray-100 rounded-full transition"
+            aria-label="Open menu"
             onClick={() => setMobileMenuOpen(true)}
           >
             <Menu size={24} />
@@ -217,7 +218,7 @@ export default function Navbar() {
               })}
             </nav>
 
-            <Link href="/contact"
+            <Link prefetch={false} href="/contact"
               onClick={() => setMobileMenuOpen(false)}
               className="drawer-cta">
               Connect Us

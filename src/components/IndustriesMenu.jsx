@@ -50,7 +50,7 @@ export default function IndustriesMenu({ isOpen, isMobile, onClose }) {
         <MobileLinkList items={INDUSTRIES_DATA.col2} onClose={onClose} />
         
         <div style={{ marginTop: 12 }}>
-          <Link href="/industries" onClick={onClose} style={{ fontWeight: 700, color: 'var(--auxo-teal)' }}>
+          <Link prefetch={false} href="/industries" onClick={onClose} style={{ fontWeight: 700, color: 'var(--auxo-teal)' }}>
             View All Industries →
           </Link>
         </div>
@@ -76,7 +76,7 @@ export default function IndustriesMenu({ isOpen, isMobile, onClose }) {
           <div className={styles.ctaCard}>
             <p>Industry-Specific Solutions</p>
             <span className={styles.ctaDesc}>We build tailored digital products that meet the unique compliance, scale, and operational demands of your sector.</span>
-            <Link href="/industries" className={styles.ctaLink} onClick={onClose}>
+            <Link prefetch={false} href="/industries" className={styles.ctaLink} onClick={onClose}>
               View All Industries <ArrowRight size={18} strokeWidth={2.5} />
             </Link>
           </div>

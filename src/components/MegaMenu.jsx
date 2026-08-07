@@ -47,7 +47,7 @@ export default function MegaMenu({ isOpen, isMobile, onClose }) {
             </Link>
           ))}
         </div>
-        <Link href="/products" onClick={onClose} className={styles.viewAllLink} style={{ marginTop: 8 }}>
+        <Link prefetch={false} href="/products" onClick={onClose} className={styles.viewAllLink} style={{ marginTop: 8 }}>
           View all products <ArrowRight size={14} />
         </Link>
       </div>
@@ -70,7 +70,7 @@ export default function MegaMenu({ isOpen, isMobile, onClose }) {
           </div>
           <div className={styles.featuredBottom}>
             <p>{MEGA_MENU_DATA.featured.description}</p>
-            <Link href={MEGA_MENU_DATA.featured.link} className={styles.featuredCta} onClick={onClose}>
+            <Link prefetch={false} href={MEGA_MENU_DATA.featured.link} className={styles.featuredCta} onClick={onClose}>
               {MEGA_MENU_DATA.featured.cta} <ArrowRight size={20} strokeWidth={1.5} />
             </Link>
           </div>
@@ -99,7 +99,7 @@ export default function MegaMenu({ isOpen, isMobile, onClose }) {
             ))}
           </div>
 
-          <Link href="/products" className={styles.viewAllLink} onClick={onClose} style={{ marginTop: 'auto' }}>
+          <Link prefetch={false} href="/products" className={styles.viewAllLink} onClick={onClose} style={{ marginTop: 'auto' }}>
             View all products <ArrowRight size={16} />
           </Link>
         </div>
