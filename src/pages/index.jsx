@@ -1,8 +1,5 @@
 import dynamic from 'next/dynamic';
-const HeroGlobe = dynamic(() => import('@/components/HeroGlobe'), { 
-  ssr: false,
-  loading: () => <div style={{ width: '100%', height: '100%', opacity: 0 }}></div>
-});
+const HeroGlobe = dynamic(() => import('@/components/HeroGlobe'), { ssr: false });
 import Reveal from '@/components/Reveal';
 import SEO from '@/components/SEO';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
