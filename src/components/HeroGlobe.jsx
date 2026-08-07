@@ -225,9 +225,5 @@ export default function HeroGlobe() {
     };
   }, []);
 
-  if (isMobile) {
-    return null; // Skip rendering entirely on mobile to fix the 4.2s LCP penalty
-  }
-
   return <canvas ref={canvasRef} id="sphere-canvas" style={{ width: '100%', height: '100%', display: 'block' }} />;
 }
