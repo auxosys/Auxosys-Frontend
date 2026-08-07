@@ -6,7 +6,7 @@ export async function getServerSideProps({ res }) {
   let content = "Auxosys AI capabilities and rules can be defined here.";
   
   try {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.auxosys.com';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com';
     const fetchRes = await fetch(`${backendUrl}/seo/files`);
     const data = await fetchRes.json();
     if (data && data.success && data.data) {

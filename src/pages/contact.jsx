@@ -31,7 +31,7 @@ export default function ContactUs({ globalSeo }) {
 
     try {
       const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'https://api.auxosys.com' : 'https://api.auxosys.com');
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'https://auxosys-backend.onrender.com' : 'https://auxosys-backend.onrender.com');
       const response = await fetch(`${API_URL}/public/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

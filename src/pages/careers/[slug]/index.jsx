@@ -204,7 +204,7 @@ export default function JobDetailsPage() {
   useEffect(() => {
     async function fetchJob() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.auxosys.com'}/job/${slug}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com'}/job/${slug}`);
         const json = await res.json();
         if (json.success && json.data) setJob(json.data);
       } catch (err) {

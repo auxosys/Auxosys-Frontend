@@ -20,7 +20,7 @@ const CookieBanner = () => {
     const fetchConfig = async () => {
       try {
         const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'https://api.auxosys.com' : 'https://api.auxosys.com');
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'https://auxosys-backend.onrender.com' : 'https://auxosys-backend.onrender.com');
         const res = await fetch(`${API_URL}/cookies/config`);
         const data = await res.json();
         if (data.success && data.data && data.data.config) {
@@ -115,7 +115,7 @@ const CookieBanner = () => {
     // Send to Backend
     try {
       const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'https://api.auxosys.com' : 'https://api.auxosys.com');
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || (isLocal ? 'https://auxosys-backend.onrender.com' : 'https://auxosys-backend.onrender.com');
       await fetch(`${API_URL}/cookies/consent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

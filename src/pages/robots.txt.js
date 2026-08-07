@@ -6,7 +6,7 @@ export async function getServerSideProps({ res }) {
   let content = "User-agent: *\nAllow: /\nSitemap: https://www.auxosys.com/sitemap.xml";
   
   try {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.auxosys.com';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com';
     const fetchRes = await fetch(`${backendUrl}/seo/files`);
     const data = await fetchRes.json();
     if (data && data.success && data.data) {

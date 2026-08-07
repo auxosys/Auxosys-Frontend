@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.auxosys.com';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com';
 
 const STATUS_CONFIG = {
   valid: {
