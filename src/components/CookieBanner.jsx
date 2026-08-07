@@ -158,7 +158,7 @@ const CookieBanner = () => {
     <>
       <style jsx>{`
         .cookie-wrap {
-          position: fixed; inset: 0; z-index: 9999;
+          position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
           display: flex; align-items: flex-end; justify-content: flex-end;
           padding: 24px;
           padding-bottom: max(24px, env(safe-area-inset-bottom));
