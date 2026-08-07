@@ -4,6 +4,7 @@ import * as THREE from 'three';
 
 export default function HeroGlobe() {
   const canvasRef = useRef(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -65,7 +66,6 @@ export default function HeroGlobe() {
 
     /* --- Particle sphere with carved "wave" cutouts --- */
     const RADIUS = 2.0;
-    const isMobile = window.innerWidth < 768;
     const SAMPLES = isMobile ? 4000 : 8000;
 
     function carveMask(theta, phi) {
