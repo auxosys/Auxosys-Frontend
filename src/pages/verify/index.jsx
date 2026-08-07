@@ -37,7 +37,7 @@ export default function VerifyPortal() {
       const foundResults = data.results || [];
       if (foundResults.length === 1) {
         // Automatically redirect to the certificate page if exactly 1 result is found
-        router.push(`/verify/[id]`, `/${foundResults[0].id}`);
+        window.location.href = `/${foundResults[0].id}`;
         return; // Don't hide loading state yet so it feels seamless
       }
       
@@ -97,7 +97,7 @@ export default function VerifyPortal() {
                 <div className={styles.resultsList}>
                   <h3 className={styles.resultsHeader}>Search Results ({results.length})</h3>
                   {results.map((cert) => (
-                    <Link href={`/verify/[id]`} as={`/${cert.id}`} key={cert.id} className={styles.resultCard}>
+                    <a href={`/${cert.id}`} key={cert.id} className={styles.resultCard}>
                       <div className={styles.resultMain}>
                         <h4>{cert.recipient_name}</h4>
                         <span className={styles.certType}>{cert.cert_type}</span>
@@ -108,7 +108,7 @@ export default function VerifyPortal() {
                           {cert.status === 'valid' ? 'Valid' : cert.status === 'revoked' ? 'Revoked' : 'Expired'}
                         </span>
                       </div>
-                    </Link>
+                    </a>
                   ))}
                 </div>
               )}
