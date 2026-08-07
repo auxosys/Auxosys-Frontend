@@ -194,9 +194,7 @@ export default function HeroGlobe() {
     let frameId;
 
     function animate() {
-      if (!isMobile) {
-        frameId = requestAnimationFrame(animate);
-      }
+      frameId = requestAnimationFrame(animate);
       const t = (performance.now() - t0) / 1000;
 
       sphereGroup.rotation.y = t * 0.18;
