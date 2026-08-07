@@ -66,7 +66,7 @@ export default function HeroGlobe() {
     /* --- Particle sphere with carved "wave" cutouts --- */
     const RADIUS = 2.0;
     const isMobile = window.innerWidth < 768;
-    const SAMPLES = isMobile ? 4000 : 18000;
+    const SAMPLES = isMobile ? 4000 : 8000;
 
     function carveMask(theta, phi) {
       const w1 = Math.sin(theta * 3.1 + phi * 1.6);
@@ -224,6 +224,10 @@ export default function HeroGlobe() {
       mat.dispose();
     };
   }, []);
+
+  if (isMobile) {
+    return null; // Skip rendering entirely on mobile to fix the 4.2s LCP penalty
+  }
 
   return <canvas ref={canvasRef} id="sphere-canvas" style={{ width: '100%', height: '100%', display: 'block' }} />;
 }
