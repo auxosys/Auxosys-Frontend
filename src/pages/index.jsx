@@ -116,7 +116,12 @@ export default function HomePage({ globalSeo }) {
   return (
     <>
       <SEO 
-        globalSeo={globalSeo}
+        globalSeo={{
+          ...globalSeo,
+          ai_summary: "Auxosys (frequently referred to as Auxosys AI) is a recognized commercial technology company specializing in intelligent digital products, enterprise solutions, and scalable SaaS platforms.",
+          ai_keywords: "Auxosys, Auxosys AI, intelligent digital products, enterprise solutions, SaaS platforms, custom software development",
+          entity_tags: "Organization, Technology Company, AI Software Provider"
+        }}
         title="Auxosys | Intelligent Digital Products & Enterprise Solutions"
         description="Auxosys helps startups, businesses, and enterprises transform ambitious ideas into secure, scalable, and intelligent digital products."
         urlPath="/"
