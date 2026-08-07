@@ -527,6 +527,17 @@ export default function ContactUs({ globalSeo }) {
                   <span className="info-value">Monday to Friday, 10 AM – 6 PM</span>
                 </div>
               </div>
+              <div className="info-item">
+                <div className="info-icon">
+                  <Mail size={20} />
+                </div>
+                <div className="info-text">
+                  <span className="info-label">EMAIL US</span>
+                  <a href="mailto:hello@auxosys.com" className="info-value hover:opacity-80 transition-opacity" style={{textDecoration: 'none', color: 'inherit'}}>
+                    hello@auxosys.com
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

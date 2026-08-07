@@ -417,6 +417,10 @@ export default function CareersClient({ initialJobs = [] }) {
                 })}
               </div>
             )}
+            
+            <div style={{ marginTop: '60px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+              <p>Don't see a role that fits? Email your resume to <a href="mailto:careers@auxosys.com" style={{ color: 'var(--teal)', textDecoration: 'underline', textUnderlineOffset: '2px' }}>careers@auxosys.com</a>.</p>
+            </div>
           </Reveal>
         </div>
       </section>
