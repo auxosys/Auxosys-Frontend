@@ -9,7 +9,7 @@ export default function SEO({
   jsonLd = null,
   globalSeo = {}, // Passed down from getStaticProps
 }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://auxosys.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.auxosys.com";
   const url = `${siteUrl}${urlPath}`;
   
   // Merge page-specific props with global SEO settings

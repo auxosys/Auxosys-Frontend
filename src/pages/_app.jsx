@@ -63,8 +63,8 @@ export default function App({ Component, pageProps }) {
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "Auxosys",
-              "url": process.env.NEXT_PUBLIC_SITE_URL || "https://auxosys.vercel.app",
-              "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://auxosys.vercel.app"}/Auxosys-social-icon.png`,
+              "url": process.env.NEXT_PUBLIC_SITE_URL || "https://www.auxosys.com",
+              "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.auxosys.com"}/Auxosys-social-icon.png`,
               "sameAs": [
                 "https://github.com/auxosys"
               ]

@@ -241,7 +241,7 @@ export default function Blog() {
         (async () => {
             try {
                 setLoading(true); setFetchError("");
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.vercel.app'}/news`);
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.auxosys.com'}/news`);
                 if(!res.ok) throw new Error("Network response was not ok");
                 const data = await res.json();
                 setBlogs(data.data || []);

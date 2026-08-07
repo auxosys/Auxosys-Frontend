@@ -14,7 +14,7 @@ export async function getServerSideProps({ res }) {
   };
 
   try {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.auxosys.com';
     const fetchRes = await fetch(`${backendUrl}/seo/sitemap`);
     const data = await fetchRes.json();
     if (data && data.success && data.data) {

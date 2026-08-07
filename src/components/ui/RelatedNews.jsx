@@ -11,7 +11,7 @@ export default function RelatedNews({ relatedPage }) {
   const [news, setNews] = useState([]);
   
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.vercel.app'}/news?relatedPage=${relatedPage}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.auxosys.com'}/news?relatedPage=${relatedPage}`)
       .then(r => r.json())
       .then(response => {
         if (response.success && Array.isArray(response.data)) {

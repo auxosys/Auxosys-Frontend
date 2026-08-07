@@ -1,6 +1,6 @@
 export async function fetchSeoData(slug = '/') {
   try {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.vercel.app';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.auxosys.com';
     const res = await fetch(`${backendUrl}/api/v1/seo/page?slug=${encodeURIComponent(slug)}`, {
       next: { revalidate: 300 } // 5 minutes cache
     });

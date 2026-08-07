@@ -18,7 +18,7 @@ export async function getServerSideProps() {
   let initialJobs = [];
   
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.vercel.app'}/job`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.auxosys.com'}/job`);
     
     if (res.ok) {
       const json = await res.json();
