@@ -538,12 +538,16 @@ export default function JobApplicationForm() {
         method: "POST",
         body: formData,
       });
-      if (!res.ok) throw new Error("Submission failed");
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.message || "Submission failed");
+      }
       
       localStorage.removeItem(`auxosys_draft_${slug}`);
+      sessionStorage.removeItem(`auxosys_step_${slug}`);
       setSubmitted(true);
-    } catch {
-      alert("Something went wrong. Please try again.");
+    } catch (err) {
+      alert(err.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
