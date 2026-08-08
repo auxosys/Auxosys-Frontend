@@ -722,7 +722,7 @@ export default function JobApplicationForm() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                   {[
                     { icon: Icons.bldg, label: "Department", value: job.department },
-                    { icon: Icons.pin, label: "Location", value: job.location },
+                    { icon: Icons.pin, label: "Location", value: `${job.work_mode || 'Any'} ${job.city ? `— ${job.city}` : ''}`.trim() },
                   ].map(({ icon, label, value }) => (
                     <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
                       <div style={{
