@@ -1,60 +1,137 @@
+function escapeXml(unsafe) {
+  if (!unsafe) return "";
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+function normalizeUrl(url, baseUrl) {
+  if (!url) return null;
+  // If it's already an absolute URL starting with our base url, return as is
+  if (url.startsWith(baseUrl)) return url;
+  
+  // If it's an absolute URL for a different domain, we might want to exclude it if it's non-canonical
+  // But for safety, ensure we are only mapping local paths to our domain
+  if (url.startsWith('http')) return url;
+  
+  // Add base url to relative paths
+  const cleanPath = url.startsWith('/') ? url : `/${url}`;
+  return `${baseUrl}${cleanPath}`.replace(/\/$/, ''); // strip trailing slash
+}
+
 export default function Sitemap() {
   return null;
 }
 
-export async function getServerSideProps({ res }) {
-  let sitemapConfig = {
-    include_products: true,
-    include_services: true,
-    include_blog: true,
-    include_jobs: true,
-    include_news: true,
-    priority: 0.8,
-    change_frequency: 'weekly'
-  };
+export async function getServerSideProps({ req, res, query }) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.auxosys.com';
+  const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com';
+  
+  let allUrls = [];
+  const urlMap = new Map(); // to prevent duplicates
 
   try {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com';
-    const fetchRes = await fetch(`${backendUrl}/seo/sitemap`);
-    const data = await fetchRes.json();
-    if (data && data.success && data.data) {
-      sitemapConfig = { ...sitemapConfig, ...data.data };
+    // 1. Fetch Page SEO data
+    const pagesRes = await fetch(`${backendUrl}/seo/pages`);
+    const pagesData = await pagesRes.json();
+    
+    if (pagesData && pagesData.success && pagesData.data) {
+      pagesData.data.forEach(page => {
+        // EXCLUSION RULES
+        if (page.status !== 'Published') return; // Exclude drafts/archived
+        if (!page.robots_index) return; // Exclude noindex
+        if (page.include_in_sitemap === false) return; // Explicit exclude
+        
+        let targetUrl = page.page_slug;
+        
+        // Handle non-canonical URLs: If a canonical is specified, use that instead of the slug.
+        // If the canonical points to an external site, exclude it from our sitemap entirely.
+        if (page.canonical && page.canonical !== '') {
+            if (page.canonical.startsWith('http') && !page.canonical.startsWith(baseUrl)) {
+                return; // Exclude external canonicals
+            }
+            targetUrl = page.canonical;
+        }
+
+        const normalizedUrl = normalizeUrl(targetUrl, baseUrl);
+        if (!normalizedUrl) return;
+
+        urlMap.set(normalizedUrl, {
+          loc: normalizedUrl,
+          lastmod: page.updated_at ? new Date(page.updated_at).toISOString() : new Date().toISOString(),
+          changefreq: page.change_frequency || 'weekly',
+          priority: page.priority || 0.8
+        });
+      });
     }
-  } catch (error) {}
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.auxosys.com';
+    // 2. Fetch Custom Sitemap Links
+    const linksRes = await fetch(`${backendUrl}/seo/sitemap-links`);
+    const linksData = await linksRes.json();
+    
+    if (linksData && linksData.success && linksData.data) {
+      linksData.data.forEach(link => {
+        // EXCLUSION RULES
+        if (!link.status) return; // Exclude disabled custom links
+
+        const normalizedUrl = normalizeUrl(link.url, baseUrl);
+        if (!normalizedUrl) return;
+
+        // If it exists in Page SEO, this custom link will OVERWRITE it (admin override)
+        urlMap.set(normalizedUrl, {
+          loc: normalizedUrl,
+          lastmod: link.lastmod_override ? (link.lastmod ? new Date(link.lastmod).toISOString() : new Date().toISOString()) : new Date().toISOString(),
+          changefreq: link.changefreq || 'weekly',
+          priority: link.priority || 0.8
+        });
+      });
+    }
+  } catch (error) {
+    console.error("Sitemap generation error:", error);
+  }
+
+  // Convert Map to Array
+  allUrls = Array.from(urlMap.values());
+
+  // 50,000 URL limit handling (Sitemap Index)
+  const URLS_PER_SITEMAP = 45000;
+  const page = parseInt(query.page || '1', 10);
   
-  // Basic static routes
-  let urls = [
-    { loc: baseUrl, priority: 1.0 },
-    { loc: `${baseUrl}/about`, priority: sitemapConfig.priority },
-    { loc: `${baseUrl}/contact`, priority: sitemapConfig.priority },
-  ];
+  if (allUrls.length > URLS_PER_SITEMAP && !query.page) {
+    // Generate Sitemap Index
+    const totalPages = Math.ceil(allUrls.length / URLS_PER_SITEMAP);
+    
+    const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+    <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      ${Array.from({ length: totalPages }).map((_, i) => `
+      <sitemap>
+        <loc>${escapeXml(`${baseUrl}/sitemap.xml?page=${i + 1}`)}</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
+      </sitemap>
+      `).join('')}
+    </sitemapindex>`;
 
-  if (sitemapConfig.include_services) {
-    urls.push({ loc: `${baseUrl}/services`, priority: sitemapConfig.priority });
-    // In a full implementation, you'd fetch the services slugs from the DB here
-  }
-  
-  if (sitemapConfig.include_products) {
-    urls.push({ loc: `${baseUrl}/products`, priority: sitemapConfig.priority });
-  }
-
-  if (sitemapConfig.include_news) {
-    urls.push({ loc: `${baseUrl}/news`, priority: sitemapConfig.priority });
-  }
-  
-  if (sitemapConfig.include_jobs) {
-    urls.push({ loc: `${baseUrl}/careers`, priority: sitemapConfig.priority });
+    res.setHeader('Content-Type', 'text/xml');
+    res.setHeader("Cache-Control", "public, s-maxage=1800, stale-while-revalidate=86400");
+    res.write(sitemapIndex.trim());
+    res.end();
+    return { props: {} };
   }
 
+  // Pagination Slice
+  const paginatedUrls = allUrls.slice((page - 1) * URLS_PER_SITEMAP, page * URLS_PER_SITEMAP);
+
+  // Generate Standard Sitemap
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${urls.map(u => `
+  ${paginatedUrls.map(u => `
   <url>
-    <loc>${u.loc}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>${sitemapConfig.change_frequency}</changefreq>
+    <loc>${escapeXml(u.loc)}</loc>
+    <lastmod>${u.lastmod}</lastmod>
+    <changefreq>${escapeXml(u.changefreq)}</changefreq>
     <priority>${u.priority}</priority>
   </url>
   `).join('')}
@@ -62,7 +139,7 @@ export async function getServerSideProps({ res }) {
 
   res.setHeader('Content-Type', 'text/xml');
   res.setHeader("Cache-Control", "public, s-maxage=1800, stale-while-revalidate=86400");
-  res.write(sitemap);
+  res.write(sitemap.trim());
   res.end();
 
   return { props: {} };
