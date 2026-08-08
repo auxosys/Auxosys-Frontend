@@ -139,7 +139,7 @@ export default function HomePage({ globalSeo }) {
                 "url": `${process.env.NEXT_PUBLIC_SITE_URL}/favicon.ico`
               },
               "sameAs": [
-                "https://www.linkedin.com/company/auxosys",
+                "https://www.linkedin.com/company/auxosys/",
                 "https://www.facebook.com/profile.php?id=61593195985842",
                 "https://x.com/auxosys",
                 "https://www.instagram.com/auxosys"

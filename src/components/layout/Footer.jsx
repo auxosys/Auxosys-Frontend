@@ -60,7 +60,7 @@ export default function Footer() {
           <div className={styles.footerBrand}>
             <h2 className={styles.footerHeroText}>Empowering Businesses<br />Through Intelligent Technology.</h2>
             <div className={styles.footerSocial} style={{ marginTop: 24, marginBottom: 48 }}>
-              <a href="https://www.linkedin.com/company/auxosys" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="LinkedIn"><Linkedin size={18} /></a>
+              <a href="https://www.linkedin.com/company/auxosys/" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="LinkedIn"><Linkedin size={18} /></a>
               <a href="https://www.facebook.com/profile.php?id=61593195985842" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="Facebook"><Facebook size={18} /></a>
               <a href="https://x.com/auxosys" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="X / Twitter"><Twitter size={18} /></a>
               <a href="https://www.instagram.com/auxosys" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="Instagram"><Instagram size={18} /></a>
