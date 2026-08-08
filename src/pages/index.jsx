@@ -434,14 +434,10 @@ export default function HomePage({ globalSeo }) {
             <div className="card-grid cols-4">
               {SERVICES.map(({ title, desc, href, Icon }) => (
                 <a href={href} className="card" key={title}>
-                  <div className="card-header">
-                    <div className="card-icon"><Icon /></div>
-                    <h3>{title}</h3>
-                  </div>
-                  <div className="card-content">
-                    <p>{desc}</p>
-                    <span className="card-link">Learn more <Arrow /></span>
-                  </div>
+                  <div className="card-icon"><Icon /></div>
+                  <h3>{title}</h3>
+                  <p>{desc}</p>
+                  <span className="card-link">Learn more <Arrow /></span>
                 </a>
               ))}
 
@@ -490,14 +486,10 @@ export default function HomePage({ globalSeo }) {
             <div className="card-grid cols-3">
               {INDUSTRIES.map(({ Icon, title, desc, href }) => (
                 <a href={href} className="card" key={title}>
-                  <div className="card-header">
-                    <div className="card-icon"><Icon /></div>
-                    <h3>{title}</h3>
-                  </div>
-                  <div className="card-content">
-                    <p>{desc}</p>
-                    <span className="card-link">Learn more <Arrow /></span>
-                  </div>
+                  <div className="card-icon"><Icon /></div>
+                  <h3>{title}</h3>
+                  <p>{desc}</p>
+                  <span className="card-link">Learn more <Arrow /></span>
                 </a>
               ))}
             </div>
@@ -531,14 +523,10 @@ export default function HomePage({ globalSeo }) {
           <Reveal>
             <div className="why-grid">
               {WHY.map(({ Icon, title, desc }) => (
-                <div className="card" key={title}>
-                  <div className="card-header">
-                    <div className="why-icon"><Icon /></div>
-                    <h3>{title}</h3>
-                  </div>
-                  <div className="card-content">
-                    <p>{desc}</p>
-                  </div>
+                <div className="why-card" key={title}>
+                  <div className="why-icon"><Icon /></div>
+                  <h4>{title}</h4>
+                  <p>{desc}</p>
                 </div>
               ))}
             </div>
