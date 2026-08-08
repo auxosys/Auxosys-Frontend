@@ -277,7 +277,7 @@
   position: relative;
   aspect-ratio: 16/10;
   overflow: hidden;
-  background: linear-gradient(135deg, #EAF7F4, #F3FBE6);
+  background: linear-gradient(135deg, #cdebe2, #dcedc7);
 }
 
 .card-media img {
