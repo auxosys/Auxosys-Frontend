@@ -804,9 +804,6 @@ h4 {
   grid-template-columns: repeat(3, 1fr);
 }
 
-  grid-template-columns: repeat(3, 1fr);
-}
-
 .card {
   background: var(--bg-1);
   border: 1px solid var(--border);
@@ -949,7 +946,7 @@ h4 {
 .why-card:hover .why-icon {
   background: rgba(var(--teal-rgb), 0.16);
   border-color: rgba(var(--teal-rgb), 0.45);
-
+}
 /* ---------- PROCESS TIMELINE ---------- */
 .timeline {
   position: relative;
