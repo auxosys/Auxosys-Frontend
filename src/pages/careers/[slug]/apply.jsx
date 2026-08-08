@@ -520,6 +520,12 @@ export default function JobApplicationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateStep("submit")) return;
+
+    if (!files.resume) {
+      alert("Your resume file was lost (possibly due to page refresh). Please go back and re-upload it.");
+      setCurrentStep(steps.findIndex(s => s.id === "documents"));
+      return;
+    }
     
     setLoading(true);
     try {
