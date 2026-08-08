@@ -101,7 +101,7 @@ const CookieBanner = () => {
     const utm_source = urlParams.get('utm_source') || null;
     const utm_medium = urlParams.get('utm_medium') || null;
     const utm_campaign = urlParams.get('utm_campaign') || null;
-    
+
     // Fetch Country Code (Silent fallback if fails)
     let country_code = 'Unknown';
     try {
