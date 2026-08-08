@@ -1,8 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { ArrowLeft } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Head from 'next/head';
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import SEO from "@/components/SEO";
 
 export default function CandidatePrivacy() {
   const router = useRouter();
