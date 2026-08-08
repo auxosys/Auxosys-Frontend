@@ -313,6 +313,7 @@ export default function JobApplicationForm() {
   const [config, setConfig] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
     if (typeof sessionStorage !== "undefined" && slug) {
@@ -519,10 +520,11 @@ export default function JobApplicationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError("");
     if (!validateStep("submit")) return;
 
     if (!files.resume) {
-      alert("Your resume file was lost (possibly due to page refresh). Please go back and re-upload it.");
+      setSubmitError("Your resume file was lost (possibly due to page refresh). Please go back and re-upload it.");
       setCurrentStep(steps.findIndex(s => s.id === "documents"));
       return;
     }
@@ -547,7 +549,7 @@ export default function JobApplicationForm() {
       sessionStorage.removeItem(`auxosys_step_${slug}`);
       setSubmitted(true);
     } catch (err) {
-      alert(err.message || "Something went wrong. Please try again.");
+      setSubmitError(err.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -1045,6 +1047,12 @@ export default function JobApplicationForm() {
                     </div>
 
                     <div style={{ height: 1, background: T.div, marginBottom: 24 }} />
+
+                    {submitError && (
+                      <div style={{ padding: "12px 16px", background: "rgba(255, 90, 90, 0.1)", border: `1px solid ${T.orange}`, borderRadius: 10, color: T.orange, fontSize: 14, marginBottom: 20 }}>
+                        {submitError}
+                      </div>
+                    )}
 
                     <button
                       onClick={handleSubmit}
