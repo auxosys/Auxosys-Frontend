@@ -62,7 +62,6 @@ export default function App({ Component, pageProps }) {
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "Auxosys",
-              "alternateName": "Auxosys AI",
               "description": "Auxosys is a technology company building innovative digital products, SaaS platforms, and AI-powered solutions.",
               "url": process.env.NEXT_PUBLIC_SITE_URL || "https://www.auxosys.com",
               "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.auxosys.com"}/apple-touch-icon.png`,
