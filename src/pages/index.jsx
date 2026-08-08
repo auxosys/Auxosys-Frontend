@@ -130,10 +130,27 @@ export default function HomePage({ globalSeo }) {
           "@context": "https://schema.org",
           "@graph": [
             {
+              "@type": "Organization",
+              "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/#organization`,
+              "name": "Auxosys",
+              "url": process.env.NEXT_PUBLIC_SITE_URL,
+              "logo": {
+                "@type": "ImageObject",
+                "url": `${process.env.NEXT_PUBLIC_SITE_URL}/favicon.ico`
+              },
+              "sameAs": [
+                "https://www.linkedin.com/company/auxosys",
+                "https://www.facebook.com/profile.php?id=61593195985842",
+                "https://x.com/auxosys",
+                "https://www.instagram.com/auxosys"
+              ]
+            },
+            {
               "@type": "WebSite",
               "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/#website`,
               "url": process.env.NEXT_PUBLIC_SITE_URL,
-              "name": "Auxosys"
+              "name": "Auxosys",
+              "publisher": { "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/#organization` }
             },
             {
               "@type": "WebPage",

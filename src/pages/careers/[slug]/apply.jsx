@@ -1027,9 +1027,9 @@ export default function JobApplicationForm() {
                       </CheckboxField>
                       <CheckboxField name="privacy" checked={form.privacy} onChange={handleChange} error={errors.privacy}>
                         I have read and agree to the{" "}
-                        <Link href="/privacy" style={{ color: T.teal, textDecoration: "underline", textUnderlineOffset: 3 }}>Privacy Policy</Link>
+                        <Link href="/careers/privacy" style={{ color: T.teal, textDecoration: "underline", textUnderlineOffset: 3 }}>Privacy Policy</Link>
                         {" "}and{" "}
-                        <Link href="/terms" style={{ color: T.teal, textDecoration: "underline", textUnderlineOffset: 3 }}>Terms of Service</Link>.
+                        <Link href="/careers/terms" style={{ color: T.teal, textDecoration: "underline", textUnderlineOffset: 3 }}>Terms of Service</Link>.
                       </CheckboxField>
                     </div>
 
