@@ -179,6 +179,7 @@ export default function CareersClient({ initialJobs = [] }) {
         }
         .job-main { flex: 1; min-width: 0; }
         .job-title-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .job-title-row .status-tag { margin-top: 0; }
         .job-title { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--text); text-decoration: none; }
         .job-title:hover { color: var(--dept-accent, var(--teal)); }
         .urgent-tag { display: inline-flex; align-items: center; gap: 6px; }
