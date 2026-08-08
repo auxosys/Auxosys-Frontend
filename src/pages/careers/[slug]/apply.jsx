@@ -332,6 +332,7 @@ export default function JobApplicationForm() {
   }, [currentStep, slug]);
 
   useEffect(() => {
+    if (!slug) return;
     const fetchJob = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com'}/job/${slug}`);
@@ -547,6 +548,7 @@ export default function JobApplicationForm() {
       
       localStorage.removeItem(`auxosys_draft_${slug}`);
       sessionStorage.removeItem(`auxosys_step_${slug}`);
+      setCurrentStep(0);
       setSubmitted(true);
     } catch (err) {
       setSubmitError(err.message || "Something went wrong. Please try again.");
