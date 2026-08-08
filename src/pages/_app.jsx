@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/layout/Footer'
 import CookieBanner from '@/components/CookieBanner'
 import Head from 'next/head'
+import Script from 'next/script'
 import { Archivo, Inter_Tight, Inter } from 'next/font/google'
 
 const archivo = Archivo({
@@ -31,6 +32,16 @@ const inter = Inter({
 export default function App({ Component, pageProps }) {
   return (
     <>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-J1CLVMJGB8" strategy="afterInteractive" />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-J1CLVMJGB8');
+        `}
+      </Script>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="theme-color" content="#17262B" />
