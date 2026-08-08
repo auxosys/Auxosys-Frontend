@@ -1,28 +1,41 @@
-export default function Robots() {
-  return null;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+function generateRobotsTxt(robotsTxt) {
+  if (robotsTxt) return robotsTxt;
+  
+  // Safe default
+  return `User-agent: *\nAllow: /\n\nSitemap: https://www.auxosys.com/sitemap.xml`;
 }
 
 export async function getServerSideProps({ res }) {
-  let content = "User-agent: *\nAllow: /\nSitemap: https://www.auxosys.com/sitemap.xml";
-  
   try {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com';
-    const fetchRes = await fetch(`${backendUrl}/seo/files`);
-    const data = await fetchRes.json();
-    if (data && data.success && data.data) {
-      const file = data.data.find(f => f.filename === "robots.txt");
-      if (file && file.content) {
-        content = file.content;
+    let robotsTxt = null;
+
+    try {
+      const settingsRes = await fetch(`${BACKEND_URL}/api/v1/seo/settings`);
+      if (settingsRes.ok) {
+        const { data } = await settingsRes.json();
+        robotsTxt = data?.robots_txt;
       }
+    } catch (e) {
+      console.error("Failed to fetch robots.txt settings:", e);
     }
+
+    const sitemap = generateRobotsTxt(robotsTxt);
+
+    res.setHeader('Content-Type', 'text/plain');
+    res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=600');
+    res.write(sitemap);
+    res.end();
   } catch (error) {
-    console.error("Failed to fetch dynamic robots.txt", error);
+    console.error("Error generating robots.txt", error);
+    res.statusCode = 500;
+    res.end();
   }
 
-  res.setHeader("Content-Type", "text/plain");
-  res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400");
-  res.write(content);
-  res.end();
-
   return { props: {} };
+}
+
+export default function Robots() {
+  // getServerSideProps handles the request
 }
