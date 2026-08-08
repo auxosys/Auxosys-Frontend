@@ -559,7 +559,8 @@ export default function JobApplicationForm() {
           </div>
           <h1 style={{ fontSize: 30, fontWeight: 800, color: T.white, marginBottom: 14 }}>Application Submitted!</h1>
           <p style={{ color: T.gray, fontSize: 16, marginBottom: 32, lineHeight: 1.6 }}>
-            Thanks for applying for <strong style={{ color: T.teal }}>{job?.title}</strong>. We'll review your application and get back to you within 5–7 business days.
+            Thanks for applying for <strong style={{ color: T.teal }}>{job?.title}</strong>. We'll review your application and get back to you within 5–7 business days.<br /><br />
+            Please check your email for application details and keep an eye out for updates. (Be sure to check your spam folder just in case!)
           </p>
           <Link href="/careers" style={{
             display: "inline-flex", alignItems: "center", gap: 8,
