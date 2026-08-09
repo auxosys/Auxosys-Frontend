@@ -178,11 +178,15 @@ export default function CareersClient({ initialJobs = [] }) {
           background: var(--dept-tint); color: var(--dept-accent);
         }
         .job-main { flex: 1; min-width: 0; }
-        .job-title-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .job-title-row .status-tag { margin-top: 0; }
-        .job-title { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--text); text-decoration: none; }
+        .job-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .job-title { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--text); text-decoration: none; line-height: 1.2; }
         .job-title:hover { color: var(--dept-accent, var(--teal)); }
-        .urgent-tag { display: inline-flex; align-items: center; gap: 6px; }
+        
+        .job-badge { 
+          display: inline-flex; align-items: center; gap: 6px; 
+          padding: 3px 8px; border-radius: 100px; font-size: 10.5px; font-weight: 700; 
+          letter-spacing: 0.5px; text-transform: uppercase; margin: 0; 
+        }
         .urgent-dot { width: 6px; height: 6px; border-radius: 50%; background: #FB7185; }
         @media (prefers-reduced-motion: no-preference) {
           .urgent-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
@@ -196,8 +200,8 @@ export default function CareersClient({ initialJobs = [] }) {
         .skill-pill { font-size: 11.5px; font-weight: 500; color: var(--text); background: var(--bg); border: 1px solid var(--border-subtle); border-radius: 6px; padding: 4px 10px; }
         .skill-pill.more { color: var(--dept-accent); border-color: transparent; background: var(--dept-tint); }
 
-        .job-side { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; }
-
+        .job-side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+        .job-side .status-tag { margin-top: 0; padding: 4px 12px; font-size: 11.5px; }
         .job-detail-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; border-top: 1px solid transparent; }
         .job-detail-wrapper.open { grid-template-rows: 1fr; border-top-color: var(--border-subtle); }
         .job-detail-inner-clip { overflow: hidden; }
@@ -349,13 +353,13 @@ export default function CareersClient({ initialJobs = [] }) {
                         <div className="job-main">
                           <div className="job-title-row">
                             <Link href={`/careers/${job.slug || job.id}`} className="job-title">{job.title}</Link>
-                            {job.featured && <span className="status-tag status-soon" style={{ padding: '2px 8px', fontSize: '10px' }}>FEATURED</span>}
+                            {job.featured && <span className="job-badge status-soon">FEATURED</span>}
                             {job.urgent && (
-                              <span className="status-tag status-dev urgent-tag" style={{ padding: '2px 8px', fontSize: '10px' }}>
+                              <span className="job-badge status-dev">
                                 <span className="urgent-dot" /> URGENT
                               </span>
                             )}
-                            <span className={`status-tag mobile-emp-type ${typeClass[job.employment_type] || "status-planned"}`} style={{ display: 'none', padding: '2px 8px', fontSize: '10px' }}>
+                            <span className={`job-badge mobile-emp-type ${typeClass[job.employment_type] || "status-planned"}`} style={{ display: 'none' }}>
                               {job.employment_type}
                             </span>
                           </div>
@@ -363,7 +367,7 @@ export default function CareersClient({ initialJobs = [] }) {
                           <div className="job-meta-row">
                             <span className="job-meta-item">{job.department}</span>
                             <span className="job-meta-item"><MapPinIcon /> {job.work_mode}{job.city ? ` — ${job.city}` : ''}</span>
-                            <span className="job-meta-item"><ClockIcon /> {timeAgo(job.created_at)}</span>
+                            <span className="job-meta-item"><ClockIcon /> {timeAgo(job.createdAt || job.created_at)}</span>
                           </div>
 
                           {previewSkills.length > 0 && (

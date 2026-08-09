@@ -388,7 +388,7 @@ export default function JobDetailsPage() {
             )}
             {job.employment_type && (<><span className="facts-divider" style={{ color: "var(--border-subtle)" }}>|</span><QuickFact icon={<BriefcaseIcon />}>{job.employment_type}</QuickFact></>)}
             {job.experience_level && (<><span className="facts-divider" style={{ color: "var(--border-subtle)" }}>|</span><QuickFact icon={<StarIcon />}>{job.experience_level} level</QuickFact></>)}
-            {job.created_at && (<><span className="facts-divider" style={{ color: "var(--border-subtle)" }}>|</span><QuickFact icon={<ClockIcon />}>Posted {new Date(job.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</QuickFact></>)}
+            {(job.createdAt || job.created_at) && (<><span className="facts-divider" style={{ color: "var(--border-subtle)" }}>|</span><QuickFact icon={<ClockIcon />}>Posted {new Date(job.createdAt || job.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</QuickFact></>)}
             <><span className="facts-divider" style={{ color: "var(--border-subtle)" }}>|</span><QuickFact icon={<HashIcon />}>Ref. {String(job.id || "").substring(0, 8).toUpperCase()}</QuickFact></>
           </div>
         </div>
