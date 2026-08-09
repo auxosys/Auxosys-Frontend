@@ -126,7 +126,7 @@ export default function CareersClient({ initialJobs = [] }) {
           z-index: 5;
           backdrop-filter: blur(10px);
         }
-        .filter-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 12px; align-items: flex-end; }
+        .filter-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; align-items: flex-end; }
         @media (max-width: 1024px) { .filter-grid { grid-template-columns: 1fr 1fr; } }
         
         .mobile-filter-toggle { display: none; }
@@ -148,14 +148,14 @@ export default function CareersClient({ initialJobs = [] }) {
         }
 
         .search-input, .filter-select {
-          background: transparent; border: 1px solid var(--border-subtle);
+          background: transparent; border: 1px solid rgba(0, 0, 0, 0.15);
           border-radius: 8px; color: var(--text); padding: 10px 14px; width: 100%; outline: none;
           font-size: 14px; transition: border-color 0.2s;
         }
         .filter-select { padding-right: 36px; appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237F93A3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
         .filter-select:focus, .search-input:focus { border-color: var(--teal); }
 
-        .job-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 16px; align-items: start; }
+        .job-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 16px; }
 
         .job-card {
           background: var(--surface);
@@ -164,6 +164,8 @@ export default function CareersClient({ initialJobs = [] }) {
           border-radius: 12px;
           overflow: hidden;
           transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+          display: flex;
+          flex-direction: column;
         }
         .job-card:hover {
           border-color: color-mix(in srgb, var(--dept-accent, var(--teal)) 55%, var(--border-subtle));
@@ -201,7 +203,7 @@ export default function CareersClient({ initialJobs = [] }) {
         .skill-pill.more { color: var(--dept-accent); border-color: transparent; background: var(--dept-tint); }
 
         .job-side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
-        .job-side .status-tag { margin-top: 0; padding: 4px 12px; font-size: 11.5px; }
+        .job-side .job-badge { margin-top: 0; padding: 4px 10px; font-size: 11px; text-transform: capitalize; letter-spacing: 0; }
         .job-detail-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; border-top: 1px solid transparent; }
         .job-detail-wrapper.open { grid-template-rows: 1fr; border-top-color: var(--border-subtle); }
         .job-detail-inner-clip { overflow: hidden; }
@@ -210,7 +212,7 @@ export default function CareersClient({ initialJobs = [] }) {
         .detail-col li { display: flex; gap: 8px; }
         .detail-col li::before { content: '→'; color: var(--dept-accent); flex-shrink: 0; }
 
-        .job-footer { padding: 12px 20px; background: var(--surface); border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .job-footer { margin-top: auto; padding: 12px 20px; background: var(--surface); border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
         .job-id { font-size: 11px; font-family: monospace; color: var(--text-muted); opacity: 0.6; }
         .quick-view-btn { display: inline-flex; align-items: center; gap: 6px; }
         .view-role-btn { display: inline-flex; align-items: center; gap: 6px; }
@@ -379,8 +381,8 @@ export default function CareersClient({ initialJobs = [] }) {
                         </div>
 
                         <div className="job-side">
-                          <span className={`status-tag ${typeClass[job.employment_type] || "status-planned"}`}>{job.employment_type}</span>
-                          <span className="job-id">{job.public_id || ('#' + job.id.substring(0, 8))}</span>
+                          <span className={`job-badge ${typeClass[job.employment_type] || "status-planned"}`}>{job.employment_type}</span>
+                          <span className="job-id" style={{ marginRight: '4px' }}>{job.public_id || ('#' + job.id.substring(0, 8))}</span>
                         </div>
                       </div>
 
