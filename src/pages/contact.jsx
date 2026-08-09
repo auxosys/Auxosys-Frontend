@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import SEO from '@/components/SEO';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Clock, Phone, Mail, MapPin, MessageSquare, CheckCircle, X } from 'lucide-react';
+import { Clock, Phone, Mail, MapPin, MessageSquare, CheckCircle, X, LifeBuoy } from 'lucide-react';
 import { COUNTRY_CODES } from '@/utils/countryCodes';
 
 import { fetchSeoData } from '@/utils/fetchSeo';
@@ -532,9 +532,20 @@ export default function ContactUs({ globalSeo }) {
                   <Mail size={20} />
                 </div>
                 <div className="info-text">
-                  <span className="info-label">EMAIL US</span>
+                  <span className="info-label">GENERAL INQUIRIES</span>
                   <a href="mailto:hello@auxosys.com" className="info-value hover:opacity-80 transition-opacity" style={{textDecoration: 'none', color: 'inherit'}}>
                     hello@auxosys.com
+                  </a>
+                </div>
+              </div>
+              <div className="info-item">
+                <div className="info-icon">
+                  <LifeBuoy size={20} />
+                </div>
+                <div className="info-text">
+                  <span className="info-label">PRODUCT SUPPORT</span>
+                  <a href="mailto:support@auxosys.com" className="info-value hover:opacity-80 transition-opacity" style={{textDecoration: 'none', color: 'inherit'}}>
+                    support@auxosys.com
                   </a>
                 </div>
               </div>
