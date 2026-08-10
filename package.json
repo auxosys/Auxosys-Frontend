@@ -28,9 +28,9 @@
     "tailwindcss": "^4.3.2"
   },
   "browserslist": [
-    "defaults",
-    "not op_mini all",
+    "> 0.3%",
+    "last 2 versions",
     "not dead",
-    "last 2 versions and not dead and > 0.2%"
+    "not op_mini all"
   ]
 }
