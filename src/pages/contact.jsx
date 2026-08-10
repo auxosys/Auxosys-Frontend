@@ -477,6 +477,14 @@ export default function ContactUs({ globalSeo }) {
           background: #223A42;
         }
 
+        /* ── DESKTOP VIEW ON MOBILE (TALL SCREENS) ── */
+        @media (max-aspect-ratio: 1/1) and (min-width: 901px) {
+          .contact-container {
+            height: auto;
+            min-height: 600px;
+          }
+        }
+
         /* ── MOBILE ── */
         @media (max-width: 900px) {
           .contact-page {
