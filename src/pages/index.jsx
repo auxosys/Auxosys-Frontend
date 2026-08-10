@@ -292,16 +292,19 @@ export default function HomePage({ globalSeo }) {
           }
         }
         @media (min-width: 961px) and (max-width: 1100px) {
+          .home-legacy-hero {
+            overflow: visible; /* Prevent viewport clipping of the globe */
+            overflow-x: clip; /* Clip the ::before background gradient but not the globe */
+          }
           .home-legacy-hero .hero-right {
             grid-area: globe;
             transform: scale(0.9);
-            margin-left: -40%;
-            margin-right: -10%;
-            width: 150%;
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: visible;
           }
         }
         @media (max-width: 960px) {
