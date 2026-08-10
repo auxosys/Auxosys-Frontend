@@ -295,8 +295,8 @@ export default function HomePage({ globalSeo }) {
           .home-legacy-hero .hero-right {
             grid-area: globe;
             transform: scale(0.9);
-            margin-left: -15%;
-            margin-right: -15%;
+            margin-left: -30%;
+            margin-right: 0;
             width: 130%;
             display: flex;
             justify-content: center;
