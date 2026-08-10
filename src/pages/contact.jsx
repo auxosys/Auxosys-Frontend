@@ -260,7 +260,7 @@ export default function ContactUs({ globalSeo }) {
           padding: 24px 32px;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
+          justify-content: center;
           background: var(--bg-1, #F8FAFC);
           overflow-y: auto;
         }
@@ -559,7 +559,6 @@ export default function ContactUs({ globalSeo }) {
 
         {/* RIGHT PANEL */}
         <div className="contact-right">
-          <h1 className="contact-title">Contact Us</h1>
 
           <div className="contact-form-container">
             <div className="form-header">
