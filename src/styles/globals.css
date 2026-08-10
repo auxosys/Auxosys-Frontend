@@ -603,8 +603,39 @@ h4 {
 }
 
 .hero-badge .dot {
-  animation: pulseDot 2s ease-in-out infinite;
 }
+
+/* =========================================================================
+   STICKY FOOTER FIX (DESKTOP-VIEW-ON-MOBILE)
+   Ensures the footer sits at the bottom of the viewport if content is short,
+   eliminating the white/blank void below it.
+   ========================================================================= */
+@media (max-aspect-ratio: 1/1) and (min-width: 901px) {
+  html, body {
+    height: 100%;
+  }
+
+  #__next {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  #__next > div[data-scroll-behavior] {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  #__next > div[data-scroll-behavior] > main {
+    flex: 1 0 auto;
+  }
+
+  #__next > div[data-scroll-behavior] > footer {
+    flex-shrink: 0;
+  }
+}
+
 
 @keyframes pulseDot {
 
