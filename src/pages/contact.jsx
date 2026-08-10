@@ -479,6 +479,12 @@ export default function ContactUs({ globalSeo }) {
 
         /* ── DESKTOP VIEW ON MOBILE (TALL SCREENS) ── */
         @media (max-aspect-ratio: 1/1) and (min-width: 901px) {
+          .contact-page {
+            min-height: auto;
+            padding-top: 120px;
+            padding-bottom: 80px;
+            align-items: flex-start;
+          }
           .contact-container {
             height: auto;
             min-height: 600px;
