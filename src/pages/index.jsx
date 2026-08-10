@@ -295,12 +295,13 @@ export default function HomePage({ globalSeo }) {
           .home-legacy-hero .hero-right {
             grid-area: globe;
             transform: scale(0.9);
-            margin-left: -30%;
-            margin-right: 0;
-            width: 130%;
+            margin-left: -40%;
+            margin-right: -10%;
+            width: 150%;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: visible;
           }
         }
         @media (max-width: 960px) {
