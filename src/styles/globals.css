@@ -391,6 +391,9 @@ h4 {
   flex-direction: column;
   gap: 24px;
   margin-bottom: auto;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 16px; /* give some room for scrollbar */
 }
 
 .drawer-link {

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X, ChevronDown } from 'lucide-react';
 import MegaMenu from './MegaMenu';
 import ServicesMenu from './ServicesMenu';
 import IndustriesMenu from './IndustriesMenu';
@@ -168,39 +168,54 @@ export default function Navbar() {
               {navLinks.map((link) => {
                 if (link.name === 'Products') {
                   return (
-                    <div key={link.name} className="drawer-item-container">
-                      <button 
-                        className="drawer-link flex justify-between w-full"
-                        onClick={() => setMegaMenuOpen(!megaMenuOpen)}
-                      >
-                        {link.name}
-                      </button>
+                    <div key={link.name} className="drawer-item-container w-full">
+                      <div className="flex justify-between items-center w-full">
+                        <Link href="/products" className="drawer-link flex-1" onClick={() => setMobileMenuOpen(false)}>
+                          {link.name}
+                        </Link>
+                        <button 
+                          className="p-1 text-gray-400 hover:text-white"
+                          onClick={() => setMegaMenuOpen(!megaMenuOpen)}
+                        >
+                          <ChevronDown size={20} className={`transform transition-transform ${megaMenuOpen ? 'rotate-180' : ''}`} />
+                        </button>
+                      </div>
                       <MegaMenu isOpen={megaMenuOpen} isMobile={true} onClose={() => { setMegaMenuOpen(false); setMobileMenuOpen(false); }} />
                     </div>
                   );
                 }
                 if (link.name === 'Services') {
                   return (
-                    <div key={link.name} className="drawer-item-container">
-                      <button 
-                        className="drawer-link flex justify-between w-full"
-                        onClick={() => setServicesMenuOpen(!servicesMenuOpen)}
-                      >
-                        {link.name}
-                      </button>
+                    <div key={link.name} className="drawer-item-container w-full">
+                      <div className="flex justify-between items-center w-full">
+                        <Link href="/services" className="drawer-link flex-1" onClick={() => setMobileMenuOpen(false)}>
+                          {link.name}
+                        </Link>
+                        <button 
+                          className="p-1 text-gray-400 hover:text-white"
+                          onClick={() => setServicesMenuOpen(!servicesMenuOpen)}
+                        >
+                          <ChevronDown size={20} className={`transform transition-transform ${servicesMenuOpen ? 'rotate-180' : ''}`} />
+                        </button>
+                      </div>
                       <ServicesMenu isOpen={servicesMenuOpen} isMobile={true} onClose={() => { setServicesMenuOpen(false); setMobileMenuOpen(false); }} />
                     </div>
                   );
                 }
                 if (link.name === 'Industries') {
                   return (
-                    <div key={link.name} className="drawer-item-container">
-                      <button 
-                        className="drawer-link flex justify-between w-full"
-                        onClick={() => setIndustriesMenuOpen(!industriesMenuOpen)}
-                      >
-                        {link.name}
-                      </button>
+                    <div key={link.name} className="drawer-item-container w-full">
+                      <div className="flex justify-between items-center w-full">
+                        <Link href="/industries" className="drawer-link flex-1" onClick={() => setMobileMenuOpen(false)}>
+                          {link.name}
+                        </Link>
+                        <button 
+                          className="p-1 text-gray-400 hover:text-white"
+                          onClick={() => setIndustriesMenuOpen(!industriesMenuOpen)}
+                        >
+                          <ChevronDown size={20} className={`transform transition-transform ${industriesMenuOpen ? 'rotate-180' : ''}`} />
+                        </button>
+                      </div>
                       <IndustriesMenu isOpen={industriesMenuOpen} isMobile={true} onClose={() => { setIndustriesMenuOpen(false); setMobileMenuOpen(false); }} />
                     </div>
                   );
