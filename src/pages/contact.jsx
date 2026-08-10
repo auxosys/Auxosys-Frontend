@@ -480,14 +480,14 @@ export default function ContactUs({ globalSeo }) {
         /* ── DESKTOP VIEW ON MOBILE (TALL SCREENS) ── */
         @media (max-aspect-ratio: 1/1) and (min-width: 901px) {
           .contact-page {
-            min-height: auto;
-            padding-top: 120px;
+            min-height: max-content;
+            height: max-content;
+            padding-top: 140px;
             padding-bottom: 80px;
-            align-items: flex-start;
           }
           .contact-container {
-            height: auto;
-            min-height: 600px;
+            height: 750px;
+            min-height: 750px;
           }
         }
 
