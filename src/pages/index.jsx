@@ -40,11 +40,11 @@ const PRODUCTS = [
     desc: 'An intelligent workspace for automating workflows, content generation, and AI-assisted productivity.'
   },
   {
-    cat: 'CXP', title: 'Customer Experience Platform', href: '/products/crm', Icon: IconCRM,
+    cat: 'CXP', title: 'Customer Experience Platform', href: '/products/cxp', Icon: IconCRM,
     desc: 'A lightweight customer relationship platform for startups and growing businesses.'
   },
   {
-    cat: 'Blockchain', title: 'Enterprise Blockchain Platform', href: '/products/cloud-workspace', Icon: IconCloud,
+    cat: 'Blockchain', title: 'Enterprise Blockchain Platform', href: '/products/enterprise-blockchain-platform', Icon: IconCloud,
     desc: 'Secure document management and a collaborative cloud platform for modern teams.'
   },
 ];
