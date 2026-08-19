@@ -138,7 +138,7 @@ export default function Navbar() {
 
           <div className={`${styles.navActions} hidden md:flex items-center`}>
             <Link prefetch={false} href="/contact" className={`${styles.navBtn} ${styles.navBtnPrimary} flex items-center`}>
-              Connect Us <ArrowRight className="inline ml-1" size={16} />
+              Contact Us <ArrowRight className="inline ml-1" size={16} />
             </Link>
           </div>
 
@@ -236,7 +236,7 @@ export default function Navbar() {
             <Link prefetch={false} href="/contact"
               onClick={() => setMobileMenuOpen(false)}
               className="drawer-cta">
-              Connect Us
+              Contact Us
               <ArrowRight size={20} />
             </Link>
           </div>
