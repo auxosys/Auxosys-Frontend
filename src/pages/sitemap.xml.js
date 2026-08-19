@@ -35,7 +35,7 @@ export async function getServerSideProps({ req, res, query }) {
 
   try {
     // 1. Fetch Page SEO data
-    const pagesRes = await fetch(`${backendUrl}/seo/pages`);
+    const pagesRes = await fetch(`${backendUrl}/api/v1/seo/pages`);
     const pagesData = await pagesRes.json();
     
     if (pagesData && pagesData.success && pagesData.data) {
@@ -69,7 +69,7 @@ export async function getServerSideProps({ req, res, query }) {
     }
 
     // 2. Fetch Custom Sitemap Links
-    const linksRes = await fetch(`${backendUrl}/seo/sitemap-links`);
+    const linksRes = await fetch(`${backendUrl}/api/v1/seo/sitemap-links`);
     const linksData = await linksRes.json();
     
     if (linksData && linksData.success && linksData.data) {
@@ -87,6 +87,29 @@ export async function getServerSideProps({ req, res, query }) {
           changefreq: link.changefreq || 'weekly',
           priority: link.priority || 0.8
         });
+      });
+    }
+
+    // 3. Fetch Navigation Links (to automatically include any links added in the Navigation & Sitelinks UI)
+    const navRes = await fetch(`${backendUrl}/api/v1/seo/navigation`);
+    const navData = await navRes.json();
+    
+    if (navData && navData.success && navData.data) {
+      navData.data.forEach(link => {
+        if (!link.url || link.url === '#' || link.url.startsWith('http')) return;
+        
+        const normalizedUrl = normalizeUrl(link.url, baseUrl);
+        if (!normalizedUrl) return;
+
+        // Only add if it doesn't already exist from pages or custom sitemap links
+        if (!urlMap.has(normalizedUrl)) {
+          urlMap.set(normalizedUrl, {
+            loc: normalizedUrl,
+            lastmod: link.updated_at ? new Date(link.updated_at).toISOString() : new Date().toISOString(),
+            changefreq: 'weekly',
+            priority: link.parent_id ? 0.7 : 0.8
+          });
+        }
       });
     }
   } catch (error) {
