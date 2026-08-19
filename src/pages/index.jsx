@@ -112,7 +112,7 @@ const TECH = ['React', 'Next.js', 'TypeScript', 'Node.js', 'NestJS', 'Supabase',
 import { fetchSeoData } from '@/utils/fetchSeo';
 
 /* ---------------- PAGE ---------------- */
-export default function HomePage({ globalSeo }) {
+export default function HomePage({ globalSeo, navigationSchema }) {
   return (
     <>
       <SEO 
@@ -167,7 +167,11 @@ export default function HomePage({ globalSeo }) {
                 "name": "Home",
                 "item": process.env.NEXT_PUBLIC_SITE_URL
               }]
-            }
+            },
+            ...(navigationSchema ? [{
+              "@type": navigationSchema["@type"],
+              "itemListElement": navigationSchema.itemListElement
+            }] : [])
           ]
         }}
       />
@@ -596,9 +600,23 @@ export default function HomePage({ globalSeo }) {
 export async function getStaticProps() {
   const globalSeo = await fetchSeoData('/');
   
+  let navigationSchema = null;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002'}/api/v1/seo/navigation/schema`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && json.data) {
+        navigationSchema = json.data;
+      }
+    }
+  } catch (error) {
+    console.error("Failed to fetch navigation schema", error);
+  }
+  
   return {
     props: {
-      globalSeo
+      globalSeo,
+      navigationSchema
     },
     revalidate: 60, // Refetch SEO data every 60 seconds
   };
