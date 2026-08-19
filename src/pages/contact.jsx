@@ -79,7 +79,7 @@ export default function ContactUs({ globalSeo }) {
           "url": `${process.env.NEXT_PUBLIC_SITE_URL}/contact`,
           "contactPoint": {
             "@type": "ContactPoint",
-            "email": "hello@auxosys.com",
+            "email": "contact@auxosys.com",
             "contactType": "customer support"
           }
         }}
@@ -547,8 +547,8 @@ export default function ContactUs({ globalSeo }) {
                 </div>
                 <div className="info-text">
                   <span className="info-label">GENERAL INQUIRIES</span>
-                  <a href="mailto:hello@auxosys.com" className="info-value hover:opacity-80 transition-opacity" style={{textDecoration: 'none', color: 'inherit'}}>
-                    hello@auxosys.com
+                  <a href="mailto:contact@auxosys.com" className="info-value hover:opacity-80 transition-opacity" style={{textDecoration: 'none', color: 'inherit'}}>
+                    contact@auxosys.com
                   </a>
                 </div>
               </div>

@@ -2,7 +2,7 @@
 Company: Auxosys
 Website: https://auxosys.com
 Location: Global
-Contact: hello@auxosys.com
+Contact: contact@auxosys.com
 
 /* SITE */
 Last update: 2024
