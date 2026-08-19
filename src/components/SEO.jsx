@@ -45,7 +45,7 @@ export default function SEO({
       <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />
       {globalSeo.keywords && <meta name="keywords" content={globalSeo.keywords} />}
-      <link rel="canonical" href={globalSeo.canonical_url || globalSeo.canonical ? `${globalSeo.canonical_url || globalSeo.canonical}${urlPath}` : url} />
+      <link rel="canonical" href={globalSeo.canonical ? globalSeo.canonical : (globalSeo.canonical_url ? `${globalSeo.canonical_url}${urlPath}` : url)} />
       <link rel="alternate" href={siteUrl} hrefLang={globalSeo.language || "en"} />
       <meta name="robots" content={robotsString} />
       <meta name="theme-color" content={themeColor} />
