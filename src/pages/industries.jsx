@@ -230,7 +230,7 @@ export default function IndustriesPage({ globalSeo }) {
         <div className="container">
           <Reveal className="section-head">
             <div className="eyebrow">Our Approach</div>
-            <h2>How we engage with every industry</h2>
+            <h2>How do we approach every industry?</h2>
           </Reveal>
           <Reveal>
             <div className="card-grid cols-5">

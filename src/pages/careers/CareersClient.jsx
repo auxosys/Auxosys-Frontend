@@ -260,6 +260,10 @@ export default function CareersClient({ initialJobs = [] }) {
         <div className="container">
 
           <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+              <h1 style={{ fontSize: '42px', fontWeight: 800, color: 'var(--text)', margin: '0 0 16px 0', fontFamily: 'var(--font-display)' }}>Join the Auxosys Team</h1>
+              <p style={{ fontSize: '18px', color: 'var(--text-muted)' }}>Explore our open positions and build the future with us.</p>
+            </div>
             {/* Filters */}
             <div className="filters-bar">
               <div className="filter-grid">
@@ -426,6 +430,7 @@ export default function CareersClient({ initialJobs = [] }) {
             )}
             
             <div style={{ marginTop: '60px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+              <h2 style={{ fontSize: '1.1rem', margin: '0 0 8px 0', color: 'var(--text)' }}>Why join our team?</h2>
               <p>Don't see a role that fits? Email your resume to <a href="mailto:careers@auxosys.com" style={{ color: 'var(--teal)', textDecoration: 'underline', textUnderlineOffset: '2px' }}>careers@auxosys.com</a>.</p>
             </div>
           </Reveal>

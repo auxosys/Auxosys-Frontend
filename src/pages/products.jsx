@@ -145,7 +145,7 @@ export default function ProductsPage({ globalSeo }) {
         <div className="container">
           <Reveal className="section-head">
             <div className="eyebrow">Built-In Capabilities</div>
-            <h2>Every product ships with</h2>
+            <h2>What is included in every product?</h2>
           </Reveal>
           <Reveal>
             <div className="card-grid cols-4">

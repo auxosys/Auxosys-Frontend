@@ -527,7 +527,7 @@ export default function ContactUs({ globalSeo }) {
             </div>
 
             <div className="contact-left-headline">
-              <h2>Tell us what you're building. We'll tell you how to ship it.</h2>
+              <h1>Tell us what you're building. We'll tell you how to ship it.</h1>
               <p>Every message reaches an actual engineer, not a queue. No forms disappearing into the void.</p>
             </div>
 

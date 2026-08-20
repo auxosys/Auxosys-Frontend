@@ -284,7 +284,7 @@ export default function AboutPage({ globalSeo }) {
         <div className="container">
           <Reveal className="section-head">
             <div className="eyebrow">The Auxosys Difference</div>
-            <h2>What sets us apart</h2>
+            <h2>Why choose Auxosys?</h2>
           </Reveal>
           <Reveal>
             <div className="card-grid cols-4">
