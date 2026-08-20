@@ -261,8 +261,8 @@ export default function CareersClient({ initialJobs = [] }) {
 
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-              <h1 style={{ fontSize: '42px', fontWeight: 800, color: 'var(--text)', margin: '0 0 16px 0', fontFamily: 'var(--font-display)' }}>Join the Auxosys Team</h1>
-              <p style={{ fontSize: '18px', color: 'var(--text-muted)' }}>Explore our open positions and build the future with us.</p>
+              <h1 style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text)', margin: '0 0 12px 0', fontFamily: 'var(--font-display)' }}>Join the Auxosys Team</h1>
+              <p style={{ fontSize: '16px', color: 'var(--text-muted)' }}>Explore our open positions and build the future with us.</p>
             </div>
             {/* Filters */}
             <div className="filters-bar">
