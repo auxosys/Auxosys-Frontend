@@ -566,7 +566,7 @@ export default function ContactUs({ globalSeo }) {
                 <MessageSquare size={18} />
               </div>
               <div className="form-header-text">
-                <h3>Send us a message</h3>
+                <h3>How can we help?</h3>
                 <p>Fill out the form below and we'll respond within 24 hours</p>
               </div>
             </div>
