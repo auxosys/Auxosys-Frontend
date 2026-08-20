@@ -44,7 +44,7 @@ const tint = (hex, alpha) => `${hex}${alpha}`; // e.g. tint('#2DD4BF','22')
 
 /* ─── LOCAL ICONS ─── */
 const MapPinIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
 );
 const CloseIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -222,6 +222,7 @@ export default function CareersClient({ initialJobs = [] }) {
         
         .detail-col ul { list-style: none; padding: 0; margin: 10px 0 0; font-size: 14px; color: var(--text-muted); display: flex; flex-direction: column; gap: 10px; line-height: 1.5; }
         .detail-col li { display: flex; gap: 8px; }
+        .detail-col li span { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; line-height: 1.5; }
         .detail-col li::before { content: '→'; color: var(--dept-accent, var(--teal)); flex-shrink: 0; }
         .job-detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 24px; }
 
@@ -439,9 +440,13 @@ export default function CareersClient({ initialJobs = [] }) {
               <h3 style={{ fontSize: '24px', fontWeight: '700', color: 'var(--text)', margin: '8px 0', fontFamily: 'var(--font-display)' }}>
                 {quickViewJob.title}
               </h3>
-              <div style={{ display: 'flex', gap: '12px', fontSize: '13px', color: 'var(--text-muted)' }}>
-                <span><MapPinIcon /> {quickViewJob.work_mode}{quickViewJob.city ? ` — ${quickViewJob.city}` : ''}</span>
-                <span>{quickViewJob.employment_type}</span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px' }}>
+                <span className="job-meta-item" style={{ background: 'var(--bg)', padding: '4px 10px', borderRadius: '6px' }}>
+                  <MapPinIcon /> {quickViewJob.work_mode}{quickViewJob.city ? ` — ${quickViewJob.city}` : ''}
+                </span>
+                <span className="job-meta-item" style={{ background: 'var(--bg)', padding: '4px 10px', borderRadius: '6px' }}>
+                  {quickViewJob.employment_type}
+                </span>
               </div>
             </div>
 
@@ -449,13 +454,13 @@ export default function CareersClient({ initialJobs = [] }) {
               <div className="detail-col">
                 <p className="eyebrow">Requirements</p>
                 <ul>
-                  {extractListItems(quickViewJob.requirements).slice(0, 5).map((r, idx) => <li key={idx}>{r}</li>)}
+                  {extractListItems(quickViewJob.requirements).slice(0, 4).map((r, idx) => <li key={idx}><span>{r}</span></li>)}
                 </ul>
               </div>
               <div className="detail-col">
                 <p className="eyebrow">Responsibilities</p>
                 <ul>
-                  {extractListItems(quickViewJob.responsibilities).slice(0, 5).map((r, idx) => <li key={idx}>{r}</li>)}
+                  {extractListItems(quickViewJob.responsibilities).slice(0, 4).map((r, idx) => <li key={idx}><span>{r}</span></li>)}
                 </ul>
               </div>
             </div>
