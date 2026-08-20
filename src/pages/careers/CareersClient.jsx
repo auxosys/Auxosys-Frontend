@@ -44,7 +44,10 @@ const tint = (hex, alpha) => `${hex}${alpha}`; // e.g. tint('#2DD4BF','22')
 
 /* ─── LOCAL ICONS ─── */
 const MapPinIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7, flexShrink: 0 }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+);
+const CloseIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 );
 const ClockIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7, flexShrink: 0 }}><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
@@ -59,7 +62,7 @@ const EmptyIcon = () => (
   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><path d="M3 12h18" /><path d="M10 12v2h4v-2" /></svg>
 );
 const FilterIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" /></svg>
 );
 
 const extractListItems = (html) => {
@@ -90,7 +93,7 @@ export default function CareersClient({ initialJobs = [] }) {
   const [dept, setDept] = useState("All Departments");
   const [type, setType] = useState("All Types");
   const [loc, setLoc] = useState("All Locations");
-  const [expanded, setExpanded] = useState(null);
+  const [quickViewJob, setQuickViewJob] = useState(null);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const filtered = useMemo(() => {
@@ -121,10 +124,6 @@ export default function CareersClient({ initialJobs = [] }) {
           border-radius: 14px;
           padding: 18px;
           margin-bottom: 28px;
-          position: sticky;
-          top: 16px;
-          z-index: 5;
-          backdrop-filter: blur(10px);
         }
         .filter-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; align-items: flex-end; }
         @media (max-width: 1024px) { .filter-grid { grid-template-columns: 1fr 1fr; } }
@@ -204,13 +203,27 @@ export default function CareersClient({ initialJobs = [] }) {
 
         .job-side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
         .job-side .job-badge { margin-top: 0; padding: 4px 10px; font-size: 11px; text-transform: capitalize; letter-spacing: 0; }
-        .job-detail-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; border-top: 1px solid transparent; }
-        .job-detail-wrapper.open { grid-template-rows: 1fr; border-top-color: var(--border-subtle); }
-        .job-detail-inner-clip { overflow: hidden; }
-        .job-detail-grid { padding: 16px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
-        .detail-col ul { list-style: none; padding: 0; margin: 10px 0 0; font-size: 13.5px; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px; line-height: 1.5; }
+        .quick-view-modal-overlay {
+          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
+          z-index: 100; display: flex; align-items: center; justify-content: center;
+          padding: 20px;
+        }
+        .quick-view-modal-content {
+          background: var(--surface); border-radius: 16px; border: 1px solid var(--border-subtle);
+          width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+          position: relative; padding: 32px;
+          animation: modal-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modal-enter { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .modal-close-btn { position: absolute; top: 20px; right: 20px; background: transparent; border: none; cursor: pointer; color: var(--text-muted); padding: 8px; border-radius: 50%; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+        .modal-close-btn:hover { background: var(--bg); color: var(--text); }
+        
+        .detail-col ul { list-style: none; padding: 0; margin: 10px 0 0; font-size: 14px; color: var(--text-muted); display: flex; flex-direction: column; gap: 10px; line-height: 1.5; }
         .detail-col li { display: flex; gap: 8px; }
-        .detail-col li::before { content: '→'; color: var(--dept-accent); flex-shrink: 0; }
+        .detail-col li::before { content: '→'; color: var(--dept-accent, var(--teal)); flex-shrink: 0; }
+        .job-detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 24px; }
 
         .job-footer { margin-top: auto; padding: 12px 20px; background: var(--surface); border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
         .job-id { font-size: 11px; font-family: monospace; color: var(--text-muted); opacity: 0.6; }
@@ -261,13 +274,13 @@ export default function CareersClient({ initialJobs = [] }) {
 
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-              <h1 style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text)', margin: '0 0 12px 0', fontFamily: 'var(--font-display)' }}>Join the Auxosys Team</h1>
-              <p style={{ fontSize: '16px', color: 'var(--text-muted)' }}>Explore our open positions and build the future with us.</p>
+              <h1 style={{ fontSize: '28px', fontWeight: 600, color: 'var(--text)', margin: '0 0 12px 0', fontFamily: 'var(--font-display)' }}>Join the Auxosys Team</h1>
+              <p style={{ fontSize: '15px', color: 'var(--text-muted)' }}>Explore our open positions and build the future with us.</p>
             </div>
             {/* Filters */}
             <div className="filters-bar">
               <div className="filter-grid">
-                
+
                 <div className="search-row">
                   <div>
                     <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Search</div>
@@ -340,7 +353,6 @@ export default function CareersClient({ initialJobs = [] }) {
                 {filtered.map(job => {
                   const accent = deptAccent(job.department);
                   const DeptIconCmp = deptIcon(job.department);
-                  const isOpen = expanded === job.id;
                   const skills = job.tech_skills || [];
                   const previewSkills = skills.slice(0, 4);
                   const extraSkills = skills.length - previewSkills.length;
@@ -390,34 +402,13 @@ export default function CareersClient({ initialJobs = [] }) {
                         </div>
                       </div>
 
-                      {/* Expanded detail */}
-                      <div className={`job-detail-wrapper${isOpen ? " open" : ""}`}>
-                        <div className="job-detail-inner-clip">
-                          <div className="job-detail-grid">
-                            <div className="detail-col">
-                              <p className="eyebrow">Requirements</p>
-                              <ul>
-                                {extractListItems(job.requirements).slice(0, 5).map((r, idx) => <li key={idx}>{r}</li>)}
-                              </ul>
-                            </div>
-                            <div className="detail-col">
-                              <p className="eyebrow">Responsibilities</p>
-                              <ul>
-                                {extractListItems(job.responsibilities).slice(0, 5).map((r, idx) => <li key={idx}>{r}</li>)}
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
                       <div className="job-footer">
                         <button
                           className="btn btn-secondary quick-view-btn"
                           style={{ padding: '8px 16px' }}
-                          onClick={() => setExpanded(isOpen ? null : job.id)}
-                          aria-expanded={isOpen}
+                          onClick={() => setQuickViewJob(job)}
                         >
-                          {isOpen ? "Hide details" : "Quick view"} <ChevronIcon open={isOpen} />
+                          Quick view
                         </button>
                         <Link href={`/careers/${job.slug || job.id}`} className="btn btn-primary view-role-btn" style={{ padding: '8px 16px' }}>
                           View role <ArrowRightIcon />
@@ -428,7 +419,7 @@ export default function CareersClient({ initialJobs = [] }) {
                 })}
               </div>
             )}
-            
+
             <div style={{ marginTop: '60px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
               <h2 style={{ fontSize: '1.1rem', margin: '0 0 8px 0', color: 'var(--text)' }}>Why join our team?</h2>
               <p>Don't see a role that fits? Email your resume to <a href="mailto:careers@auxosys.com" style={{ color: 'var(--teal)', textDecoration: 'underline', textUnderlineOffset: '2px' }}>careers@auxosys.com</a>.</p>
@@ -436,6 +427,48 @@ export default function CareersClient({ initialJobs = [] }) {
           </Reveal>
         </div>
       </section>
+
+      {quickViewJob && (
+        <div className="quick-view-modal-overlay" onClick={() => setQuickViewJob(null)}>
+          <div className="quick-view-modal-content" onClick={e => e.stopPropagation()} style={{ '--dept-accent': deptAccent(quickViewJob.department) }}>
+            <button className="modal-close-btn" onClick={() => setQuickViewJob(null)}>
+              <CloseIcon />
+            </button>
+            <div style={{ marginBottom: '16px' }}>
+              <span className="eyebrow">{quickViewJob.department}</span>
+              <h3 style={{ fontSize: '24px', fontWeight: '700', color: 'var(--text)', margin: '8px 0', fontFamily: 'var(--font-display)' }}>
+                {quickViewJob.title}
+              </h3>
+              <div style={{ display: 'flex', gap: '12px', fontSize: '13px', color: 'var(--text-muted)' }}>
+                <span><MapPinIcon /> {quickViewJob.work_mode}{quickViewJob.city ? ` — ${quickViewJob.city}` : ''}</span>
+                <span>{quickViewJob.employment_type}</span>
+              </div>
+            </div>
+
+            <div className="job-detail-grid">
+              <div className="detail-col">
+                <p className="eyebrow">Requirements</p>
+                <ul>
+                  {extractListItems(quickViewJob.requirements).slice(0, 5).map((r, idx) => <li key={idx}>{r}</li>)}
+                </ul>
+              </div>
+              <div className="detail-col">
+                <p className="eyebrow">Responsibilities</p>
+                <ul>
+                  {extractListItems(quickViewJob.responsibilities).slice(0, 5).map((r, idx) => <li key={idx}>{r}</li>)}
+                </ul>
+              </div>
+            </div>
+
+            <div style={{ marginTop: '32px', display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+              <button className="btn btn-secondary" onClick={() => setQuickViewJob(null)}>Close</button>
+              <Link href={`/careers/${quickViewJob.slug || quickViewJob.id}`} className="btn btn-primary" onClick={() => setQuickViewJob(null)}>
+                View full role <ArrowRightIcon />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

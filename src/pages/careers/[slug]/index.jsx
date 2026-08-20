@@ -287,8 +287,8 @@ export default function JobDetailsPage() {
         .crumb a:hover { text-decoration: underline; }
         
         /* New Redesign Styles */
-        .header-hero { background: transparent; border-bottom: 1px solid var(--border-subtle); padding: 56px 24px 24px; }
-        .section-card { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; border: 1px solid var(--border-subtle); background: var(--surface); border-radius: 16px; padding: 40px; box-shadow: 0 4px 20px -10px rgba(0,0,0,0.02); }
+        .header-hero { background: transparent; border-bottom: 1px solid var(--border-subtle); padding: 56px 24px 16px; }
+        .section-card { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; border: 1px solid var(--border-subtle); background: var(--surface); border-radius: 16px; padding: 24px 40px 40px; box-shadow: 0 4px 20px -10px rgba(0,0,0,0.02); }
         .section-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -12px rgba(0,0,0,0.08); border-color: rgba(92,201,214,0.3); }
         .section-block:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
         .bullet-item { transition: transform 0.2s ease, color 0.2s ease; }
@@ -395,7 +395,7 @@ export default function JobDetailsPage() {
       </div>
 
       {/* ═══════════════ CONTENT ═══════════════ */}
-      <div className="job-detail-main" style={{ maxWidth: "1160px", margin: "0 auto", padding: "32px 24px 0" }}>
+      <div className="job-detail-main" style={{ maxWidth: "1160px", margin: "0 auto", padding: "16px 24px 0" }}>
         <div className="job-layout" style={{ display: "flex", gap: "48px", alignItems: "flex-start" }}>
 
           {/* ── LEFT: Main Content ── */}
@@ -481,7 +481,7 @@ export default function JobDetailsPage() {
           {/* ── RIGHT: Sidebar ── */}
           <div className="job-sidebar" style={{ width: "320px", flexShrink: 0, position: "sticky", top: "100px", marginBottom: "24px" }}>
             <div className="sidebar-glance">
-              <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--border-subtle)" }}>
+              <div style={{ padding: "24px 22px 18px", borderBottom: "1px solid var(--border-subtle)", display: "flex", alignItems: "center", minHeight: "68px", boxSizing: "border-box" }}>
                 <p style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-soft)", margin: 0 }}>Job at a glance</p>
               </div>
 
