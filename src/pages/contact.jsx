@@ -123,15 +123,15 @@ export default function ContactUs({ globalSeo }) {
           position: absolute;
           inset: 0;
           background-size: cover;
-          background-position: center 18%;
-          opacity: 0.95;
-          filter: saturate(1.05);
+          background-position: center 32%;
+          opacity: 1;
+          filter: saturate(1.1);
         }
 
         .contact-left-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.78) 100%);
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.65) 100%);
         }
 
         .contact-left::after {
@@ -175,13 +175,13 @@ export default function ContactUs({ globalSeo }) {
 
         .contact-left-headline h1 {
           font-family: var(--font-display, sans-serif);
-          font-size: 22px;
-          font-weight: 800;
+          font-size: 18px;
+          font-weight: 700;
           color: #ffffff !important;
           opacity: 1 !important;
-          line-height: 1.35;
-          margin: 0 0 12px 0;
-          text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+          line-height: 1.4;
+          margin: 0 0 10px 0;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.85);
         }
 
         .contact-left-headline h2 {
@@ -189,14 +189,14 @@ export default function ContactUs({ globalSeo }) {
         }
 
         .contact-left-headline p {
-          font-size: 14.5px;
-          color: rgba(255, 255, 255, 0.9) !important;
+          font-size: 13.5px;
+          color: rgba(255, 255, 255, 0.95) !important;
           opacity: 1 !important;
           font-weight: 500;
-          max-width: 340px;
-          line-height: 1.6;
+          max-width: 320px;
+          line-height: 1.55;
           margin: 0;
-          text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+          text-shadow: 0 1px 8px rgba(0,0,0,0.75);
         }
 
         .contact-info-list {
