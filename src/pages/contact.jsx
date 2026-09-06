@@ -123,15 +123,15 @@ export default function ContactUs({ globalSeo }) {
           position: absolute;
           inset: 0;
           background-size: cover;
-          background-position: center;
-          opacity: 0.8;
-          filter: saturate(1);
+          background-position: center 18%;
+          opacity: 0.95;
+          filter: saturate(1.05);
         }
 
         .contact-left-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%);
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.78) 100%);
         }
 
         .contact-left::after {
