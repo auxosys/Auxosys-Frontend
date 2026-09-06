@@ -176,12 +176,12 @@ export default function ContactUs({ globalSeo }) {
         .contact-left-headline h1 {
           font-family: var(--font-display, sans-serif);
           font-size: 18px;
-          font-weight: 700;
+          font-weight: 500;
           color: #ffffff !important;
           opacity: 1 !important;
           line-height: 1.4;
           margin: 0 0 10px 0;
-          text-shadow: 0 2px 10px rgba(0,0,0,0.85);
+          text-shadow: 0 2px 8px rgba(0,0,0,0.7);
         }
 
         .contact-left-headline h2 {
