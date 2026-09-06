@@ -131,7 +131,7 @@ export default function ContactUs({ globalSeo }) {
         .contact-left-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%);
         }
 
         .contact-left::after {
@@ -173,18 +173,30 @@ export default function ContactUs({ globalSeo }) {
           margin: auto 0;
         }
 
+        .contact-left-headline h1 {
+          font-family: var(--font-display, sans-serif);
+          font-size: 22px;
+          font-weight: 800;
+          color: #ffffff !important;
+          opacity: 1 !important;
+          line-height: 1.35;
+          margin: 0 0 12px 0;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        }
+
         .contact-left-headline h2 {
           display: none;
         }
 
         .contact-left-headline p {
-          font-size: 16px;
-          color: #ffffff !important;
+          font-size: 14.5px;
+          color: rgba(255, 255, 255, 0.9) !important;
           opacity: 1 !important;
           font-weight: 500;
-          max-width: 320px;
+          max-width: 340px;
           line-height: 1.6;
           margin: 0;
+          text-shadow: 0 1px 6px rgba(0,0,0,0.5);
         }
 
         .contact-info-list {
