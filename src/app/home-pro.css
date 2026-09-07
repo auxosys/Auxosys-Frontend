@@ -1334,14 +1334,23 @@ a.card:focus-visible,
 
 .pf-chip.chip1 {
   top: 16%;
-  left: 2%;
+  left: calc(50% - 215px);
   animation: pf-floatA 5s ease-in-out infinite
 }
 
 .pf-chip.chip2 {
   bottom: 18%;
-  right: 1%;
+  right: calc(50% - 195px);
   animation: pf-floatB 5.6s ease-in-out infinite
+}
+
+@media (max-width: 640px) {
+  .pf-chip.chip1 {
+    left: -10px;
+  }
+  .pf-chip.chip2 {
+    right: -10px;
+  }
 }
 
 .pf-chip.chip1 .dot {
