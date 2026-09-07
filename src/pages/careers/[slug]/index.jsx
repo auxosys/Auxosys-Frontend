@@ -111,7 +111,7 @@ const AlertCircleIcon = () => (
   </svg>
 );
 const ShareIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="18" cy="5" r="3" />
     <circle cx="6" cy="12" r="3" />
     <circle cx="18" cy="19" r="3" />
@@ -309,7 +309,7 @@ export default function JobDetailsPage() {
         .job-detail-main { animation: fadeUp 0.4s ease both; }
         .apply-btn { transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
         .apply-btn:hover { background: #0A6B60 !important; transform: translateY(-2px); box-shadow: 0 8px 20px -6px rgba(12,128,116,0.4); }
-        .share-btn { display: inline-flex; alignItems: center; justifyContent: center; width: 44px; height: 44px; background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text); borderRadius: 8px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; box-sizing: border-box; }
+        .share-btn { display: inline-flex; alignItems: center; justifyContent: center; width: 46px; height: 46px; background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text); borderRadius: 10px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; box-sizing: border-box; }
         .share-btn:hover { background: rgba(92,201,214,0.12) !important; border-color: rgba(92,201,214,0.4) !important; color: #5CC9D6 !important; transform: translateY(-2px); box-shadow: 0 4px 14px -4px rgba(92,201,214,0.3); }
         .util-btn { transition: background 0.15s ease, border-color 0.15s ease; cursor: pointer; }
         .util-btn:hover { background: var(--border-subtle) !important; }
