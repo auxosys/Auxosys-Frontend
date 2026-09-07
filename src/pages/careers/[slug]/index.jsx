@@ -110,6 +110,15 @@ const AlertCircleIcon = () => (
     <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
   </svg>
 );
+const ShareIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="18" cy="5" r="3" />
+    <circle cx="6" cy="12" r="3" />
+    <circle cx="18" cy="19" r="3" />
+    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+  </svg>
+);
 
 /* ─── Brand tokens (single restrained accent + one action color) ─── */
 const ACCENT = "#5CC9D6";   // informational accent — icons, links, section markers
@@ -219,7 +228,27 @@ export default function JobDetailsPage() {
   const handleCopy = () => {
     navigator.clipboard.writeText(window.location.href);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const handleWebShare = async () => {
+    if (typeof window === "undefined") return;
+    const shareData = {
+      title: job?.title ? `${job.title} | Auxosys` : "Career Opportunity | Auxosys",
+      text: `Check out this position for ${job?.title || "a role"} at Auxosys!`,
+      url: window.location.href,
+    };
+
+    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (err) {
+        if (err.name === "AbortError") return;
+      }
+    }
+
+    handleCopy();
   };
 
   const handleShare = (platform) => {
@@ -280,6 +309,8 @@ export default function JobDetailsPage() {
         .job-detail-main { animation: fadeUp 0.4s ease both; }
         .apply-btn { transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
         .apply-btn:hover { background: #0A6B60 !important; transform: translateY(-2px); box-shadow: 0 8px 20px -6px rgba(12,128,116,0.4); }
+        .share-btn { display: inline-flex; alignItems: center; justifyContent: center; gap: 8px; background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text); padding: 12px 18px; borderRadius: 8px; fontWeight: 600; fontSize: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
+        .share-btn:hover { background: rgba(92,201,214,0.1) !important; border-color: rgba(92,201,214,0.4) !important; color: #5CC9D6 !important; transform: translateY(-2px); box-shadow: 0 4px 14px -4px rgba(92,201,214,0.3); }
         .util-btn { transition: background 0.15s ease, border-color 0.15s ease; cursor: pointer; }
         .util-btn:hover { background: var(--border-subtle) !important; }
         .skill-tag { transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease; }
@@ -312,8 +343,9 @@ export default function JobDetailsPage() {
             gap: 8px !important; 
           }
           .facts-divider { display: none !important; }
-          .hero-actions { width: 100%; }
-          .hero-actions .apply-btn { width: 100%; text-align: center; justify-content: center; }
+          .hero-actions { width: 100%; display: flex; gap: 10px; align-items: center; }
+          .hero-actions .share-btn { flex-shrink: 0; }
+          .hero-actions .apply-btn { flex: 1; text-align: center; justify-content: center; }
 
           /* Content cards */
           .section-card { padding: 16px 20px !important; margin-bottom: 0 !important; }
@@ -363,7 +395,16 @@ export default function JobDetailsPage() {
             </h1>
             
             {/* CTA */}
-            <div className="hero-actions" style={{ display: "flex", gap: "10px", flexShrink: 0 }}>
+            <div className="hero-actions" style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+              <button
+                onClick={handleWebShare}
+                className="share-btn"
+                title="Share this job opening"
+                aria-label="Share this job opening"
+              >
+                <ShareIcon />
+                <span>Share</span>
+              </button>
               {isClosed ? (
                 <div style={{ padding: "13px 26px", borderRadius: "8px", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)", color: "#EF4444", fontWeight: 700, fontSize: "0.9rem" }}>
                   Applications closed
@@ -523,14 +564,25 @@ export default function JobDetailsPage() {
                     Applications closed
                   </div>
                 ) : (
-                  <Link href={`/careers/${slug}/apply`} className="apply-btn" style={{
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-                    width: "100%", background: ACTION, color: "#fff",
-                    padding: "12px 16px", borderRadius: "8px", fontWeight: 700, fontSize: "0.88rem",
-                    textDecoration: "none", boxSizing: "border-box",
-                  }}>
-                    Apply for this role
-                  </Link>
+                  <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                    <button
+                      onClick={handleWebShare}
+                      className="share-btn"
+                      style={{ padding: "12px 14px" }}
+                      title="Share job opening"
+                      aria-label="Share job opening"
+                    >
+                      <ShareIcon />
+                    </button>
+                    <Link href={`/careers/${slug}/apply`} className="apply-btn" style={{
+                      display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                      flex: 1, background: ACTION, color: "#fff",
+                      padding: "12px 16px", borderRadius: "8px", fontWeight: 700, fontSize: "0.88rem",
+                      textDecoration: "none", boxSizing: "border-box",
+                    }}>
+                      Apply for this role
+                    </Link>
+                  </div>
                 )}
                 <button onClick={handleCopy} className="util-btn" style={{
                   width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
@@ -547,6 +599,28 @@ export default function JobDetailsPage() {
           </div>
         </div>
       </div>
+      {copied && (
+        <div style={{
+          position: "fixed",
+          bottom: "28px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          background: "#0C8074",
+          color: "#fff",
+          padding: "10px 22px",
+          borderRadius: "30px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+          zIndex: 99999,
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          fontSize: "0.88rem",
+          fontWeight: 600,
+          animation: "fadeUp 0.3s ease",
+        }}>
+          <CheckCircleIcon /> Job link copied to clipboard!
+        </div>
+      )}
     </div>
   );
 }

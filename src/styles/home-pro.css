@@ -1384,11 +1384,53 @@ a.card:focus-visible,
 }
 
 @media (max-width: 640px) {
-  .pf-chip.chip1 {
-    left: -10px;
+  .phone {
+    width: 250px;
+    height: 500px;
   }
+
+  .pf-chip {
+    padding: 6px 11px;
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+
+  .pf-chip.chip1 {
+    top: 15%;
+    left: auto;
+    right: calc(50% + 128px);
+  }
+
   .pf-chip.chip2 {
-    right: -10px;
+    bottom: 16%;
+    left: calc(50% + 128px);
+    right: auto;
+  }
+}
+
+@media (max-width: 440px) {
+  .phone {
+    width: 215px;
+    height: 440px;
+    border-radius: 36px;
+    padding: 9px;
+  }
+
+  .pf-chip {
+    padding: 5px 9px;
+    font-size: 10.5px;
+  }
+
+  .pf-chip.chip1 {
+    top: 14%;
+    left: auto;
+    right: calc(50% + 111px);
+  }
+
+  .pf-chip.chip2 {
+    bottom: 15%;
+    left: calc(50% + 111px);
+    right: auto;
   }
 }
 
