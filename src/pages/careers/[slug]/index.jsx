@@ -309,8 +309,8 @@ export default function JobDetailsPage() {
         .job-detail-main { animation: fadeUp 0.4s ease both; }
         .apply-btn { transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
         .apply-btn:hover { background: #0A6B60 !important; transform: translateY(-2px); box-shadow: 0 8px 20px -6px rgba(12,128,116,0.4); }
-        .share-btn { display: inline-flex; alignItems: center; justifyContent: center; gap: 8px; background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text); padding: 12px 18px; borderRadius: 8px; fontWeight: 600; fontSize: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
-        .share-btn:hover { background: rgba(92,201,214,0.1) !important; border-color: rgba(92,201,214,0.4) !important; color: #5CC9D6 !important; transform: translateY(-2px); box-shadow: 0 4px 14px -4px rgba(92,201,214,0.3); }
+        .share-btn { display: inline-flex; alignItems: center; justifyContent: center; width: 44px; height: 44px; background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text); borderRadius: 8px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; box-sizing: border-box; }
+        .share-btn:hover { background: rgba(92,201,214,0.12) !important; border-color: rgba(92,201,214,0.4) !important; color: #5CC9D6 !important; transform: translateY(-2px); box-shadow: 0 4px 14px -4px rgba(92,201,214,0.3); }
         .util-btn { transition: background 0.15s ease, border-color 0.15s ease; cursor: pointer; }
         .util-btn:hover { background: var(--border-subtle) !important; }
         .skill-tag { transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease; }
@@ -389,7 +389,7 @@ export default function JobDetailsPage() {
             {isClosed && <span style={tagStyle("#EF4444")}>Position closed</span>}
           </div>
 
-          <div className="title-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "20px", marginBottom: "18px" }}>
+          <div className="title-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", marginBottom: "18px" }}>
             <h1 className="hero-title" style={{ fontSize: "2.5rem", fontWeight: 800, color: "var(--text)", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
               {job.title}
             </h1>
@@ -403,7 +403,6 @@ export default function JobDetailsPage() {
                 aria-label="Share this job opening"
               >
                 <ShareIcon />
-                <span>Share</span>
               </button>
               {isClosed ? (
                 <div style={{ padding: "13px 26px", borderRadius: "8px", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)", color: "#EF4444", fontWeight: 700, fontSize: "0.9rem" }}>
