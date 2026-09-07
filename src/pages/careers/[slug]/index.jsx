@@ -307,10 +307,10 @@ export default function JobDetailsPage() {
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         .job-detail-main { animation: fadeUp 0.4s ease both; }
-        .apply-btn { transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
+        .apply-btn { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 24px; border-radius: 8px; box-sizing: border-box; transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
         .apply-btn:hover { background: #0A6B60 !important; transform: translateY(-2px); box-shadow: 0 8px 20px -6px rgba(12,128,116,0.4); }
-        .share-btn { display: inline-flex; alignItems: center; justifyContent: center; width: 46px; height: 46px; background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text); borderRadius: 10px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; box-sizing: border-box; margin-top: 4px; }
-        .share-btn:hover { background: rgba(92,201,214,0.12) !important; border-color: rgba(92,201,214,0.4) !important; color: #5CC9D6 !important; transform: translateY(2px); box-shadow: 0 4px 14px -4px rgba(92,201,214,0.3); }
+        .share-btn { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; box-sizing: border-box; margin: 0; }
+        .share-btn:hover { background: rgba(92,201,214,0.12) !important; border-color: rgba(92,201,214,0.4) !important; color: #5CC9D6 !important; transform: translateY(-2px); box-shadow: 0 4px 14px -4px rgba(92,201,214,0.3); }
         .util-btn { transition: background 0.15s ease, border-color 0.15s ease; cursor: pointer; }
         .util-btn:hover { background: var(--border-subtle) !important; }
         .skill-tag { transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease; }
@@ -333,8 +333,8 @@ export default function JobDetailsPage() {
           .job-detail-main { padding: 24px 16px 0 !important; }
           
           /* Hero Section compacting */
-          .title-row { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
-          .hero-title { font-size: 2rem !important; line-height: 1.1 !important; }
+          .title-row { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+          .hero-title { font-size: 2rem !important; line-height: 1.15 !important; }
           
           /* 1-column Facts strip */
           .facts-strip { 
@@ -344,7 +344,7 @@ export default function JobDetailsPage() {
           }
           .facts-divider { display: none !important; }
           .hero-actions { width: 100%; display: flex; gap: 10px; align-items: center; }
-          .hero-actions .share-btn { flex-shrink: 0; margin-top: 0 !important; }
+          .hero-actions .share-btn { flex-shrink: 0; margin: 0 !important; }
           .hero-actions .apply-btn { flex: 1; text-align: center; justify-content: center; }
 
           /* Content cards */
@@ -389,13 +389,13 @@ export default function JobDetailsPage() {
             {isClosed && <span style={tagStyle("#EF4444")}>Position closed</span>}
           </div>
 
-          <div className="title-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", marginBottom: "18px" }}>
+          <div className="title-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "24px", marginBottom: "18px" }}>
             <h1 className="hero-title" style={{ fontSize: "2.5rem", fontWeight: 800, color: "var(--text)", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
               {job.title}
             </h1>
             
             {/* CTA */}
-            <div className="hero-actions" style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+            <div className="hero-actions" style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
               <button
                 onClick={handleWebShare}
                 className="share-btn"
@@ -405,13 +405,13 @@ export default function JobDetailsPage() {
                 <ShareIcon />
               </button>
               {isClosed ? (
-                <div style={{ padding: "13px 26px", borderRadius: "8px", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)", color: "#EF4444", fontWeight: 700, fontSize: "0.9rem" }}>
+                <div style={{ padding: "12px 24px", borderRadius: "8px", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)", color: "#EF4444", fontWeight: 700, fontSize: "0.9rem" }}>
                   Applications closed
                 </div>
               ) : (
                 <Link href={`/careers/${slug}/apply`} className="apply-btn" style={{
                   display: "inline-flex", alignItems: "center", gap: "9px",
-                  background: ACTION, color: "#fff", padding: "13px 26px", borderRadius: "8px",
+                  background: ACTION, color: "#fff",
                   fontWeight: 700, fontSize: "0.9rem", textDecoration: "none", letterSpacing: "-0.01em",
                 }}>
                   Apply for this role
