@@ -132,14 +132,15 @@ export default function CareersClient({ initialJobs = [] }) {
         .filter-dropdowns { display: contents; }
         .search-row { display: contents; }
         
-        @media (max-width: 600px) { 
-          .filter-grid { grid-template-columns: 1fr 1fr; gap: 12px; } 
+        @media (max-width: 600px) {
+          .filters-bar { padding: 12px; border-radius: 10px; margin-bottom: 16px; }
+          .filter-grid { grid-template-columns: 1fr; gap: 10px; } 
           .filter-grid > div:first-child, .filter-grid > button { grid-column: 1 / -1; }
           
-          .search-row { display: flex; gap: 10px; grid-column: 1 / -1; align-items: flex-end; }
+          .search-row { display: flex; gap: 8px; grid-column: 1 / -1; align-items: center; }
           .search-row > div { flex: 1; }
           
-          .mobile-filter-toggle { display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border-subtle); border-radius: 8px; width: 40px; height: 40px; color: var(--text-muted); flex-shrink: 0; cursor: pointer; transition: all 0.2s; }
+          .mobile-filter-toggle { display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border-subtle); border-radius: 8px; width: 40px; height: 40px; color: var(--text-muted); flex-shrink: 0; cursor: pointer; transition: all 0.2s; margin-top: 18px; }
           .mobile-filter-toggle.active { background: color-mix(in srgb, var(--teal) 15%, transparent); border-color: var(--teal); color: var(--teal); }
           
           .filter-dropdowns { display: none; }
@@ -241,10 +242,10 @@ export default function CareersClient({ initialJobs = [] }) {
         .empty-state { text-align: center; padding: 64px 24px; background: var(--surface-bg); border-radius: 14px; border: 1px dashed var(--border-subtle); color: var(--text-muted); }
         .empty-state svg { margin: 0 auto 16px; opacity: 0.5; }
 
-        .jobs-section { padding-top: 160px; }
+        .jobs-section { padding-top: 120px; }
 
         @media (max-width: 640px) {
-          .jobs-section { padding-top: 100px; }
+          .jobs-section { padding-top: 72px; }
           .job-list { grid-template-columns: 1fr; gap: 12px; }
           
           .job-card { height: max-content; }
@@ -274,9 +275,9 @@ export default function CareersClient({ initialJobs = [] }) {
         <div className="container">
 
           <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-              <h1 style={{ fontSize: '28px', fontWeight: 600, color: 'var(--text)', margin: '0 0 12px 0', fontFamily: 'var(--font-display)' }}>Join the Auxosys Team</h1>
-              <p style={{ fontSize: '15px', color: 'var(--text-muted)' }}>Explore our open positions and build the future with us.</p>
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(20px, 4vw, 40px)' }}>
+              <h1 style={{ fontSize: 'clamp(22px, 5vw, 32px)', fontWeight: 700, color: 'var(--text)', margin: '0 0 10px 0', fontFamily: 'var(--font-display)', letterSpacing: '-0.01em' }}>Join the Auxosys Team</h1>
+              <p style={{ fontSize: 'clamp(13px, 3.5vw, 15px)', color: 'var(--text-muted)', margin: 0 }}>Explore our open positions and build the future with us.</p>
             </div>
             {/* Filters */}
             <div className="filters-bar">
@@ -286,7 +287,7 @@ export default function CareersClient({ initialJobs = [] }) {
                   <div>
                     <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Search</div>
                     <div style={{ position: 'relative' }}>
-                      <span style={{ position: 'absolute', left: 12, top: 10, color: 'var(--text-muted)' }}><IconSearch style={{ width: 16, height: 16 }} /></span>
+                      <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', display: 'flex' }}><IconSearch style={{ width: 16, height: 16 }} /></span>
                       <input className="search-input" style={{ paddingLeft: 36, height: '40px' }} placeholder="Role, skill, or keyword…" value={search} onChange={e => setSearch(e.target.value)} />
                     </div>
                   </div>
