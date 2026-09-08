@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'https://auxosys-backend.onrender.com';
 
 function generateRobotsTxt(robotsTxt) {
   if (robotsTxt) return robotsTxt;
