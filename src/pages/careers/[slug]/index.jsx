@@ -583,16 +583,7 @@ export default function JobDetailsPage() {
                     </Link>
                   </div>
                 )}
-                <button onClick={handleCopy} className="util-btn" style={{
-                  width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
-                  background: "transparent", border: "1px solid var(--border-subtle)",
-                  color: copied ? POSITIVE : "var(--text-muted)",
-                  padding: "10px 16px", borderRadius: "8px", marginTop: "8px",
-                  fontWeight: 600, fontSize: "0.82rem", boxSizing: "border-box",
-                }}>
-                  {copied ? <CheckCircleIcon /> : <LinkIcon />}
-                  {copied ? "Link copied" : "Copy link to this job"}
-                </button>
+
               </div>
             </div>
           </div>
