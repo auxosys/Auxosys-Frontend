@@ -333,7 +333,7 @@ export default function JobDetailsPage() {
           .job-detail-main { padding: 24px 16px 0 !important; }
           
           /* Hero Section compacting */
-          .title-row { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+          .title-row { flex-direction: column !important; align-items: stretch !important; gap: 14px !important; }
           .hero-title { font-size: 2rem !important; line-height: 1.15 !important; }
           
           /* 1-column Facts strip */
@@ -343,9 +343,9 @@ export default function JobDetailsPage() {
             gap: 8px !important; 
           }
           .facts-divider { display: none !important; }
-          .hero-actions { width: 100%; display: flex; gap: 10px; align-items: center; }
-          .hero-actions .share-btn { flex-shrink: 0; margin: 0 !important; }
-          .hero-actions .apply-btn { flex: 1; text-align: center; justify-content: center; }
+          .hero-actions { width: 100% !important; display: flex !important; flex-direction: row !important; gap: 10px !important; align-items: center !important; }
+          .hero-actions .share-btn { flex-shrink: 0 !important; width: 44px !important; height: 44px !important; margin: 0 !important; }
+          .hero-actions .apply-btn { flex: 1 !important; text-align: center !important; justify-content: center !important; height: 44px !important; }
 
           /* Content cards */
           .section-card { padding: 16px 20px !important; margin-bottom: 0 !important; }
