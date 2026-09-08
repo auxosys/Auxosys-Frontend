@@ -144,7 +144,8 @@ export default function Navbar() {
 
           {/* Mobile Hamburger */}
           <button
-            className="md:hidden flex items-center justify-center p-2 text-black hover:bg-gray-100 rounded-full transition"
+            className="md:hidden flex items-center justify-center text-black hover:bg-gray-100 rounded-full transition"
+            style={{ width: 36, height: 36, padding: 0 }}
             aria-label="Open menu"
             onClick={() => setMobileMenuOpen(true)}
           >
